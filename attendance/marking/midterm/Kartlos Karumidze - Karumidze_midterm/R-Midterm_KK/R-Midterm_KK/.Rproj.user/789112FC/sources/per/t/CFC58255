@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1514171825577.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3712648138",
+    "id" : "CFC58255",
+    "lastKnownWriteTime" : 1514171870,
+    "last_content_update" : 1514171868873,
+    "path" : "E:/R-Midterm/R-Midterm_KK/R-Midterm_KK/Karumidze_midterm.Rmd",
+    "project_path" : "Karumidze_midterm.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "91,321",
+        "scrollLine" : "53",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

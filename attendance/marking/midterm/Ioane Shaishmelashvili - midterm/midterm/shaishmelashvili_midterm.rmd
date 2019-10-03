@@ -1,0 +1,29 @@
+---
+title: "Midterm"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+
+```{r}
+setwd("D:\\Files\\Desktop\\Quantitive Methods\\intro_stats_r4\\labs\\midterm")
+midt <- read.csv("data.csv")
+midt$agegroup <- midt$age # I create new variable
+midt$agegroup[midt$agegroup>18 & midt$agegroup<35] <- 1 # I create subgruops
+midt$agegroup[midt$agegroup>36 & midt$agegroup<55] <- 2 # I create subgruops
+midt$agegroup[midt$agegroup>56] <- 3 # I create subgruops
+midt$agegroup <- factor(midt$agegroup) # I make variable factor for agegroup
+midt$sex1 <- midt$sex
+summary(midt)
+
+### as far as I can not go further, I kindly present my poor knowledge in R :)
+
+mean(midt$sex)
+mean(midt$age)
+mean(midt$exp)
+sd(midt$sex)
+sd(midt$age)
+sd(midt$exp)
+```

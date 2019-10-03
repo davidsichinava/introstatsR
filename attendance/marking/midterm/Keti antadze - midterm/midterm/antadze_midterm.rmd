@@ -1,0 +1,162 @@
+---
+title: "antadze_midterm.rmd"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+
+
+
+setwd("D:\\intro_stats_r4\\labs\\midterm")
+
+midt <- read.csv("data.csv")
+dim(midt)
+summary(midt)
+names(midt)
+
+
+midt$agegroup
+midt$agegroup[midt$age>=18 & midt$age<35] <-1 
+midt$agegroup[midt$age>=35 & midt$age < 55] <-2
+midt$agegroup[midt$age>=55 ] <-3 
+
+midt$sex <- ordered(midt$sex, 
+                    levels = c(1,2),
+                    labels = c("male", "female"))
+
+
+midt$exp <- ordered(midt$exp,
+                    levels = c(1,2,3,4),
+                    labels = c("control", "high taxes and government inverstments", "law taxes and private investments", "low taxes and government investments"))
+
+###calculation of political knowledge. 
+
+midt$knowledge <- 0
+midt$knowledge[midt$q28==1 & is.na(midt$q28)] <- midt$knowledge+1
+midt$knowledge[midt$q29==1 & is.na(midt$q29)] <- midt$knowledge+1
+midt$knowledge[midt$q30==1 & is.na(midt$q30)] <- midt$knowledge+1
+midt$knowledge[midt$q31==1 & is.na(midt$q31)] <- midt$knowledge+1
+
+midt$knowledge <- midt$q28 + midt$q29 + midt$q30 + midt$q31
+mean(midt$knowledge)
+## as estimates showed the average score of political knowledge is 2.079224~2.1. it is in the middle of scale therefore, we can conclude that respondents had an general average knowledge about the political processes 
+
+
+## calculation of economic conditions of respondents 
+## I am going to consolidate the results of questions q40-1, q40-2, q40-3, q40-4, and q40-5 into one new variable - economy, which will measure the economic wellbeing of respondents. (the maximum score per household will be 5, and min - 0)
+
+midt$economy <- 0
+midt$economy <- midt$q40_1+ midt$q40_2 + midt$q40_3 + midt$q40_4 + midt$q40_5
+mean(midt$economy)
+## the score of average economic conditions is 2.960651~3, which means that most of the housholds on evarage have 3 among the abovementioned 5 utilities. We can assume that most of respondents live well off. 
+
+
+## calculation of summary statistics for the variable gender
+summary(midt$sex)
+## according to data the pbservation included 646 males and 1260 females. 
+
+
+## calculation of summary statistics for the questions connected to the age of respondents 
+summary(midt$age)
+sd(midt$age)
+## the minimum age of respondents is 18 and max - 101. evarage age of respondents is mean=48.22~48. 
+##median of group is 48 years, which means that 953th respondent was 48 years old.Standard deviation showed that the age is not closely concentrated around the average age as it equals to 19, which means that age of respondents varies between 29-67 years.
+
+
+## calculation of summary statistics for the questions connected to the political knowledge
+summary(midt$knowledge)
+sd(midt$knowledge)
+## the average pol.knowledge score is 2.1, whicle median 2. The scores of most respondents fall under the category of 0.8-3.4 score.
+
+##calculation of summary statistics for the households economic conditions 
+summary(midt$economy)
+sd(midt$economy)
+## average score for households economic conditions is 3; median is also 3. as sd=1.2, the results vary between 1.8 and 4.2 scores. which means that almost every respondent have at least air conditioner, car, washing machine, smartphone and/or computer
+
+
+##calculation of summary statistics for education level 
+summary(midt$q32)
+sd(midt$q32)
+## education scores vary vetween 1-7 scores. the average score of attained education is 5.133~5, median==5. As sd=1, the most of the estimates fall under the group of 4-6 scores, at the same time the result of first quantile is 4, which shows that respondents dont have a very low score of education.
+
+## calculation of summary statistics for Givi 
+summary(midt$q16_part, na.rm = TRUE)
+sd(midt$q16_part, na.rm = TRUE)
+## average score for boy like givi to vote in the elections is 3.722~3.7, which means that it is highly likely that Givi will vote. summary data also shows that 11 respondents have abstained from response, however, amount of them is very small and thus could nmot have a effect on the average score. 
+
+#### calculation of summary statistics for experimental interventions
+
+summary(midt$exp)
+
+
+## differences between male and female responses/scores 
+#political knowledge
+mean(midt$knowledge[midt$sex=="female"], na.rm = TRUE)
+mean(midt$knowledge[midt$sex=="male"], na.rm = TRUE)
+## according to statistics male respondents have a higher political education(2.49), that female respondents(1.86). difference between their political knowledge scores is |2.49-1.86= 0.63|
+
+##economic conditions 
+mean(midt$economy[midt$sex=="male"], na.rm = TRUE)
+mean(midt$economy[midt$sex=="female"], na.rm = TRUE)
+## male respondents answers showed that they have a better economic conditions (3.2), than females (2.9). In that case, difference is smaller than in instance of education |3.2-2,9=0.3|
+
+## education level 
+mean(midt$q32[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q32[midt$sex=="female"], na.rm = TRUE)
+## among the female and male education statistics showed a small difference. Females have a higher education with 0.13 score |5.17-5.04=0.13|
+
+
+##GIVI 
+mean(midt$q16_part[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q16_part[midt$sex=="female"], na.rm = TRUE)
+##  according to estimates there is know difference between the the males and females scores with regard to their willingness to vote in the elections. they have equally 3.7 point. 
+
+## calculation of difference between political knowledge and education level 
+
+summary(midt$q32)
+mean(midt$knowledge[midt$q32==1])
+mean(midt$knowledge[midt$q32==3])
+mean(midt$knowledge[midt$q32==5])
+mean(midt$knowledge[midt$q32==7])
+## estimates show that if person has a high level of education they have a higher political knowledge. 
+
+## political knowledge and economic conditions 
+summary(midt$economy)
+mean(midt$knowledge[midt$economy==1])
+mean(midt$knowledge[midt$economy==2])
+mean(midt$knowledge[midt$economy==3])
+mean(midt$knowledge[midt$economy==4])
+mean(midt$knowledge[midt$economy==5])
+
+## results display that persons economic wellbeing have an influence on their political education. Higher economic wellbeing leads to a bit higher political knowledge
+
+
+
+## impact of third exp on GIVI`s willingness to vote 
+## third experimental group
+mean(midt$q16_part, na.rm = TRUE) 
+sd(midt$q16_part, na.rm = TRUE) 
+
+mean(midt$q16_part[midt$exp=="low taxes and government investments"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="low taxes and government investments"], na.rm = TRUE)
+
+
+## control group 
+mean(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+
+
+##  compared to general image of voters willingness the members of third experimental group have higher motivation to vote; difference is |3.72-3.27=0.45|, which might lead to the conclusion that unrealistic policy promises have an impact on the voters. However, if we compare the estimates of control group which have not received any treatment we might doubt about it. The result of control group i higher than score of third experiment group (control(3.75) > treatment(3.72); diff|3.75-3.72=0.03). Therefore, i assume that unrealistic policy promises does not impact on the voters willingness to participate in the elections 
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

@@ -1,0 +1,89 @@
+---
+title: "Final"
+author: "Eva"
+date: "26 ?????????????????????, 2018"
+output: html_document
+---
+```{r}
+setwd("D:\\USERS\\USER\\Desktop\\intro_stats_r4\\Final")
+trade <- read.csv("trade.csv")
+
+summary(trade)
+```
+
+```{r}
+aggtrade<- aggregate(trade$XIJL,
+by=list(trade$YEAR), FUN=sum, na.rm=TRUE)
+summary(aggtrade)
+
+library("ggplot2")
+ggplot(aggtrade, aes(x=Group.1,
+y=x, group=1))+ geom_line(linetype="solid", size=1,  color='navyblue')+
+labs(title="Volume of exports, 1907-1990", subtitles="In constant U.S. dollars", 
+x="Year",
+y="Volume of trade")
+### At the diagram two periods of relative decline in trade in the world can be observed. Decline in volume of exports are probably the result of world world I (1914-1918) and world world II (1939-1945). 
+
+```
+
+```{r}
+###MID, ALLIAL, DEMDL, BIAL, and MULTIAL transformed into binary variables
+
+trade$mildispute <-0
+trade$mildispute[trade$MIDL>0]<-1 
+
+
+trade$alliance <-0
+trade$alliance[trade$ALLIAL>0]<-1
+
+trade$dempair <-0
+trade$dempair[trade$DEMDL>0]<-1
+
+trade$bialliance <-0
+trade$bialliance[trade$BIAL>0]<-1
+
+trade$multalliance<-0
+trade$multalliance[trade$MULTIAL>0]<-1
+###Ones here mean the prevalence of characteristic- i did not get this question, that's what you mean? 
+mean(trade$mildispute)
+mean(trade$alliance)
+mean(trade$dempair)
+mean(trade$bialliance )
+mean(trade$multalliance)
+```
+
+```{r}
+### value of export throughout the time period
+mean(trade$XIJL, na.rm=TRUE)
+
+```
+```{r}
+###in our case, the null hypothesis is that there is no difference in trade flows despite being engaged in military disputes or not, the alternative hypothesis would be that the difference of the means is not zero, which means countries engaged in military disputes should have lower trade flows than those which are not engaged in the dispute. Here i try to reject the null hypothesis(military disputes have no affect on trade flows) with 95% level of confidence.
+t.test(trade$XIJL[trade$mildispute ==0], trade$XIJL[trade$mildispute==1], conf.level= 0.95)
+
+### Small p-value (9.747e-14) suggests that we can reject the null hypothesis and assume, that countries engaged in military disputes should have lower trade flows than those which are not engaged in the military dispute. If p-value was larger than 0.05 (conf. level is 0.95) we would have to accept null hypothesis, but is its way smaller equals to 9.747e-14
+```
+
+```{r}
+mean(trade$XIJL[trade$dempair==0],na.rm=TRUE )
+mean(trade$XIJL[trade$dempair==1], na.rm=TRUE)
+
+t.test(trade$XIJL[trade$dempair ==0], trade$XIJL[trade$dempair==1], conf.level= 0.95)
+
+### pairs of democratic countries(mean=6.212435) trade more than non-democratic(mean=4.195582) ones. In our t test small p-value (2.2e-16) suggests  that difference is statistically significant, thus, we can assume: the type of regime of the dyad has effect on export flows-pairs of democratic countries trade more.  
+summary(trade)
+```
+```{r}
+modeltrade <- lm(XIJL~ MIDL+TAUL+DEMDL+MULTIALL+GNPIL+POPIL+CGNPJL+POPJL+DISTANCL,  data=trade)
+summary(modeltrade)
+### Hypotheis 1: in order to test first hypothesis, we need two separate analysis, the hypothesis 1a will test if there is difference in trade flows depending on being engaged in military disputes or not. The null hypotheis here is that military disputes do not affect trade flows, the alternative hypothesis implies engagement in military disputes have effect on trade. To test 1b hypotheis-whether common interests between a pair of states lead to greater trade flows- null hypotheis would indicate that common interests have no effect, alternative hypotheis-there is relationship between common interests and trade flows.
+###small p-value in both cases are small so we can conclude our model is statistically significant,three asterisks represent a highly significant p-value. 
+###A negative coefficient (-1.37) supports the hypothesis that military disputes lower trade flows, positive coefficient (1.43273) common interest increase trade.  with increase each militarized dispute, export is changed with  -1.37000, with increase of common interest (per measured unit) trade flow increases by 1.43273. The Standard Error estimates the expected difference in case we ran the model again and again. We can say that the required change in MIDL and TAUL leading to change in XIJL can vary by 0.17224 and 0.14191 accordingly. In our example t value is relatively far away from zero and large compared to the standard error in the case of TAUL, but less than 0.05 in the case of MIDL, which could indicate a common interests' influence on trade flow is significant but engagement in military disputes (small t value)  indicates that observed difference can be purely by chance. 
+###Hypothesis 1a is not supported baecause effect of a milarized conflict on trade is not statistically significant,hypothesis 1b is supported-we can reject null hypothesis and assume that common interests affect trade flows,thus,  more common interesrs-more trade.
+###Hypotheis 2 Democratic pairs of countries have greater trade flows than nondemocratic pairs of countries. Null hypotheis indicates there is no relationship, alternative hypothesis-there is relationship between regime type of the dyad and trade flows.
+###in this case t value is relatively far away from zero and large compared to the standard error, which could indicate a relationship exists. Three asterisks represent a highly significant p-value. Small p-value for the intercept and the slope indicates that we can reject the null hypothesis which allows us to conclude that there is a relationship between regime type of the dyad and trade flows. With increase of  democracy (binary variable 0 and 1) trade increases by 0.83571. hypothesis 2-democratic pairs of countries have greater trade flows than nondemocratic pairs of countries is supported
+
+```
+
+
+

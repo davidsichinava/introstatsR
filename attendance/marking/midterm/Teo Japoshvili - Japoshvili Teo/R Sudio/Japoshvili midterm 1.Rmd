@@ -1,0 +1,114 @@
+---
+title: "Japoshvili_midterm.Rmd"
+output: html_document
+---
+```{r}
+setwd("C:/Users/Teo/Desktop/R Sudio")
+midt<-read.csv("midt.csv")
+summary(midt)
+summary(midt)
+midt$agegroup[midt$age<=18-35]<-1
+midt$agegroup[midt$age<=36-55]<-2
+midt$agegroup[midt$age<=56]<-3
+table(midt$agegroup)
+midt$agegroup <- factor(midt$age,
+                        levels = c(1,2,3),
+                        labels = c("young", "middle-aged", "old"))
+
+midt$sex <- factor(midt$sex,
+                   levels = c(1,2),
+                   labels = c("male", "female"))
+
+midt$exp <- factor(midt$exp,
+                   levels = c(1,2,3,4),
+                   labels = c("control", "hightax&govInv", "lowtax&privInv", "lowtax&govInv"))
+
+midt$knowledge <- 0
+
+midt$knowledge[midt$q28==1 & !is.na(midt$q28)] <- midt$knowledge+1
+
+midt$knowledge[midt$q29==1 & !is.na(midt$q29)] <- midt$knowledge+1
+
+midt$knowledge[midt$q30==1 & !is.na(midt$q30)]<- midt$knowledge+1
+
+midt$knowledge[midt$q31==1 & !is.na(midt$q31)] <- midt$knowledge+1
+
+##Economic situation of respodents
+midt$economic <-0
+
+midt$economic[midt$q40_1==1 & !is.na(midt$q40_1)] <- midt$economic+1
+
+midt$economic[midt$q40_2==1 & !is.na(midt$q40_2)] <- midt$economic+1
+
+midt$economic[midt$q40_3==1 & !is.na(midt$q40_3)] <- midt$economic+1
+
+midt$economic[midt$q40_4==1 & !is.na(midt$q40_4)] <- midt$economic+1
+
+midt$economic[midt$q40_5==1 & !is.na(midt$q40_5)] <- midt$economic+1
+
+
+summary(midt$knowledge)
+summary(midt$economic)
+summary(midt$age)
+summary(midt$sex)
+summary(midt$exp)
+summary(midt$q16_part)
+summary(midt$q32)
+
+##Interpretation
+##Among the respodents minimum level of knowledge is while maximum level is 5000, as for the economc situation of the respodents is the minimum is 0, maximum is represented with 5000 while the medium number is 3000. Among the respodents  646 was male and 1260 was female. Among the experimental groups control and high taxes were given to 477 persons, low taxes to 476,  from the ones who would vote Givi minimum score was 1000 while the maximum was 7000. Maximum of political Education level among the respodents was 7000, while minumum was 1000 and the medium number was 5000. Economic situation of the respodents ranger between null to 50000. 
+
+mean(midt$knowledge[midt$sex=="male"], na.rm = TRUE)
+mean(midt$knowledge[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$economic[midt$sex=="male"], na.rm = TRUE)
+mean(midt$economic[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$q32[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q32[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$q16_part[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q16_part[midt$sex=="female"], na.rm = TRUE)
+
+##Interpratation 
+##Political knowledge of men turned out to be higher than wome. In case of male respodent the score of political knowledge turned out to be 2,27 while women took 1.8 score. As for economic situation level male respodents took 2.8 while women took 2,6 while in case of attained aducation level woman took 5,1 sore and men 1.0. As for houshold issues women and men turmed out to have similar scores 3,72. 
+mean(midt$q32[midt$knowledge==1], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==2], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==3], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==4], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==5], na.rm = TRUE)
+
+
+mean(midt$economic[midt$knowledge==1], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==2], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==3], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==4], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==5], na.rm = TRUE)
+
+##Interpratation
+##As the results showed political knowledge and education have a connection , if we rely on the results of our respodents.
+##As for the economc situation respodents with the better economic situation turned out to have higher political knowledge.
+
+mean(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="hightax&govInv"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="lowtax&privInv"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="lowtax&govInv"], na.rm = TRUE)
+
+sd(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="hightax&govInv"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="lowtax&privInv"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="lowtax&govInv"], na.rm = TRUE)
+
+
+
+##Interpratation
+## If we rely on the resupts of our respodents, unlealistic promises are from the campaigners are more likely to get votes. In case of Givi the minimum score was 3.4 while in case of realistic promises maximum score was 1,6. Therefore we can conclude that people are more likely to vote for cundidates with better promises. 
+```
+
+
+
+
+
+
+```
+

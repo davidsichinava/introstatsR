@@ -1,0 +1,90 @@
+---
+title: "Midterm"
+output: html_notebook
+---
+```{r}
+setwd("D:/Labs")
+stud <-read.csv("data.csv")
+summary(stud)
+### Create a new variable
+stud$agegroup <-(stud$age) 
+stud$agegroup[stud$age<=20]<-1
+stud$agegroup[stud$age>20]<-2
+table(stud$agegroup)
+stud$agegroup<-factor(stud$agegroup,levels=c(1,2),labels=c("20 year old or younger ","older than 20"))
+## The results show that 110 respondents are 20 or younger than 20 (in table it shows the youngest is 17), and 54 respondents are older (the oldest is 27)
+stud$gender<-factor(stud$gender,levels=c(1,2),labels=c("male","female"))
+table(stud$gender)
+##From results I see that 45 respondents are male, and 118 are female. 
+
+stud$exp<-factor(stud$exp,levels=c(0,1,2),labels=c("control","direct elections", "indirect elections"))
+table (stud$exp)
+## For this task the results are: control(55)   direct elections(58) indirect elections (51) 
+
+stud$knowledge <- 0
+stud$knowledge[stud$q4_1 == 2 & !is.na(stud$q4_1)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_2 == 1 & !is.na(stud$q4_2)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_3 == 2 & !is.na(stud$q4_3)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_4 == 1 & !is.na(stud$q4_4)] <- stud$knowledge + 1
+table(stud$knowledge)
+mean(stud$knowledge)
+#Here I got 2.35 from 4 maximum
+
+stud$ideologyscore <- rowMeans(subset(stud, select = c("q5_1","q5_2", "q5_3", "q5_4", "q5_5", "q5_6")), na.rm = TRUE)
+(mean(stud$q5_1, na.rm=TRUE) + mean(stud$q5_2, na.rm=TRUE) + mean(stud$q5_3, na.rm=TRUE) + mean(stud$q5_4, na.rm=TRUE) + mean(stud$q5_5, na.rm=TRUE) + mean(stud$q5_6, na.rm=TRUE))/ 6
+#Here I got 5.9 from 10. 
+summary(stud$gender)
+summary(stud$age)
+summary(stud$knowledge)
+summary(stud$ideologyscore)
+summary(stud$q3_1)
+summary(stud$q6)
+summary(stud$exp)
+
+mean(stud$knowledge[stud$gender=="male"], na.rm=TRUE)
+mean(stud$knowledge[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$agegroup=="20 year old or younger"], na.rm=TRUE)
+mean(stud$ideologyscore[stud$agegroup=="older than 20"], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$gender=="male"], na.rm=TRUE)
+mean(stud$ideologyscore[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$q3_1[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q3_1[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$q6[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q6[stud$gender=="female"], na.rm=TRUE)
+#Here as I understood this number (51.4) shows male attitude towards the institute of the president and this one (54.64655) — female. So we can say that results are more positive, though female respondents attitude is a little bit higher than male's.
+
+mean(stud$ideologyscore[stud$knowledge>=2], na.rm=TRUE)
+mean(stud$ideologyscore[stud$knowledge<2], na.rm=TRUE)
+
+mean(stud$knowledge[stud$ideologyscore>=5], na.rm=TRUE)
+mean(stud$knowledge[stud$ideologyscore<5], na.rm=TRUE)
+
+mean(stud$q3_1[stud$knowledge>2], na.rm=TRUE)
+mean(stud$q3_1[stud$knowledge<=2], na.rm=TRUE)
+##Results show that the opinion towards politicians is negative (28.77-29.74)
+
+mean(stud$q3_2[stud$knowledge>2], na.rm=TRUE)
+mean(stud$q3_2[stud$knowledge<=2], na.rm=TRUE)
+##Though we do not need to examine respondents attitude towards President Margvelashvili, but it is interesting for me to know is it positive or negative, because the opinion about all politicans was negative, so Margvelashvili is also a politican. Here results show that Margvelashvili gets positive veiwpoint from respondents (52.9-male), (55.7- female). So President Margvelashvili is viewed with favor by female respondents. 
+
+
+mean(stud$q6[stud$exp=="control"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+
+sd(stud$q6[stud$exp=="control"], na.rm=TRUE)
+sd(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+sd(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+
+mean(stud$q6[stud$q3_2>50], na.rm=TRUE)
+mean(stud$q6[stud$q3_2<=50], na.rm=TRUE)
+
+## Do not know it is right or not, but according to the results (65.8 and 40.21) there is a corralation between the attitude towards President Margvelashvili and towards the presidency in general terms. More respondents show sympathy for the current President than presidency. 
+                       
+                       
+                        
+```

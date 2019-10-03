@@ -1,0 +1,116 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+setwd("C:/Users/Teo/Desktop/intro_stats_r4/labs/Final Assignmant")
+winlose <- read.csv("winlose.csv")
+summary(winlose)
+dim(winlose)
+
+summary(winlose$chalwin4, relcapbl, rlstake3, relres4, chalnuke, defnukes, chaldemc, defdenic)
+
+wincount <- as.data.frame(table(winlose$year))
+names(wincount) <- c("year", "count")
+library(ggplot2)
+ggplot(wincount, aes(x=year, y=count, group=1))+
+  geom_line()+
+  scale_x_discrete(breaks=c(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990))+
+  labs(title="Number of International Conflicts, 1918-1994",
+       x="Year",
+       y="Number of Conflicts",
+       subtitle="International Conflicts in 1920-1990")
+##Accordng to the chart we can conclude that from 1920 to 1938 there for comperatively peaceful period in the world, however from 1938 the lines in the chart goes up that means that number of international conflicts grew.
+
+
+
+
+
+
+```
+
+```{r}
+ChallengerPrevails <- table(winlose$chalwin4[winlose$chalwin4==1 | winlose$chalwin4==4])
+names(ChallengerPrevails)[1] = 'lose'
+names(ChallengerPrevails)[2] = 'win'
+ChallengerPrevails
+
+## According to the results challanger lost 169 and won 87 times
+
+
+
+```
+
+```{r}
+mean(winlose$chaldemc[winlose$chalwin4==1], na.rm = TRUE)#lose
+mean(winlose$chaldemc[winlose$chalwin4==2], na.rm = TRUE)#stalemate
+mean(winlose$chaldemc[winlose$chalwin4==3], na.rm = TRUE)#compromise
+mean(winlose$chaldemc[winlose$chalwin4==4], na.rm = TRUE)#win
+
+##Accorting to the resulst we see from the results when challenger lost when the avarage democracy score was 6.4 When the score was  7.1 challanger was stalemated, in case of 8.7 score challanger was compromised and with 9.2 democracy score challanger won. The results have shown that if democracies are challengers they are most likely to prevail in international crisis.
+
+mean(winlose$chaldemc, na.rm = TRUE)#Challenger's Democracy Score
+mean(winlose$defdemoc, na.rm = TRUE)#Defender's Democracy Score
+
+
+## Challanger's Democracy Score is 7.5 while Defender's democracy score is 11.6. If we relied on this results it could give a hand to democratc peace theory accortding which democraces don't wage war with each other, however we know that 11.6 s not the high score, there for this assumption will not be valid. 
+
+
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(winlose,aes(x=factor(chalnuke),y=chaldemc)) + 
+  geom_boxplot()+
+  labs(title="", x="Challenger Nuclear Capable ", y="Challenger's Democracy Score(0-21)")
+##The results showed that challenger with nuclear capabilities tend to have highter democracy score that challangers without nuclear capablities. However this assumpton needs to be ckecked. Therefore we should check with a statistcal test. 
+
+t.test(chaldemc~chalnuke,winlose)
+##The results of the Sample test showed that there is very low very  P-value (0.000008), moreover confidence interval is 95.
+
+
+#transforming the variable relres4 which contains negative values. Change negative values to NA
+
+winlose$relres4[winlose$relres4 < 0] <- NA
+
+chalDefDemScore <- lm(chalwin4~chaldemc+defdemoc, chalWinlose)
+summary(chalDefDemScore)
+
+militaryCap <- lm(relcapbl~chaldemc+defdemoc+rlstake3, winlose)
+summary(militaryCap)
+
+library(ggplot2)
+ggplot(winlose, aes(x=chalwin4, y=relcapbl))+
+geom_point(aes(colour=chaldemc,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="Challengers in conflicts and Democracy Score",
+x="Challenger Wins orLoses",
+y ="Challengers Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+##The chart is an obvious supporter of the first hypothesis as on the diagram we can see that when the challenger loses, democracy score is lower and when the challenger wins, the democracy score is higher. Therefore we can assume thatdemocratic challengers will more likely to prevail in conflict than the other challengers.
+
+
+
+```
+
+```{r}
+winlose$defWin4[winlose$chalwin4==1] <- 4
+winlose$defWin4[winlose$chalwin4==2] <- 2
+winlose$defWin4[winlose$chalwin4==3] <- 3
+winlose$defWin4[winlose$chalwin4==4] <- 1
+library(ggplot2)
+ggplot(winlose, aes(x=defWin4, y=relcapbl))+
+geom_point(aes(colour=defdemoc ,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="Defenders in conflict and Democracy Score",
+x="Defender Wins or Loses",
+y ="Defender's Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+
+##The diagram shows that the defender countries that ost n the conflist reviel higher democracy score compared to the ones that won, therefore we can assume that the second hypothesis that Democratic states will be more likely to prevail in an international crisis,regardless of whether they are challengers or defenders is not true. Accordng to our result it is important wether the country has a defender democracy or challanger democracy. This diagram once agan showes that the first hypothesis s true.
+
+
+
+
+```

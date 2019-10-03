@@ -1,0 +1,189 @@
+---
+title: "Khutsishvili_Final"
+output: html_notebook
+---
+```{r}
+setwd("C:/Users/user-001/Desktop/intro_stats_r4/Final")
+winLose <- read.csv("winlose.csv")
+library("ggplot2")
+library("stargazer")
+library("knitr")
+```
+
+```{r}
+summary(subset(winLose, select =c("chalwin4","relcapbl","rlstake3","relres4","chalnuke","defnukes","chaldemc","defdemoc")))
+```
+
+```{r}
+countOfConflicts <- table(winLose$year)
+```
+
+```{r}
+countOfConflictsPerYear <- as.data.frame(countOfConflicts)
+names(countOfConflictsPerYear)[1] = 'year'
+names(countOfConflictsPerYear)[2] = 'countOfConflicts'
+```
+
+```{r}
+ggplot(countOfConflictsPerYear, aes(x=year, y=countOfConflicts, group=1))+
+geom_line(linetype=1, color="#339999", size=1)+
+geom_point(color="#ff6e00")+
+scale_x_discrete(breaks=c(1920, 1930,1935, 1940, 1950, 1960, 1970, 1980, 1990))+
+labs(title="Number of International Conflicts, 1918-1994",
+x="Year",
+y="Number of Conflicts")
+```
+A line chart to visualize the number of conflicts per year.
+As we can see from the diagram below, first part of the third decade of 20'th century was relatively peaceful compared to the rest of the century.
+
+```{r}
+countOfChallengerPrevails <- table(winLose$chalwin4[winLose$chalwin4==1 | winLose$chalwin4==4])
+names(countOfChallengerPrevails)[1] = 'lose'
+names(countOfChallengerPrevails)[2] = 'win'
+countOfChallengerPrevails
+```
+Challenger won 169 times and lost 87 times.
+```{r}
+mean(winLose$chaldemc[winLose$chalwin4==1], na.rm = TRUE)#lose
+mean(winLose$chaldemc[winLose$chalwin4==2], na.rm = TRUE)#stalemate
+mean(winLose$chaldemc[winLose$chalwin4==3], na.rm = TRUE)#compromise
+mean(winLose$chaldemc[winLose$chalwin4==4], na.rm = TRUE)#win
+```
+We have an increasing patter in average democracy score from lose to win. when challenger lost we have 6.4 average democracy score, 7.1 when stalemeted, 8.7 when compromised and 9.2 when won. although average  9.2 is quite low from a scale of 1 to 21, this data might support first hypothesis that if democracies are challengers, they are most likely to prevail.
+```{r}
+mean(winLose$chaldemc, na.rm = TRUE)#Challenger's Democracy Score
+mean(winLose$defdemoc, na.rm = TRUE)#Defender's Democracy Score
+```
+Average score of Defenders democracy is Nearly twice as high as challenger's. This might support hypothesis that democracies do not wage war with each other, but 11 is not very high score for the defender to be called democratic. Generaly low average democracy score in both challenges and defenders might indicate that Democracies do not tend to engage in conflicts.
+```{r}
+ggplot(winLose,aes(x=factor(chalnuke),y=chaldemc)) + 
+  geom_boxplot()+
+  labs(title="", x="Challenger Nuclear Capable ", y="Challenger's Democracy Score")
+```
+This intends to show whether the democracy score in challenger countries which have nuclear weapon differ from those challengers who do not have nuclear capabilities. It creates a graphical representation to compare democracy score between two types of countries.
+From the boxplot we can see that challengers with nuclear capabilities have higher democracy score than challengers without nuclear weapon(0 - for the countries which does not have a nuclear weapon, 1 - countries with nuclear capabilities). But it is possible this apparent pattern happened by a random chance. To check whether that is the case, lets do the statistical test.
+```{r}
+t.test(chaldemc~chalnuke,winLose)
+```
+We have a very low P-value(below 0.00009) therefore we can be fairly confident there is an actual difference between the groups.
+```{r}
+winLose$relres4[winLose$relres4 < 0] <- NA
+#Transforming the variable relres4. Changeing negative values to NA
+```
+
+```{r}
+chalWinLose <-winLose[winLose$chalwin4==1 | winLose$chalwin4==4,]
+#new dataframe which contains only won and lost conflicts by the challengers
+```
+
+```{r}
+winLose$defWin4[winLose$chalwin4==1] <- 4
+winLose$defWin4[winLose$chalwin4==2] <- 2
+winLose$defWin4[winLose$chalwin4==3] <- 3
+winLose$defWin4[winLose$chalwin4==4] <- 1
+```
+
+```{r}
+table(chalWinLose$chalwin4)
+```
+challenger lost most of the times.
+```{r}
+ggplot(chalWinLose,aes(x=factor(chalwin4),y=chaldemc)) + 
+ geom_boxplot()
+```
+
+```{r}
+#dividing countries by democracy score (>=15 as democratic, <15 as nondemocratic)
+demChal <- winLose[winLose$chaldemc >= 15,]
+nonDemChal <- winLose[winLose$chaldemc < 15,]
+
+demDef <- winLose[winLose$defdemoc >= 15,]
+nonDemDef <- winLose[winLose$defdemoc < 15,]
+
+table(demChal$chalwin4)
+table(nonDemChal$chalwin4)
+table(demDef$chalwin4)
+table(nonDemDef$chalwin4)
+```
+win/lose ratio for democratic countries is higher then for non-democratic ones in both cases.
+Democratic Challenger win/lose - 27/23 Non-democratic 59/146
+Democratic Defender win/lose - 39/75 Non-democratic 47/93
+This also shows that Democratic countries are more likely to win as challengers rather then as defenders.
+But we must also take into account other factors like military capabilities and interests at stake.
+```{r}
+chalDefDemScore <- lm(chalwin4~chaldemc+defdemoc, chalWinLose)
+summary(chalDefDemScore)
+```
+From Linear model we can see that we have R squared of 0.035 which means that linear model is not best suited. We have estimates for the y intercept(1.69). Also we have a positive slope for both challengers and defenders democracy score. P value for the challengers democracy is significant, but the significance for the defenders democracy score is not significant which means that it provides no additional information. P value of y intercep is very low therefore we have a significan result which gives us strong evidence to reject null hypothesis. First part of the hypothesis that democratic defenders are less likely to prevail in the international conflict than other defenders is true, but second part that democratic challengers are more likely to prevail in the conflict than other challengers is wrong from the test.
+```{r}
+predict(chalDefDemScore)
+```
+
+```{r}
+ggplot(winLose, aes(x=relcapbl, y=chaldemc))+
+geom_point(aes(colour=rlstake3))+
+geom_smooth(method="lm")+
+labs(title="",
+x="Relative Military Capabilities",
+y ="Challangers democracy score",color = "Relative interests at stake")
+
+ggplot(winLose, aes(x=relcapbl, y=defdemoc))+
+geom_point(aes(colour=rlstake3))+
+geom_smooth(method="lm")+
+labs(title="",
+x="Relative Military Capabilities",
+y ="Defenders democracy score",color = "Relative interests at stake")
+```
+```{r}
+militaryCap <- lm(relcapbl~chaldemc+defdemoc+rlstake3, winLose)
+summary(militaryCap)
+```
+
+```{r}
+ggplot(winLose, aes(x=chalwin4, y=relcapbl))+
+geom_point(aes(colour=chaldemc,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="",
+x="Challenger Win/Lose",
+y ="Challengrers Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+```
+This demonstrates that interests at stake and relative military capabilities in challenger's win/lose ratio does not change dramatically, but we can observe, that democracy score is lower in cases when challenger lost, this means that challenger states are more likely to prevail when they are democratic.
+```{r}
+ggplot(winLose, aes(x=defWin4, y=relcapbl))+
+geom_point(aes(colour=defdemoc ,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="",
+x="Deffender Win/Lose",
+y ="Deffender's Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+```
+this shows that the opposite is true when we are talking about countries defending themselves in conflicts. Here first collumn shows lost cases and 4th shows won. We can see that the fidderence in democracy score in this 2 cases is not as radically different as it was in the case of Challenger's democracy scores, but here countries that lost show higher democracy scores that those that won, so the statement, that democratic countries are more likely to win either as challengers or as offenders is not true.
+
+First hypothesis, that democratic defenders are less likely to prevail than onther defenders, whereas democratic challengers are more likely to prevail than others is close to the truth.
+
+to further prove it I will take countries perviously divided by democracy scores and compare their average military capabilities and interests at stake
+
+```{r}
+mean(demChal$rlstake3[demChal$chalwin4==4],na.rm = TRUE)#win
+mean(demChal$rlstake3[demChal$chalwin4==1],na.rm = TRUE)#lose
+
+
+mean(nonDemChal$rlstake3[nonDemChal$chalwin4==4],na.rm = TRUE)#win
+mean(nonDemChal$rlstake3[nonDemChal$chalwin4==1],na.rm = TRUE)#lose
+```
+This further proves what is more or less visible on the chart, that there is not much difference in interest rates. same is true for military capabilities
+```{r}
+mean(demChal$relcapbl[demChal$chalwin4==4],na.rm = TRUE)#win
+mean(demChal$relcapbl[demChal$chalwin4==1],na.rm = TRUE)#lose
+
+
+mean(nonDemChal$relcapbl[nonDemChal$chalwin4==4],na.rm = TRUE)#win
+mean(nonDemChal$relcapbl[nonDemChal$chalwin4==1],na.rm = TRUE)#lose
+```
+which means that these factors do not have implication on the outcomes and we can say that it is determined by Democracy or other specific factors that come with democratic model.
+
+```{r}
+chalTmp <- lm(chalwin4~chaldemc+relcapbl+rlstake3, chalWinLose)
+summary(chalTmp)
+```
+our estimate of y intercept is 1.03 which means that surprisingly if challengers democracy score,relative military capability and relative interest at stake were all zeros challenger will lose. slope of the challengers democracy score is 0.03, 1.38 for the military capability and 0.25 for interest at stake. out proportion of variability is 0.11.
+P value of y intercep is very low therefore we have a significan result which gives us strong evidence to reject null hypothesis.

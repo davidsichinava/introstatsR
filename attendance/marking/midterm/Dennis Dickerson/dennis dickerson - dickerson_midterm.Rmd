@@ -1,0 +1,7 @@
+### General help:
+```
+help.start("wd")
+```
+
+setwd("E:/caucasian studies/qantitative analysis/midterm")
+stud <- read.csv("stud.csv")

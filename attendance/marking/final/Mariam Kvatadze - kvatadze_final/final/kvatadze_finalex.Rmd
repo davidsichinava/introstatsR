@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+setwd("C:\\Users\\kvata\\Desktop\\intro_statsr_R4\\final")
+
+tradflo <- read.csv("tradflo.csv")
+
+summary(tradflo)
+```
+
+```{r}
+sumofexports <- aggregate(tradflo$XIJL,
+                          by=list(Year=tradflo$YEAR),
+                          FUN=sum, na.rm=TRUE)
+
+summary(sumofexports)
+
+library(ggplot2)
+ggplot(sumofexports, aes(x=Year, y=x, group=1))+
+  geom_line(linetype= 1, color="purple", size = 1)+
+  geom_point(color="black")+
+  labs(title="Volume of exports, 1907-1990", subtitle="Exports from country i to country j , in constant U.S. dollars",
+       x="year",
+       y="volume of trade")
+
+```
+According to the diagram we can assume that there were two periods of relative decline of world trade. they coincide with the periods of World War 1 and World war 2, whereas, the world trade decline was bigger during 1940's than during the World War 1 period.
+```{r}
+tradflo$militarydispute <- 0
+tradflo$militarydispute[tradflo$MIDL>0] <- 1
+
+tradflo$alliancemembership <- 0
+tradflo$alliancemembership[tradflo$ALLIAL>0] <- 1
+
+tradflo$pairofdemocracy <- 0
+tradflo$pairofdemocracy[tradflo$DEMDL>0] <- 1
+
+tradflo$bilateralalliance <- 0
+tradflo$bilateralalliance[tradflo$BIALL>0] <- 1
+
+tradflo$multalliance <- 0
+tradflo$multalliance[tradflo$MULTIALL>0] <- 1
+```
+
+```{r}
+mean(tradflo$XIJL, na.rm=TRUE)
+```
+mean of export throuout 1907-1990 years is 5.266335
+```{r}
+t.test(tradflo$XIJL[tradflo$militarydispute == 0], tradflo$XIJL[tradflo$militarydispute == 1], conf.level = 0.95)
+```
+According to our hypothesis, states, which are not involved in wars have higher level of trade than the ones that are ivolved. As the p-value appeared to be 9.747 e-14, we can assume that there is not enough evidence that would reject our hypothesis. we can make assumptions about the export values by means which differ from each other - 5.325066 and 3.854233. Presented example proves falseness of the null hypothesis.
+```{r}
+t.test(tradflo$XIJL[tradflo$pairofdemocracy == 0], tradflo$XIJL[tradflo$pairofdemocracy == 1], conf.level = 0.95)
+
+mean(tradflo$XIJL[tradflo$pairofdemocracy == 0], na.rm = TRUE)
+mean(tradflo$XIJL[tradflo$pairofdemocracy == 1], na.rm = TRUE)
+```
+As the t-test shows, democratic countries have higher trade levels than non-democratic ones we can assume this also by p-value that is quite small 2.2 e-16. taking into account these factors, we can conclude, that democratic countries tend to have higher trade levels than non-democracies.
+```{r}
+modeltradflo <- lm(XIJL~MIDL+TAUL+DEMDL+MULTIALL+GNPIL+POPIL+CGNPJL+POPJL+DISTANCL, data = tradflo)
+summary(modeltradflo)
+```
+while testing first hypothesis, it becomes obvious, that the null hypothesis, according to which military disputes of countries do not have any affect on trade, is false. As for the relations between states' common interests and trade flows, an alternative hypothesis appears to be true according to which, common interests lead to greater trade. We make the abovementioned assumptions accoridng to p-value that is quite small in both cases.
+positive coefficient, 1.43273, stands for the hypothesis that common interests increase trade and a negative one, -1.37, applies for the hypothesis, that military disputes make trade flows dicrease. In case of military dispute, export changes by -1.37 and in case of increasing common interest, trade flow increases by 1.43273. Standard error shows an expected difference in case if we run the model multiple times. Required change in MIDL and TAUL leads a change of XIJL, which can vary by 0.17224 and 0.14191. In presented case, t-value is far from 0, bigger than TAUL's standard error. though, it is less then 0.5 for MIDL. it shows that the influence of common interests on trade flow is significant. 
+In case of the second hypothesis, null hypothesis claims that there is no relationship between countries' level of democracy and trade flows, while an alternative hypothesis argues about opposite. Here, t-value is far from zero and bigger than standard error. According to the p-value, which is quite small, we can assume falsness of null hypothesis.According to the abovmentioned facts, we can conclude that there is an existing relation between countries' level of democracy and trade flows and that the second hypothesis is supported. when democracy increases, trade also increases by 0.83571. 

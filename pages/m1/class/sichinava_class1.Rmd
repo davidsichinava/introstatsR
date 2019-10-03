@@ -1,0 +1,29 @@
+---
+title: "Class one!"
+output: html_notebook
+---
+
+```{r}
+setwd("D:\\Dropbox\\My projects\\Courses\\QT_Analysis\\website\\pages\\m1\\class")
+
+
+```
+
+```{r}
+install.packages("ggplot2")
+
+library(ggplot2)
+
+```
+
+```{r}
+source("class1.R")
+```
+
+__This is bold text__
+
+_This is italic_
+
+
+
+

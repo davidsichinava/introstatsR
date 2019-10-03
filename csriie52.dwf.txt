@@ -1,0 +1,38 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	deleted:    IBSU/lecture/images.xlsx
+#	deleted:    IBSU/lecture/sichinava_signed.pdf
+#	deleted:    IBSU/lecture/yerevan_population.xlsx
+#	deleted:    "IBSU/lecture/\341\203\227\341\203\221\341\203\230\341\203\232\341\203\230\341\203\241\341\203\230.mxd"
+#	deleted:    "IBSU/lecture/\341\203\241\341\203\220\341\203\232\341\203\224\341\203\245\341\203\252\341\203\230\341\203\235 \341\203\231\341\203\243\341\203\240\341\203\241\341\203\230 - \341\203\223\341\203\220\341\203\225\341\203\230\341\203\227 \341\203\241\341\203\230\341\203\255\341\203\230\341\203\234\341\203\220\341\203\225\341\203\220.docx"
+#	deleted:    "IBSU/lecture/\341\203\241\341\203\230\341\203\255\341\203\230\341\203\234\341\203\220\341\203\225\341\203\220-\341\203\232\341\203\224\341\203\245\341\203\252\341\203\230\341\203\220.docx"
+#	deleted:    "IBSU/lecture/\341\203\241\341\203\230\341\203\255\341\203\230\341\203\234\341\203\220\341\203\225\341\203\220-\341\203\232\341\203\224\341\203\245\341\203\252\341\203\230\341\203\220.pdf"
+#	deleted:    "IBSU/lecture/\341\203\241\341\203\230\341\203\255\341\203\230\341\203\234\341\203\220\341\203\225\341\203\220-\341\203\232\341\203\224\341\203\245\341\203\252\341\203\230\341\203\220.pptx"
+#	modified:   IBSU/syllabus/Quantitative Research Methods_syllabus_sichinava.docx
+#	modified:   "IBSU/syllabus/\341\203\240\341\203\220\341\203\235\341\203\223\341\203\224\341\203\234\341\203\235\341\203\221\341\203\240\341\203\230\341\203\225\341\203\230 \341\203\231\341\203\225\341\203\232\341\203\224\341\203\225\341\203\230\341\203\241 \341\203\233\341\203\224\341\203\227\341\203\235\341\203\223\341\203\224\341\203\221\341\203\230.docx"
+#	modified:   pages/m12/pres/meeting_12.Rpres
+#	modified:   pages/m12/pres/meeting_12.md
+#	modified:   pages/m13/pres/meeting_13.Rpres
+#	modified:   pages/m13/pres/meeting_13.html
+#	modified:   pages/m13/pres/meeting_13.md
+#
+# Untracked files:
+#	IBSU/attendance/attendance_sheet_JAN8.pdf
+#	IBSU/labs/
+#	IBSU/lecture/
+#	IBSU/meetings/m10/
+#	IBSU/syllabus/QRM_Sichinava_Syllabus.docx
+#	IBSU/syllabus/Sichinava_bio.docx
+#	"IBSU/syllabus/\341\203\240\341\203\231\341\203\233_\341\203\241\341\203\230\341\203\255\341\203\230\341\203\234\341\203\220\341\203\225\341\203\220_\341\203\241\341\203\230\341\203\232\341\203\220\341\203\221\341\203\243\341\203\241\341\203\230.docx"
+#	pages/m12/pres/data/.Rhistory
+#	pages/m12/pres/data/class.R
+#	pages/m13/data/
+#	pages/m13/lab/
+#	pages/m13/pres/img/neyman.PNG
+#
+

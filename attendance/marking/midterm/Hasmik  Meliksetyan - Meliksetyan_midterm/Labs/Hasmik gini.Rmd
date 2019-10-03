@@ -1,0 +1,23 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+setwd ("D:/Labs")
+gini <- read.csv ("USGini.csv") 
+summary (gini)
+dim(gini)
+plot(gini$year, gini$gini, ylim =c(0.35, 0.45), xlab ="Year", 
+ylab= "Gini coefficent", main = "Income inequality")
+
+
+
+cor(gini$gini, gini$rep.median - gini$dem.median, use ="complete.obs")
+```
+
+---
+```{r}
+plot(cars)
+```
+
+

@@ -1,0 +1,122 @@
+---
+title: "midterm"
+author: "Eva"
+date: "9 áf"áf"áfTáf"áf>áf'áf"áf áf~, 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+setwd("D:\\USERS\\USER\\Desktop\\intro_stats_r4\\midterm")
+stud <- read.csv("stud.csv")
+stud$agegroup<-stud$age
+
+
+stud$agegroup[stud$age<=20]<-1
+stud$agegroup[stud$age>20]<-2
+table(stud$agegroup)
+stud$agegroup<-factor(stud$agegroup,levels=c(1,2),labels=c("20 year old or younger ","older than 20"))
+table(stud$agegroup) ### 110 respondnets are 20 years old or younger, 54 are older than 20 
+```
+```{r}
+
+stud$gender<-factor(stud$gender,levels=c(1,2),labels=c("male","female"))
+table(stud$gender)
+stud$gender <- factor(stud$gender)
+
+```
+
+```{r}
+stud$exp<-factor(stud$exp,levels=c(0,1,2),labels=c("control","direct elections", "indirect elections"))
+table(stud$exp)
+```
+```{r}
+
+
+stud$knowledge <- 0
+stud$knowledge[stud$q4_1 == 2 & !is.na(stud$q4_1)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_2 == 1 & !is.na(stud$q4_2)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_3 == 2 & !is.na(stud$q4_3)] <- stud$knowledge + 1
+stud$knowledge[stud$q4_4 == 1 & !is.na(stud$q4_4)] <- stud$knowledge + 1
+table(stud$knowledge)
+mean(stud$knowledge)
+### the political knowledge is a bit above average,  approximately 2.4 (from maximum 4)
+
+```
+```{r}
+stud$ideologyscore <- rowMeans(subset(stud, select = c("q5_1","q5_2", "q5_3", "q5_4", "q5_5", "q5_6")), na.rm = TRUE)
+(mean(stud$q5_1, na.rm=TRUE) + mean(stud$q5_2, na.rm=TRUE) + mean(stud$q5_3, na.rm=TRUE) + mean(stud$q5_4, na.rm=TRUE) + mean(stud$q5_5, na.rm=TRUE) + mean(stud$q5_6, na.rm=TRUE))/ 6
+### on the scale from 1 to 10, 5.9 can be considered as moderate, slightly right-leaning. ### I could not calcutale this with another option, I got errors.
+```
+```{r}
+summary(stud$gender)
+summary(stud$age)
+summary(stud$knowledge)
+summary(stud$ideologyscore)
+summary(stud$q3_1)
+summary(stud$q6)
+summary(stud$exp)
+```
+
+```{r}
+mean(stud$knowledge[stud$gender=="male"], na.rm=TRUE)
+mean(stud$knowledge[stud$gender=="female"], na.rm=TRUE)
+### there is no significant difference in political knowledge scores, could be due to sample is of a smaller size, therefore differences would not be enough to be statistically significant, however, in general terms, we can say male respondents scored slightly higher than females. (resul below)
+```
+```{r}
+### this was not given in assignment but I was "playing" with variables, wonder why I got NaN? probably I made a mistake somewhere
+mean(stud$ideologyscore[stud$agegroup=="20 year old or younger"], na.rm=TRUE)
+mean(stud$ideologyscore[stud$agegroup=="older than 20"], na.rm=TRUE)
+```
+
+```{r}
+mean(stud$ideologyscore[stud$gender=="male"], na.rm=TRUE)
+mean(stud$ideologyscore[stud$gender=="female"], na.rm=TRUE)
+### both male and female respondents show right-leaning tendencies, females are more right-leaning than males. (result below)
+```
+```{r}
+mean(stud$q3_1[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q3_1[stud$gender=="female"], na.rm=TRUE)
+###both male and female respondents' attitudes towards politicians is negative. Male respondents perceive politicians more postitively than female respondents.
+```
+```{r}
+mean(stud$q6[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q6[stud$gender=="female"], na.rm=TRUE)
+###both male and female respondents'generaly view the instutute of president more positively than negatively, the score is average (approximately 50 from 100).Female respondents attitude towards presidency is more positive than males.
+```
+```{r}
+mean(stud$ideologyscore[stud$knowledge>=2], na.rm=TRUE)
+mean(stud$ideologyscore[stud$knowledge<2], na.rm=TRUE)
+### (on the scale from 0 to 4, measuring political knowledge 2 can be considered as middle threshold) there is slight difference in ideology scores, therefore tha idea that political knowledge is an important factor which often predicts one's political attitudes is under question. however, we can assume, higher the political knowledge, more left leaning is the person. Less political knowledge (equal to 2 or less) determines more right-leaning attitudes. Even though this slight difference can not be a solid proof, this assumption makes pefect sense to me :) (result below)
+```
+
+```{r}
+mean(stud$knowledge[stud$ideologyscore>=5], na.rm=TRUE)
+mean(stud$knowledge[stud$ideologyscore<5], na.rm=TRUE)
+### I also calculated another way round correlation. Despite there is so significant difference, we can assume, those whose ideological score is higher (more or equal to 5), which means they are more right leaning, tend to have less political knowledge. while "leftists" score higher on political knowledge score. We can also notice generally political knowldege is higher than middle score (2 can be thought to be treshold from max 4) (result below)
+```
+```{r}
+mean(stud$q3_1[stud$knowledge>2], na.rm=TRUE)
+mean(stud$q3_1[stud$knowledge<=2], na.rm=TRUE)
+### Generally speaking, respondents attitudes towards politicians is more negative than positive (about 30 from 100). Political knowldege does not seem to highly affect respondents' attitudes, but from data we can say, higher political knowledge causes more negative attitudes towards politicians.
+```
+```{r}
+mean(stud$q6[stud$exp=="control"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+### direct or indirect election of the president quite a???ects the public's attitudes towards the institute of the presidency. Respondnets' feelings towards the institute of presidency is the most positive( 55 more than middle score 50, from 1 to 100 scale) when president is elected directly, via national popular vote. Respondents' attitudes towards president institude is the lowest among treantment and control groups when she/he is elected indirectly (46.6). (I would like to menation one confusing point: the election of the United States President is considered indirect (via electoral college), however president is elected by people not by parliemnt etc. this could have effected the attitudes of those respondents who had higher political knowledge and knew that indirect elections does not necessarly mean no people's direct participation in presidental elections)
+```
+```{r}
+sd(stud$q6[stud$exp=="control"], na.rm=TRUE)
+sd(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+sd(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+### respondents' scores (positive-negative feelings towards persident's institute) are least dispersed around the mean in the group "direct elections", smaller sd means responders attitudes are more similar with each other in this group. Respondents' attitudes vary to greater extent in "indirect elections" treatment group. while contol group shows modetare sd. there can be a number of explanations, I think, major one can be that people mostly make their judgements based on their own experience and knwoledge, as in Geogia the president is directly elected, this is stable given presumption so respondents did not have to alther their perceptions according to assigned treatment. While for Georgian students pros and cons of indirect elections can be more difficlut to be analyzed, therefore there is a bigger starndard deviation in this treatment group.
+```
+```{r}
+mean(stud$q6[stud$q3_1>50], na.rm=TRUE)
+mean(stud$q6[stud$q3_1<=50], na.rm=TRUE)
+```
+### we can say, that, there is a correlation between how people think about Georgia's president Giorgi Margvelashvili and how they perceive presidency in general. More positive attitides towards Margvelashvili correlates with more positive attitudes towards presidency in gerenal.Respondents' attitudes towards Margvelashvili could have affected the results of experiment, as they might have drwan their conclusions about direct or indirect election system based on their perceptions about effective-innefective presidency of Margvelashvili. Georgia can be characterized with personality dominated politics- abovestated assumption seems to go hand in hand with this gerenal idea.
+
+

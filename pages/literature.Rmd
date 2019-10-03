@@ -1,0 +1,48 @@
+---
+title: "Key and additional literature"
+output: html_document
+
+---
+
+#### Key readings:
+
+* [Imai, K.: Quantitative Social Science, An Introduction. _Princeton University Press_. 2017](https://www.dropbox.com/s/u4a5w0570j2ba2i/Quantitative%20Social%20Science_%20An%20Introduction%20-%20Kosuke%20Imai.pdf?dl=0)
+
+#### Readings on R-programming
+
+
+* Grolemund, G. & Wickham, H.: [R for Data Science](http://r4ds.had.co.nz/)
+* Venables, W.N., Smith, D.M. & the R Core Team: [An Introduction to R](https://www.dropbox.com/s/dfe8zahsfvod94q/Intro-R.pdf?dl=0). Notes on R: A Programming Environment for Data Analysis and Graphics
+* Verzani, J.: simpleR: [Using R for Introductory Statistics](https://www.dropbox.com/s/5a5tx3p3v8glwix/Verzani-SimpleR.pdf?dl=0)
+
+
+#### Readings for the annotated bibliography
+
+##### First meeting:
+
+* Goodman, S. N., Fanelli, D., & Ioannidis, J. P. (2016). [What does research reproducibility mean?](https://www.dropbox.com/s/4io57pvabqw539s/Goodman%2C%202016.pdf?dl=0). _Science translational medicine_, 8(341).
+* Iqbal, S. A., Wallach, J. D., Khoury, M. J., Schully, S. D., & Ioannidis, J. P. (2016). [Reproducible research practices and transparency across the biomedical literature](https://www.dropbox.com/s/dgl3tbskfjjn5ib/iqbal_et_al%2C%202016.PDF?dl=0). _PLoS Biol_, 14(1).
+* Stodden, V. (2010). [Data sharing in social science repositories: facilitating reproducible computational research](https://www.dropbox.com/s/uh7vd6diud8tcyu/Stodden%2C%202010.pdf?dl=0). _NIPS_ 2010.
+
+##### Second meeting:
+
+* Mearsheimer, J. J., & Walt, S. M. (2013). [Leaving theory behind: Why simplistic hypothesis testing is bad for International Relations](https://www.dropbox.com/s/um04p1wipvgh5pt/mearsheimer2013.pdf?dl=0). _European Journal of International Relations_, 19(3), 427-457.
+
+
+##### Third meeting:
+
+* Höfler, M. (2005). [Causal inference based on counterfactuals](https://www.dropbox.com/s/7qo4c0g85xw0zer/Hoefler2005.pdf?dl=0). BMC medical research methodology, 5(1), 28.
+* Holland, P. W. (1986). [Statistics and causal inference](https://www.dropbox.com/s/8dza8acflt1ige4/Holland1986.pdf?dl=0). Journal of the American statistical Association, 81(396), 945-960.
+
+##### Fourth meeting:
+
+* Card, D., & Krueger, A. B. (1993). [Minimum wages and employment: A case study of the fast food industry in New Jersey and Pennsylvania](https://www.dropbox.com/s/34x5ilchdjxs35t/njmin-aer.pdf?dl=0) (No. w4509). National Bureau of Economic Research.
+
+##### Seventh meeting:
+
+* Powsner, S. M., & Tufte, E. R. (1994). [Graphical summary of patient status](https://www.dropbox.com/s/2fgyc2cwf3thlf8/Powsner%26Tufte.pdf?dl=0). The Lancet, 344(8919), 386-389.
+* Edward Tufte. (1983). The visual display of quantitative information. [Chapter 9](https://www.dropbox.com/s/4ommrdiokew9h54/VDQI_Ch9.pdf?dl=0).
+
+##### Twelweth meeting:
+
+* Gelman, A., & Loken, E. (2014). [The Statistical Crisis in Science Data-dependent analysis—a “garden of forking paths”—explains why many statistically significant comparisons don't hold up](https://www.dropbox.com/s/eu8jky7q5urj3mi/gelman_loken_2014_the_statistical_crisis_in_science.pdf?dl=0). Am Sci, 102(6), 460.

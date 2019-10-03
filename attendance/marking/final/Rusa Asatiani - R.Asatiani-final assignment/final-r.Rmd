@@ -1,0 +1,49 @@
+---
+title: "Final-R.Asatiani"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+```{r}
+setwd("E:\\R-LAB-Rusa\\final")
+
+winlose <-read.csv("winlose.csv")
+
+The data include 34 variables and 422 observations for each of them. 
+
+summary(winlose$chalwin4)
+summary(winlose$relcapbl)
+summary(winlose$rlstake3)
+summary(winlose$relres4)
+summary(winlose$chalnuke)
+summary(winlose$chaldemc)
+summary(winlose$defdemoc)
+
+install.packages("plyr")
+library(plyr)
+time<-count(winlose$year)
+time
+
+hist(winlose$year,main = "Frequency of Conflicts",breaks= c(1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990,2000), xlab = "years",col = c("blue","orange","purple"))
+
+1970ies are characterised with the highest frequency of conflicts, followed by 1960ies and 1980ies. The most peaceul period in the world had been 1920ies followed by 2000ies and 1910ies. 
+
+Now we should calculate average score of democracy:
+
+demscore<-c(mean(winlose$chaldemc[winlose$chalwin4==1],na.rm=TRUE),mean(winlose$chaldemc[winlose$chalwin4==2],na.rm=TRUE),mean(winlose$chaldemc[winlose$chalwin4==3],na.rm=TRUE),mean(winlose$chaldemc[winlose$chalwin4==4],na.rm=TRUE))
+
+We can say that winners are more likely to be democratic.
+
+cor(winlose$chaldemc,winlose$defdemoc,use="complete.obs")
+
+Corelation (-0.071) between challanger and defender is close to zero, so those are undifferentiating. 
+
+t.test(winlose$chaldemc[winlose$chalnuke==0],winlose$chaldemc[winlose$chalnuke==1])
+
+T test gives us evidence that if country has higher score of democracy, it is more likely to own nuclear weapon. 
+
+winlose$relres4[winlose$relres4<0]<-"na"
+```
+

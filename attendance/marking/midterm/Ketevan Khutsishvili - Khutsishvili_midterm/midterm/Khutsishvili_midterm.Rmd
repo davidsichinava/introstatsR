@@ -1,0 +1,106 @@
+---
+title: "midterm"
+output: html_notebook
+---
+
+```{r}
+setwd("C:/Users/user-001/Desktop/intro_stats_r4/midterm")
+```
+
+```{r}
+stud <- read.csv("data.csv")
+```
+
+```{r}
+stud$agegroup <- ifelse(stud$age <= 20, "younger", "older")
+stud$agegroup <- factor(stud$agegroup)
+stud$gender[stud$gender == 1] <- "male"
+stud$gender[stud$gender == 2] <- "female"
+stud$exp[stud$exp == 0] <- "control"
+stud$exp[stud$exp == 1] <- "direct"
+stud$exp[stud$exp == 2] <- "indirect"
+```
+When i wrote this code like you had hinted in the assignment it displayed the message "number of items to replace is not a multiple of replacement lengthnumber of items to replace is not a multiple of replacement" so I changed it a little>
+```{r}
+stud$politknowledgescore<- 0
+stud$politknowledgescore [stud$q4_1==2 & !is.na(stud$q4_1)] <- stud$politknowledgescore [stud$q4_1==2 & !is.na(stud$q4_1)] + 1
+stud$politknowledgescore [stud$q4_3==2 & !is.na(stud$q4_3)] <- stud$politknowledgescore [stud$q4_3==2 & !is.na(stud$q4_3)] + 1
+stud$politknowledgescore [stud$q4_2==1 & !is.na(stud$q4_2)] <- stud$politknowledgescore [stud$q4_2==1 & !is.na(stud$q4_2)] + 1
+stud$politknowledgescore [stud$q4_4==1 & !is.na(stud$q4_4)] <- stud$politknowledgescore [stud$q4_4==1 & !is.na(stud$q4_4)] + 1
+```
+
+```{r}
+mean(stud$politknowledgescore)
+```
+
+there was a mistake in our assignment because it said that ideology questions were answered from 1 to 7 but there are other numbers in answers too like 10 for example
+so now i wonder when i analyse the mean should it be compared to max 7 or max 10
+also i found writing this part of the code most difficult because when i wrote it like we learned with just c function it did not work so i had to google this part
+```{r}
+stud$ideologyscore <- rowMeans(subset(stud, select = c("q5_1","q5_2", "q5_3", "q5_4", "q5_5", "q5_6")), na.rm = TRUE)
+```
+so now when the mean of the political ideology score is almost 6, on the 1 to 7 scale we could say that on the average student are right leaning, but on the 1 to 10 scale it will mean less right leaning and almost in the middle
+```{r}
+mean(stud$ideologyscore, na.rm = TRUE)
+```
+```{r}
+subset(stud, select =c("gender", "age", "politknowledgescore", "ideologyscore", "exp"))
+```
+```{r}
+mean(stud$politknowledgescore[stud$gender=="male"], na.rm=TRUE)
+mean(stud$politknowledgescore[stud$gender=="female"], na.rm=TRUE)
+```
+there is no big difference in political knowledge score between male and female students and both are slightly above average. Male score is higher than the mean of both genders where as female score is slightly less.
+```{r}
+mean(stud$ideologyscore[stud$gender=="male"], na.rm=TRUE)
+mean(stud$ideologyscore[stud$gender=="female"], na.rm=TRUE)
+```
+same goes for left and right leaning political views. Females are slightly more right leaning.
+```{r}
+mean(stud$q3_1[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q3_1[stud$gender=="female"], na.rm=TRUE)
+mean(stud$q6[stud$gender=="male"], na.rm=TRUE)
+mean(stud$q6[stud$gender=="female"], na.rm=TRUE)
+```
+This shows that the trust towards institute of the president is higher than the trust towards politicians in general. Trust towards institute of the president is average (on a scale of 0 to 100 in the middle) in both genders, but slightly more in Females whereas the trust towards politicians in general is low, but males trust politicians in general more than females.
+```{r}
+mean(stud$ideologyscore[stud$politknowledgescore>2], na.rm=TRUE)
+mean(stud$ideologyscore[stud$politknowledgescore<=2], na.rm=TRUE)
+```
+to compare the ideology scores between those who scored high in political knowledge score and those who scored low i divided them as follows:
+those, who got more than 2 point in political knowledge questions are regarded as high scoring
+those who got 2 points or less are regarded as low scoring.
+when comparing the ideological scores of these two groups we can see that the difference is not big, but those, who scored lower are slightly more right leaning.
+```{r}
+mean(stud$q3_1[stud$politknowledgescore>2], na.rm=TRUE)
+mean(stud$q3_1[stud$politknowledgescore<=2], na.rm=TRUE)
+```
+in the same groups, divided by political knowledge scores as abowe, the trust towards politicians in general is low, but in case of the students, who scored higher, the level of trust is slightly more. this could mean, that the more they know about politics, the more they trust them, but we can not say that, because the question 3_1 was about politicians in general, and questions assessing political knowledge were mainly about presidential institute. and also the difference is very small.
+```{r}
+mean(stud$q6[stud$politknowledgescore>2], na.rm=TRUE)
+mean(stud$q6[stud$politknowledgescore<=2], na.rm=TRUE)
+```
+now this is interesting, because it shows, that the students, who scored less in knowledge of presidential institute have more trust in it.
+```{r}
+mean(stud$q6[stud$exp=="control"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="direct"], na.rm=TRUE)
+mean(stud$q6[stud$exp=="indirect"], na.rm=TRUE)
+```
+this data shows, that when the participants asked about the directly elected president showed more trust towards the institute, and those asked about indirectly elected, meaning for example appointed by the parliament showed much less trust towards the institute.
+In general as in treatment groups, trust towards the institute is average (on the scale of 0 to 100 between 45 and 60), being highest in case of president being elected directly.
+```{r}
+meancontrol <- stud$q6[stud$exp=="control"]
+sd (meancontrol, na.rm = TRUE)
+meandirect <- stud$q6[stud$exp=="direct"]
+sd (meandirect, na.rm = TRUE)
+meanindirect <- stud$q6[stud$exp=="indirect"]
+sd (meanindirect, na.rm = TRUE)
+```
+standard deviation in control and treatment groups is highest for the group asked about indirectly elected president and the lowest in group asked about directly elected president, which indicated that people in more consistend regarding the trust towards directly elected president and more inconsistent in case of idirectly elected one.
+```{r}
+mean(stud$q3_2, na.rm=TRUE)
+mean(stud$q6, na.rm=TRUE)
+```
+This shows, that factor of Mr. Margvelashvili does not change anything. Trust towards him personally is slightly higher than the trust towards the institute of president in general, but not so much that we could blame him for higher trust in presedent than in politicians in general. Considering the fact that there is no big difference in trust towards Margvelashvili and trsut towards the institute in general, this factor should not inflience the above analysis.
+
+

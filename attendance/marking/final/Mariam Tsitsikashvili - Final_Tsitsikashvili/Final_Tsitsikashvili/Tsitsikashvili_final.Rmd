@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+setwd("C:\\Users\\GRASS\\Desktop\\TSU\\R\\Final_Tsitsikashvili")
+
+tradflo <- read.csv("tradflo.csv")
+
+summary(tradflo)
+```
+
+```{r}
+ExpSum <- aggregate(tradflo$XIJL, 
+                    by=list(Year=tradflo$YEAR),
+                    FUN=sum, na.rm=TRUE)
+summary(ExpSum)
+```
+
+```{r}
+library(ggplot2)
+ggplot(ExpSum, aes(x=Year, y=x, group=1))+
+  geom_line(linetype=1, colour = "pink", size = 2)+
+  labs(title="Volume of exports, 1907-1990",subtitle="calculated in constant U.S. dollars",
+       x="Year",
+       y="Volume of trade")
+```
+Looking at the diagram, we may notice that there two time periods when volume of international trade drastically drops. these two periods are around 1910-1920  and 1940-1950 years. We can assume that this striking decline was a result of World War 1 and World War 2. 
+```{r}
+tradflo$militarydispute <- 0
+tradflo$militarydispute[tradflo$MIDL>0] <-1
+
+tradflo$alliancememb <- 0
+tradflo$alliancememb[tradflo$ALLIAL>0] <- 1
+
+tradflo$democracypair <- 0
+tradflo$democracypair[tradflo$DEMDL>0] <- 1
+
+tradflo$Bialliance
+tradflo$Bialliance[tradflo$BIALL>0] <-1
+
+tradflo$Mulalliance
+tradflo$Mulalliance[tradflo$MULTIALL>0] <-1
+```
+```{r}
+mean(tradflo$XIJL, na.rm = TRUE)
+
+##throughout the time period, mean value of international trade is 5.2
+```
+```{r}
+t.test(tradflo$XIJL[tradflo$militarydispute ==0], tradflo$XIJL[tradflo$militarydispute==1], conf.level= 0.95)
+```
+Explanation: our hypothesis is that states in conflict with each other will have lower levels of trade than states not in conflict. Additionally, the greater the degree of common interests between a pair of states, the greater will be their trade flow.  the Null hypothesis would have been that there is no difference in trade volumes between countries in conflict and not in conflict. t-test illustrated that there are rather small evidence against our hypothesis. since p-value in our case is 0.000000000000009747 it means that the hypothesis is not rejected by substantial number of evidence that whould have convinced us that the null hypothesis is correct. Mean for X (countries not in military conflict) is 5.3, while for y (countries in conflict) is 3.8. therefore, mean values also suggest that there is a difference in trade volumes between observed two types of countries. 
+```{r}
+mean(tradflo$XIJL[tradflo$democracypair==0], na.rm = TRUE)
+mean(tradflo$XIJL[tradflo$democracypair==1], na.rm = TRUE)
+
+t.test(tradflo$XIJL[tradflo$democracypair == 0], tradflo$XIJL[tradflo$democracypair == 1], conf.level= 0.95)
+```
+Explanation: means shows us that democratic countries (y)have higher trade volume than non-democratic countries (x). t-test suggests that p-value is relatively small 2.2e-16, meaning that there are no significant statistical evidence against the hypothesis that democractic pairs of countries have higher trade volume, that the non-democratic ones.Therefore, we can conclude that regime type has an influence on trade flows.
+
+```{r}
+modeltradflo <- lm(XIJL~ MIDL+TAUL+DEMDL+MULTIALL+GNPIL+POPIL+CGNPJL+POPJL+DISTANCL,  data=tradflo)
+summary(modeltradflo)
+```
+Explanation:
+looking at MIDL coefficients we can assume that military disputes negatively effect trade flowes between the countries. while observing TAUL and respective coefficients they show us that higher the mutual interests are the higher trade volume is. 
+
+t value in case of MIDL is -7.954 while in case of Taul it has positive coefficient 10.0954. therefore, we can say that mutual interests have an effect on trade flows. 
+
+Concerning second hypothesis, we can see that t value is rather a small number, thus there are not much evidence against our hypothesis. Therefore, the second hypothesis is supported. 

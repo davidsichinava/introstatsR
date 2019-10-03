@@ -1,0 +1,103 @@
+---
+title: "karumidze_final.Rmd"
+output: html_notebook
+---
+
+
+```{r}
+winlose <- read.csv("winlose.csv")  ### read data
+
+### --- 1. descriptive statistics of variables chalwin4, relcapbl, rlstake3, relres4, chalnuke, defnukes, chaldemc, defdemoc ---
+
+summary(winlose$chalwin4)
+summary(winlose$relcapbl) 
+summary(winlose$rlstake3) 
+summary(winlose$relres4) 
+summary(winlose$chalnuke) 
+summary(winlose$defnukes) 
+summary(winlose$chaldemc) 
+summary(winlose$defdemoc)
+
+### --- 2. Store the count number conflicts by year ---
+
+conflicts <- as.data.frame(winlose$year)
+conflicts <- table(winlose$year)
+conflicts <- as.data.frame(table(winlose$year))
+names(conflicts)[1] ="Year"
+
+### --- 3. Visualization of the number of conflicts per year ---
+
+library("ggplot2")
+ggplot(conflicts, aes(x=conflicts$Year, y=conflicts$Freq, group=1))+
+geom_line(linetype="solid", color="blue", size=1)+geom_point(color="black", size=0.99)+ ## Note that we are using line chart here
+scale_x_discrete(breaks=c(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990))+
+labs(title="Number of International Conflicts, 1918-1994", subtitle="Number of conflicts per year",
+x="Year",
+y="Number of Conflicts") + theme(
+  panel.background = element_rect(fill = "lightblue",
+                                colour = "lightblue",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "white"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid', colour = "white")
+  )
+
+### --- 4. Period of relative peace in the world ---
+### 1920s and 1930s were relatively peaceful periods in the world.
+
+### --- 5. challengers outcomes ---
+
+table(winlose$chalwin4)
+### In 87 cases challengers won and in 169 cases they lost. 
+
+### --- 6. If democracies are challengers, they are most likely to prevail ---
+
+mean(winlose$chaldemc[winlose$chalwin4=="1"], na.rm=TRUE)
+mean(winlose$chaldemc[winlose$chalwin4=="2"], na.rm=TRUE)
+mean(winlose$chaldemc[winlose$chalwin4=="3"], na.rm=TRUE)
+mean(winlose$chaldemc[winlose$chalwin4=="4"], na.rm=TRUE)
+
+### Democratic challengers that prevail in the conflict have higher democracy score (9.23) compared to those democratic challengers who did not success in the conflict (6.44).  According to Bueno de Mesquita that is explained by the fact that democracies are more selective about the crises they choose to initiate as domestic costs are very large if they lose a conflict. Therefore, leaders of democratic challenger countries  must either be highly motivated to prevail on the issue at stake or highly confident of their ability to prevail.
+
+### --- 7. Democracies do not wage war with each other  ---
+
+winlose$chaldemc.NA<-c(winlose$chaldemc) ### copy data of chaldemc variable into the new variable chaldemc.NA
+winlose$defdemoc.NA<-c(winlose$defdemoc) ### copy data of defdemoc variable into the new variable defdemoc.NA
+
+winlose[, 35:36][is.na(winlose[, 35:36])] <- 0 ### replace NA with 0 in the newly created variables chaldemc.NA and defdemoc.NA
+
+cor(winlose$chaldemc.NA, winlose$defdemoc.NA,  method = "pearson", use = "complete.obs") 
+
+### There is no correlation between democracy scores of challenger and defender countries as the correlation coefficient is too low - 0.08
+
+
+
+### --- 8. Do challenger countries which have nuclear weapon differ from those challengers which do not have nukes? ---
+
+t.test(winlose$chalwin4[winlose$chalnuke == 1], winlose$chalwin4[winlose$chalnuke == 0])
+
+### Since the p-value is greater than the standard threshold of α = 0.05, we fail to reject the null hypothesis that the challenger countries which have nuclear weapon do not differ from challengers which do not have nukes.
+
+### --- 9. Change negative values to NA in the variable relres4 ---
+
+winlose$relres4[winlose$relres4 <0] <- NA
+
+
+### --- 10. Hypothesis 1 - Democratic challengers are more likely to win ---
+
+Hypothesis1<-lm(chaldemc~chalwin4 == 4, data=winlose)
+summary(Hypothesis1)
+
+### As the p-value are very close to zero and the coefficient t-value is high enough (19.373) we can conclude that relationship between democracy score and positive output of the conflict really does exist.
+
+### --- 11. Hypothesis 2 - Democracies always possess necessary military capabilities ---
+
+Hypothesis2<-lm(relcapbl~chaldemc+rlstake3, data=winlose)
+summary(Hypothesis2)
+
+Hypothesis2.1<-lm(relcapbl~defdemoc+rlstake3, data=winlose)
+summary(Hypothesis2.1)
+
+### Calculated coefficients indicates that  democracies are capable to prevail in any international conflict regardless the fact they were defenders or the challengers.
+
+```

@@ -1,0 +1,33 @@
+---
+title: "Lab3"
+output: html_document
+---
+
+```{r}
+setwd("D:/Labs")
+
+resume <-read.csv("resume.csv")
+
+head(resume)
+
+race.call.tab <- table(race = resume$race, call = resume$call)
+addmargins(race.call.tab)
+race.call.tab
+
+sum(race.call.tab[, 2]) / nrow(resume) #Overall proportions
+race.call.tab[1,2] / sum(race.call.tab[1, 1]) #African Americans
+race.call.tab[2,2] / sum(race.call.tab[2, 1]) #White Americans
+
+
+mean(resume$call[resume$race == "black"])
+
+mean(resume$call[resume$sex == "black"])
+mean(resume$call[resume$sex == "male"])
+```
+```{r}
+
+```
+
+
+
+

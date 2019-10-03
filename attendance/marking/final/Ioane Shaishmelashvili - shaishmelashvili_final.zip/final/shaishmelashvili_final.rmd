@@ -1,0 +1,47 @@
+---
+title: "Final"
+output:
+  html_document:
+    df_print: paged
+---
+```{r}
+setwd("D:\\Files\\Desktop\\Quantitive Methods\\intro_stats_r4\\labs\\final")
+tradflo <- read.csv("tradflo.csv")
+summary(tradflo)
+ExpSum <- aggregate(tradflo$XIJL, 
+                    by=list(Year=tradflo$YEAR),
+                    FUN=sum, na.rm=TRUE)
+summary(ExpSum)
+library(ggplot2)
+ggplot(ExpSum, aes(x=Year, y=x, group=1))+
+  geom_line(linetype=1, colour = "pink", size = 2)+
+  labs(title="Volume of exports, 1907-1990",subtitle="calculated in constant U.S. dollars",
+       x="Year",
+       y="Volume of trade")
+### We see that volume of trade drops and it happens twice. The most significant is that period, when it drops, coincides with WWI and WWII periods. Based on this opinion, we may conclude, that plunge was caused by world wars.
+tradflo$militarydispute <- 0
+tradflo$militarydispute[tradflo$MIDL>0] <-1
+
+tradflo$alliancememb <- 0
+tradflo$alliancememb[tradflo$ALLIAL>0] <- 1
+
+tradflo$democracypair <- 0
+tradflo$democracypair[tradflo$DEMDL>0] <- 1
+
+tradflo$Bialliance
+tradflo$Bialliance[tradflo$BIALL>0] <-1
+
+tradflo$Mulalliance
+tradflo$Mulalliance[tradflo$MULTIALL>0] <-1
+mean(tradflo$XIJL, na.rm = TRUE) ### mean value of international trade - 5.266335
+t.test(tradflo$XIJL[tradflo$militarydispute ==0], tradflo$XIJL[tradflo$militarydispute==1], conf.level= 0.95) ### based on mean values we may conclude, that between given to countries is difference between trade volumes.
+
+mean(tradflo$XIJL[tradflo$democracypair==0], na.rm = TRUE)
+mean(tradflo$XIJL[tradflo$democracypair==1], na.rm = TRUE)
+
+t.test(tradflo$XIJL[tradflo$democracypair == 0], tradflo$XIJL[tradflo$democracypair == 1], conf.level= 0.95) ### data makes it visible, that democratic countries outweigh nondemocratic countries in trade volumes. As far as p-values is small, we may say that what we say is right, so to conclude, regime type affects trade volume of a country.
+modeltradflo <- lm(XIJL~ MIDL+TAUL+DEMDL+MULTIALL+GNPIL+POPIL+CGNPJL+POPJL+DISTANCL,  data=tradflo)
+summary(modeltradflo) ### based on data we can say, that wars affect trade between countries in a negative way, while if there is higher mutual interest between countries, trade pace rises. As far as TAUL has positive coefficient, we cam conclude, that mutual interests influence trade. Finnally saying, second version is OK, because there is not much to say against it.
+
+
+```

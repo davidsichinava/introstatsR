@@ -1,0 +1,74 @@
+---
+title: "lab5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r}
+setwd("D:/Labs")
+
+minwage <- read.csv("minwage.csv")
+
+dim(minwage)
+
+summary(minwage)
+
+minwageNJ <- subset(minwage, subset = (location!= "PA")) ## data that don't include PA. show me data that doesn't include smth- !=
+
+minwagePA <- subset(minwage, subset = (location == "PA"))
+
+minwageNJ$fullPropAfter <- minwageNJ$fullAfter / (minwageNJ$fullAfter + minwageNJ$partAfter)
+
+minwagePA$fullPropAfter <- minwagePA$fullAfter / (minwagePA$fullAfter + minwagePA$partAfter)
+
+mean(minwageNJ$fullPropAfter) -
+
+mean(minwagePA$fullPropAfter)
+
+prop.table(table(minwageNJ$chain))
+
+prop.table(table(minwagePA$chain))
+
+minwageNJ.bk <- subset(minwageNJ, subset = (chain == "burgerking"))
+
+minwagePA.bk <- subset(minwagePA, subset = (chain == "burgerking"))
+
+mean(minwageNJ.bk$fullPropAfter) - 
+mean(minwagePA.bk$fullPropAfter)
+```
+
+
+```{r}
+##Penn: difference in means
+minwagePA$fullpropBefore <- minwagePA$fullBefore/ (minwagePA$fullBefore + minwagePA$partBefore)
+
+PAdiff <- mean(minwagePA$fullPropAfter) - mean(minwagePA$fullPropBefore)
+
+##Penn: difference in means
+minwageNJ$fullpropBefore <- minwageNJ$fullBefore/ (minwageNJ$fullBefore + minwageNJ$partBefore)
+
+PAdiff <- mean(minwageNJ$fullPropAfter) - mean (minwageNJ$fullPropBefore)
+
+
+NJdiff <- mean(minwageNJ$fullPropAfter) - mean (minwageNJ$fullPropBefore)
+##Diff-in-diff
+NJdiff-PAdiff
+
+```
+
+```{r}
+##Median difference between states
+median(minwageNJ$fullPropAfter)- median (minwagePA$fullPropAfter)
+##Difference-in-medians between states
+NJdiff.med <- median (minwageNJ$fullpropAfter)-median (minwageNJ$fullPropBefore)
+NJdiff.med
+##Median difference-in-difference
+PAdiff.med <- median(minwagePA$fullPropAfer)- median(minwagePA$fullPropBefore)
+NJdiff.med-PAdiff.med
+```
+
+

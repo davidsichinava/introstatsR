@@ -1,0 +1,92 @@
+stud <- read.csv("data.csv") ### Read downloaded csv to r. and name the new data frame stud. 
+agegroup <- stud$age ### Create a new variable agegroup from the initial variable age.
+agegroup [stud$age <=20] <- "Group_One" ### Group together the respondents who are 20 year old or younger in group one and attach label "Group_One"
+agegroup [stud$age >20] <- "Group_Two" ### Group together the respondents who are older than 20 year old in group two and attach label "Group_Two"
+agegroup <- as.factor(agegroup) ### Convert agegroup variable as a factor
+gender <- stud$gender ### Create a new variable gender from the initial variable gender.
+gender [stud$gender ==1] <- "Male" ### attach label "Male"
+gender [stud$gender ==2] <- "Female"  ### attach label "Female"
+gender <- as.factor(gender) ### Convert gender variable as a factor
+exp <- stud$exp ### Create a new variable exp from the initial variable exp.
+exp [stud$exp ==0] <-"Control" ### attach label "Control"
+exp [stud$exp ==1] <-"Direct_elections" ### attach label "Direct_elections"
+exp [stud$exp ==2] <-"Indirect_elections" ### attach label "Indirect_elections"
+exp <- as.factor(exp) ### Convert exp variable as a factor
+
+ library(data.table) ### Load data.table package
+stud <- data.table(stud) ### Load data.table package
+knowledge_score <- stud[,list(political = sum(q4_1 =="2", q4_2=="1", q4_3=="2", q4_4=="1"), freq = .N), by = c("id")] ### Calculate Knowledge score
+ideological_score <- stud[,list(ideological = sum(q5_1, q5_2, q5_3, q5_4, q5_5, q5_6), freq = .N), by = c("id")] ### Calculate Ideological score
+stud$knowledge_score <- knowledge_score$political ### add calculated knowledge_score to stud data frame
+stud$ideological_score <- ideological_score$ideological ### add calculated ideological_score to stud data frame
+
+knowledge_score <- stud$knowledge_score ### Create a new variable knowledge_score from the initial variable knowledge_score.
+knowledge_score [stud$knowledge_score ==1] <-"1" ### attach label "1"
+knowledge_score [stud$knowledge_score ==2] <-"2" ### attach label "2"
+knowledge_score [stud$knowledge_score ==3] <-"3" ### attach label "3"
+knowledge_score [stud$knowledge_score ==4] <-"4" ### attach label "4"
+knowledge_score <- as.factor(knowledge_score) ### Convert knowledge_score variable as a factor
+
+summary(gender)
+summary(agegroup)
+summary(knowledge_score)
+summary(stud$ideological_score)
+summary(stud$q3_1)
+summary(stud$q6)
+summary(exp)
+
+### 118 Females and 45 males participated in the study, 67% were 20 years old or younger and 33% were older than 20. As for political knowledge 93 participants received 2 points, 49 - 3 points, 10 - 4 points, 11 person received 1 point and one participant did not answer the question. The highest left-to-right score was 50 and mean was 35.38, so we could conclude that participants were more right leaning in terms of ideology.  Respondent's attitude towards politicians were more negative than positive as the mean score for the question q3_1 was 29.4 and their attitude towards institutions were more positive as the mean score for the question q6 was 53.80. 55 participants belonged to control group, 58 - direct elections group and 51 - indirect elections group.
+
+tapply(stud$knowledge_score, stud$gender, mean, na.rm=TRUE) ### political knowledge difference
+tapply(stud$ideological_score, stud$gender, mean, na.rm=TRUE)  ### difference in left-right leanings 
+tapply(stud$q6, stud$gender, mean, na.rm=TRUE) ### attitude towards politicians
+tapply(stud$q3_1, stud$gender, mean, na.rm=TRUE) ### attitude towards presidency
+
+### In terms of political knowledge male participants mean value is slightly bigger (2.46) than female participants mean value (2.31). In terms of Ideological score female participants mean value is slightly bigger (35.82) than male participants mean value (34.40). Female participants attitude toward politicians (54.64) were more positive than male participants attitude (51.40). While male participants have more positive attitude towards the presidency (33.26) compared to female participants mean value (27.74)
+
+dif_knowledge1 <- (stud$knowledge_score=="1" & stud$ideological_score >= "30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in ideological score. 
+sum(dif_knowledge1, NA, na.rm = TRUE) ### get the number
+
+dif_knowledge2 <- (stud$knowledge_score=="2" & stud$ideological_score >= "30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in ideological score.
+sum(dif_knowledge2, NA, na.rm = TRUE) ### get the number
+
+dif_knowledge3 <- (stud$knowledge_score=="3" & stud$ideological_score >= "30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in ideological score.
+sum(dif_knowledge3, NA, na.rm = TRUE) ### get the number
+
+dif_knowledge4 <- (stud$knowledge_score=="4" & stud$ideological_score >= "30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in ideological score.
+sum(dif_knowledge4, NA, na.rm = TRUE) ### get the number
+
+dif_attitude1 <- (stud$knowledge_score=="1" & stud$q3_1 >="30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in the question measuring attitude towards politicians.
+summary(dif_attitude1, NA, na.rm = TRUE) ### get the number
+
+dif_attitude2 <- (stud$knowledge_score=="2" & stud$q3_1 >="30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in the question measuring attitude towards politicians.
+summary(dif_attitude2, NA, na.rm = TRUE) ### get the number
+
+dif_attitude3 <- (stud$knowledge_score=="3" & stud$q3_1 >="30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in the question measuring attitude towards politicians.
+summary(dif_attitude3, NA, na.rm = TRUE) ### get the number
+
+dif_attitude4 <- (stud$knowledge_score=="4" & stud$q3_1 >="30") ### calculate participants number who received 1 point in the questions measuring political knowledge and who have 30 points or more in the question measuring attitude towards politicians.
+summary(dif_attitude4, NA, na.rm = TRUE) ### get the number
+
+### Vast majority of Participants (75) who have 30 points or more in ideological score received 2 points in political knowledge. 36 right-winged participants received 3 points in political knowledge. 9 received - 4 points and 10 participants received - 1 point. 
+### 56 Participants with 2 points in political knowledge have 30 points or more in the question measuring attitude towards politicians. 24 Participants with 3 points in political knowledge have 30 points or more in the question measuring attitude towards politicians. 6 Participants with 4 points in political knowledge have 30 points or more in the question measuring attitude towards politicians. 5 Participants with 1 points in political knowledge have 30 points or more in the question measuring attitude towards politicians.
+### So it could be concluded that participants with average political knowledge are more right-winged and the have more positive attitude towards politicians.
+
+exp_c <- (stud$exp=="0" & stud$q6) ### control groups attitudes toward the institutions
+exp_d <- (stud$exp=="1" & stud$q6) ### Direct elections groups attitudes toward the institutions
+exp_i <-  (stud$exp=="2" & stud$q6) ### Indirect elections groups attitudes toward the institutions
+
+sd(exp_c, na.rm=TRUE) ### standard deviations for control groups attitudes toward the institutions
+mean(exp_c, na.rm=TRUE) ### mean values for control groups attitudes toward the institutions
+
+sd(exp_d, na.rm=TRUE) ### standard deviations for Direct elections groups attitudes toward the institutions
+mean(exp_d, na.rm=TRUE) ### mean values for Direct elections groups attitudes toward the institutions
+
+sd(exp_i, na.rm=TRUE) ### standard deviations for Indirect elections groups attitudes toward the institutions
+mean(exp_i, na.rm=TRUE) ### mean values for Indirect elections groups attitudes toward the institutions
+
+### There are high standard deviation that indicates that data is widely spread (less reliable)
+
+cor.test(stud$q3_1, stud$q6, method=c("pearson"))
+
+### Mean values of the attitudes toward the institutions of Direct elections groups (0.34) and control groups (31) are higher than Indirect elections groups (0.27), however high standard deviation makes that data less reliable and the p-value = 0.06251 indicates that there is weak   evidence against the null hypothesis.

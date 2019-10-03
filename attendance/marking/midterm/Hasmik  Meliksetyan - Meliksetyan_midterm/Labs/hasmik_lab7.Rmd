@@ -1,0 +1,40 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+setwd ("D:/Labs")
+gayreshaped <- read.csv ("gayreshaped.csv")
+summary (gayreshaped)
+ mean(gayreshaped$therm1, na.rm= TRUE)
+ mean(gayreshaped$therm2, na.rm= TRUE)
+ mean(gayreshaped$therm3, na.rm= TRUE)
+ mean(gayreshaped$therm4, na.rm= TRUE)
+ 
+ sd(gayreshaped$therm1, na.rm= TRUE)
+ sd(gayreshaped$therm2, na.rm= TRUE)
+ sd(gayreshaped$therm3, na.rm= TRUE)
+ sd(gayreshaped$therm4, na.rm= TRUE)
+ 
+ median(gayreshaped$therm1, na.rm= TRUE)
+ median(gayreshaped$therm2, na.rm= TRUE)
+ median(gayreshaped$therm3, na.rm= TRUE)
+ median(gayreshaped$therm4, na.rm= TRUE)
+ 
+ cor(gayreshaped$therm1, gayreshaped$therm2,  use ="complete.obs")
+ cor(gayreshaped$therm3, gayreshaped$therm4,  use ="complete.obs")
+ cor(gayreshaped$therm1, gayreshaped$therm3,  use ="complete.obs")
+
+ newdata <-as.matrix(gayreshaped$therm1, gayreshaped$therm2, gayreshaped$therm3, gayreshaped$therm4)
+ str(newdata)
+ round(cor(newdata), 2)
+ 
+```
+
+
+ 
+
+```{r}
+plot(cars)
+```
+

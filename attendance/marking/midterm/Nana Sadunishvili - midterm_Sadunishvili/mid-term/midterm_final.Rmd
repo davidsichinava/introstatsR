@@ -1,0 +1,111 @@
+---
+title: "Midterm_Sadunishvili"
+author: "Naiko Sadunishvili"
+date: "13 ???????????????????????????, 2017"
+output: html_document
+---
+
+```{r}
+setwd("C:/Users/MTG/Desktop/mid-term")
+stud <- read.csv ("stud.csv")
+stud$agegroup <- stud$age
+stud$agegroup[stud$age <= 20] <- 1
+stud$agegroup[stud$age > 20] <- 2
+stud$agegroup <- factor(stud$agegroup, labels = c("twenty years old or younger","older than twenty"))
+stud$gender <- factor(stud$gender, labels = c("male", "female"))
+stud$exp <- factor(stud$exp, labels = c("control", "direct elections", "indirect elections"))
+stud$knowledge <- 0
+stud$knowledge[stud$q4_1 == 2 & !is.na(stud$q4_1)] <- stud$knowledge+1
+table(stud$knowledge)
+
+stud$knowledge <- 0
+stud$knowledge[stud$q4_3 == 2 & !is.na(stud$q4_3)] <- stud$knowledge+1
+table(stud$knowledge)
+
+stud$knowledge <- 1
+stud$knowledge[stud$q4_2 == 1 & !is.na(stud$q4_2)] <- stud$knowledge+1
+table(stud$knowledge)
+
+stud$knowledge <- 1
+stud$knowledge[stud$q4_4 == 1 & !is.na(stud$q4_4)] <- stud$knowledge+1
+table(stud$knowledge)
+
+stud$ideologyscore <- rowMeans(subset(stud, select = c("q5_1","q5_2", "q5_3", "q5_4", "q5_5", "q5_6")), na.rm = TRUE)
+(mean(stud$q5_1, na.rm=TRUE) + mean(stud$q5_2, na.rm=TRUE) + mean(stud$q5_3, na.rm=TRUE) + mean(stud$q5_4, na.rm=TRUE) + mean(stud$q5_5, na.rm=TRUE) + mean(stud$q5_6, na.rm=TRUE))/ 6
+
+summary(stud$gender)
+summary(stud$age)
+summary(stud$knowledge)
+summary(stud$ideologyscore)
+summary(stud$q3_1)
+summary(stud$q6)
+summary(stud$exp)
+
+mean(stud$knowledge[stud$gender=="male"], na.rm=TRUE)
+
+mean(stud$knowledge[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$gender=="male"], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$q3_1[stud$gender=="male"], na.rm=TRUE)
+
+mean(stud$q3_1[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$q6[stud$gender=="male"], na.rm=TRUE)
+
+mean(stud$q6[stud$gender=="female"], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$knowledge>=2], na.rm=TRUE)
+
+mean(stud$ideologyscore[stud$knowledge<2], na.rm=TRUE)
+
+mean(stud$knowledge[stud$ideologyscore>=5], na.rm=TRUE)
+
+mean(stud$knowledge[stud$ideologyscore<5], na.rm=TRUE)
+
+mean(stud$q3_1[stud$knowledge>2], na.rm=TRUE)
+
+mean(stud$q3_1[stud$knowledge<=2], na.rm=TRUE)
+
+mean(stud$q6[stud$exp=="control"], na.rm=TRUE)
+
+mean(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+
+mean(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+
+sd(stud$q6[stud$exp=="control"], na.rm=TRUE)
+
+sd(stud$q6[stud$exp=="direct elections"], na.rm=TRUE)
+
+sd(stud$q6[stud$exp=="indirect elections"], na.rm=TRUE)
+
+mean(stud$q6[stud$q3_2>50], na.rm=TRUE)
+
+mean(stud$q6[stud$q3_2<=50], na.rm=TRUE)
+```
+Among 164 respondents there were 45 men and 118 women and one person's gender is not known.
+Average age of respondents is about 20 years old. The youngest respondent is 17 years old and the oldest one is 27 years old.
+Average score of political knowledge is 1.165; Minimal score of political knowledge is 1.000 and maximum is 2.000
+Average ideological score is 5.907, minimal score which means least right-leaning is 2.500 and maximum is 8.333 which is most right-leaning. There is no data about three respondents
+Average score of Respondent's attitude towards politicians in general is 29.4, the most negative attitude is 0.0 and and most positive is 100.0
+Concerning respondent's attitude towards institute of the president, average score of respondent's attitude towards institute of the president is 53.80, the most negative attitude is 0.00 and and most positive is 100.00. And there is no data about two respondents.
+There were 55 respondents in control group which means that 55 respondents did not receive any intervention and there were two experemental groups. 58 respondents from one experimental group supported that president should be elected directly by people and 51 respondents from the other experimental group supported that president should be elected by, for example, parliament.
+As data shows, female respondents have higher political knowledge which is 1.169492 and male respondents have lower political knowledge which is 1.155556. But I should point out that the difference between the scores of political knowledge of male and female respondents is not high.
+As for the difference in terms of ideological score between male and female respondents, female respondents turned out to be more right-leaning(5.983188) than male respondents (5.733333)
+Male respondents have more positive attitudes towards  politicians in general (33.26667) and female respondents have more negative attitudes (27.74576) towards politicians in general than male respondents. 
+Female respondents are more positively minded towards the institute of presidency (average score is (54.64655) than male respondents (average score is51.4)
+There is no data about the respondents who have higher political knowlege and their attitude towards politicians.  Average score of respondents with less political knowledge and their attitude towards politicians is 29.39634.As for the link between level of political knowledge and ideological score, respondents with higher political knowledge are less right leaning (average score 1.165414)  and respondents with lower political knowledge are more right-leaning 1.178571.
+As for the attitude towards presidency, control group has more positive attitude towards presidency (average score of attitude 55.01852) than the members of treatment group who support indirect elections (average score 46.64706) and less positive than the members of treatment group who support direct elections of president (average score of attitude 59.03509 ). Standard deviation in case of control group is 29.618, in case of treatment group supporting direct elections is 26.54307, in case of treatment group supporting indirect elections is 32.5778.
+Concerning correlation between how people think about Georgian President Margvelashvili and how they perceive presidency in general, respondents with more positive attitudes towards President Margvelashvili, are more positively minded when it comes to the institute of presidency (average score 65.80233) and respondents with less positive/negative attitudes towards President Margvelashvili, they are also less positively minded when it comes to the institute of presidency. So, there is a correlation.
+
+
+
+
+
+
+
+
+
+

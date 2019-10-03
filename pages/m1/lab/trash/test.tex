@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english, georgian]{babel}
+\usepackage{fontspec}
+\usepackage{geometry, graphicx}
+\usepackage[noae]{Sweave} % you must load Sweave with the `noae` option
+\setmainfont[
+Extension=.ttf,
+UprightFont={*},
+BoldFont = {arial_geo-bold},
+ItalicFont = {arial_geo-italic},
+BoldItalicFont = {arial_geo-bold-italic}
+]{arial_geo}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{<U+10DA><U+10D0><U+10D1><U+10DD><U+10E0><U+10D0><U+10E2><U+10DD><U+10E0><U+10E3><U+10DA><U+10D8> <U+10E1><U+10D0><U+10DB><U+10E3><U+10E8><U+10D0><U+10DD> 1: <U+10E8><U+10D4><U+10E1><U+10D0><U+10D5><U+10D0><U+10DA><U+10D8> R-<U+10D2><U+10D0><U+10E0><U+10D4><U+10DB><U+10DD><U+10E8><U+10D8>}
+\date{\today}
+
+\begin{document}
+\input{test-concordance}
+\maketitle
+
+
+
+
+\end{document}

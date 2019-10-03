@@ -1,0 +1,154 @@
+---
+title: "Final"
+output: html_notebook
+---
+```{r}
+setwd("D:/Labs/Meliksetyan_final")
+winlose<-read.csv("winlose.csv")
+library("ggplot2")
+library("stargazer")
+library("knitr")
+
+summary(subset(winlose, select =c("chalwin4","relcapbl","rlstake3","relres4","chalnuke","defnukes","chaldemc","defdemoc")))
+
+countOfConflicts <- table(winlose$year)
+
+countOfConflictsPerYear <- as.data.frame(countOfConflicts)
+names(countOfConflictsPerYear)[1] = 'year'
+names(countOfConflictsPerYear)[2] = 'countOfConflicts'
+
+library(ggplot2)
+
+ggplot(countOfConflictsperyear, aes(x=year, y=countOfConflicts, group=1))+
+geom_line(linetype=1, color="#339999", size=1)+
+geom_point(color="#ff6e00")+
+scale_x_discrete(breaks=c(1920, 1930,1935, 1940, 1950, 1960, 1970, 1980, 1990))+
+labs(title="Number of International Conflicts, 1918-1994",
+x="Year",
+y="Number of Conflicts")
+
+
+countOfChallengerPrevails <- table(winlose$chalwin4[winlose$chalwin4==1 | winlose$chalwin4==4])
+names(countOfChallengerPrevails)[1] = 'lose'
+names(countOfChallengerPrevails)[2] = 'win'
+countOfChallengerPrevails
+
+##The results show that Challenger lose 169 times and win 87 times.
+
+mean(winlose$chaldemc[winlose$chalwin4==1], na.rm = TRUE)#lose
+mean(winlose$chaldemc[winlose$chalwin4==2], na.rm = TRUE)#stalemate
+mean(winlose$chaldemc[winlose$chalwin4==3], na.rm = TRUE)#compromise
+mean(winlose$chaldemc[winlose$chalwin4==4], na.rm = TRUE)#win
+
+##The results show that in average democracy score we have growing patter. It starts from 6.4 to 9.2. Need to mention, that 9.2 is not so high in the scale of 1-21, the data can support first hypothesis- if democracies are challengers, they are most likely to prevail.
+
+mean(winlose$chaldemc, na.rm = TRUE)#Challenger's Democracy Score
+mean(winlose$defdemoc, na.rm = TRUE)#Defender's Democracy Score
+
+##Here we have 7,5 and 11,6. This numbers show that average score of Defenders democracy is almost two time high than challenger's.  But low average democracy score in both cases should indicate that Democracies do not tend to involve in conflicts.
+
+
+ggplot(winlose,aes(x=factor(chalnuke),y=chaldemc)) + 
+  geom_boxplot()+
+  labs(title="", x="Challenger Nuclear Capable ", y="Challenger's Democracy Score")
+
+t.test(chaldemc~chalnuke,winlose)
+
+winlose$relres4[winlose$relres4 < 0] <- NA
+#Transforming the variable relres4. Changeing negative values to NA
+chalWinlose <-winlose[winlose$chalwin4==1 | winlose$chalwin4==4,]
+#new dataframe which contains only won and lost conflicts by the challengers
+
+winlose$defWin4[winlose$chalwin4==1] <- 4
+winlose$defWin4[winlose$chalwin4==2] <- 2
+winlose$defWin4[winlose$chalwin4==3] <- 3
+winlose$defWin4[winlose$chalwin4==4] <- 1
+
+table(chalWinlose$chalwin4)
+
+ggplot(chalWinlose,aes(x=factor(chalwin4),y=chaldemc)) + 
+ geom_boxplot()
+
+#dividing countries by democracy score (>=15 as democratic, <15 as nondemocratic)
+demChal <- winlose[winlose$chaldemc >= 15,]
+nonDemChal <- winlose[winlose$chaldemc < 15,]
+
+demDef <- winlose[winlose$defdemoc >= 15,]
+nonDemDef <- winlose[winlose$defdemoc < 15,]
+
+table(demChal$chalwin4)
+table(nonDemChal$chalwin4)
+table(demDef$chalwin4)
+table(nonDemDef$chalwin4)
+
+##Democratic Challenger win/lose - 27/23 Non-democratic 59/146
+##Democratic Defender win/lose - 39/75 Non-democratic 47/93
+##It shows that democratic countries are more likely to win as challengers rather then as defenders.
+
+
+chalDefDemScore <- lm(chalwin4~chaldemc+defdemoc, chalWinlose)
+summary(chalDefDemScore)
+
+predict(chalDefDemScore)
+
+ggplot(winlose, aes(x=relcapbl, y=chaldemc))+
+geom_point(aes(colour=rlstake3))+
+geom_smooth(method="lm")+
+labs(title="",
+x="Relative Military Capabilities",
+y ="Challangers democracy score",color = "Relative interests at stake")
+
+
+ggplot(winlose, aes(x=relcapbl, y=defdemoc))+
+geom_point(aes(colour=rlstake3))+
+geom_smooth(method="lm")+
+labs(title="",
+x="Relative Military Capabilities",
+y ="Defenders democracy score",color = "Relative interests at stake")
+
+
+militaryCap <- lm(relcapbl~chaldemc+defdemoc+rlstake3, winLose)
+summary(militaryCap)
+
+
+ggplot(winlose, aes(x=chalwin4, y=relcapbl))+
+geom_point(aes(colour=chaldemc,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="",
+x="Challenger Win/Lose",
+y ="Challengrers Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+
+##The result shows that democracy score is lower in cases when challenger lost, it means challenger states are more likely to prevail when they are democratic.
+
+ggplot(winlose, aes(x=defWin4, y=relcapbl))+
+geom_point(aes(colour=defdemoc ,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="",
+x="Deffender Win/Lose",
+y ="Deffender's Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+
+##This case shows that the opposite is true in that cases when  countries defend themselves in conflicts.
+
+#Thus, the first hypothesis, that democratic defenders are less likely to prevail than other defenders, whereas democratic challengers are more likely to prevail than others is close to the truth.
+
+
+
+mean(demChal$rlstake3[demChal$chalwin4==4],na.rm = TRUE)#win
+mean(demChal$rlstake3[demChal$chalwin4==1],na.rm = TRUE)#lose
+
+
+mean(nonDemChal$rlstake3[nonDemChal$chalwin4==4],na.rm = TRUE)#win
+mean(nonDemChal$rlstake3[nonDemChal$chalwin4==1],na.rm = TRUE)#lose
+
+mean(demChal$relcapbl[demChal$chalwin4==4],na.rm = TRUE)#win
+mean(demChal$relcapbl[demChal$chalwin4==1],na.rm = TRUE)#lose
+
+
+mean(nonDemChal$relcapbl[nonDemChal$chalwin4==4],na.rm = TRUE)#win
+mean(nonDemChal$relcapbl[nonDemChal$chalwin4==1],na.rm = TRUE)#lose
+
+chalTmp <- lm(chalwin4~chaldemc+relcapbl+rlstake3, chalWinlose)
+summary(chalTmp)
+```
+
+

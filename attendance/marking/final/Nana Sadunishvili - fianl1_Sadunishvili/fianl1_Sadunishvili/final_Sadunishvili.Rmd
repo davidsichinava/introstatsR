@@ -1,0 +1,91 @@
+---
+title: "final R"
+output: html_notebook
+---
+
+```{r}
+setwd("C:/Users/MTG/Desktop/fianl R")
+winlose <- read.csv("winlose.csv")
+summary(winlose)
+dim(winlose)
+summary(winlose$chalwin4, relcapbl, rlstake3, relres4, chalnuke, defnukes, chaldemc, defdenic)
+
+wincount <- as.data.frame(table(winlose$year))
+names(wincount) <- c("year", "count")
+library(ggplot2)
+ggplot(wincount, aes(x=year, y=count, group=1))+
+  geom_line()+
+  scale_x_discrete(breaks=c(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990))+
+  labs(title="Number of International Conflicts, 1918-1994",
+       x="Year",
+       y="Number of Conflicts",
+       subtitle="International Conflicts in 1920-1990")
+### as we see on the line chart, from 1920 to approx. 1935, there was relative peace in the world compared to the rest period of the century
+
+ChallengerPrevails <- table(winlose$chalwin4[winlose$chalwin4==1 | winlose$chalwin4==4])
+names(ChallengerPrevails)[1] = 'lose'
+names(ChallengerPrevails)[2] = 'win'
+ChallengerPrevails
+### as we see, the challenger won 87 times and lost 169 times
+
+mean(winlose$chaldemc[winlose$chalwin4==1], na.rm = TRUE)#lose
+mean(winlose$chaldemc[winlose$chalwin4==2], na.rm = TRUE)#stalemate
+mean(winlose$chaldemc[winlose$chalwin4==3], na.rm = TRUE)#compromise
+mean(winlose$chaldemc[winlose$chalwin4==4], na.rm = TRUE)#win
+
+## after calculating means, we see that average score increases from lose to win. For example, when challenger lost, the average democracy score is approximately 6.4; when challenger stalemated average score is 7.1; when compromised 8.8 and when won - 9.2. So, despite the fact that 9.2 is relatively low if we consider that Challenger's Democracy Score is between 1-21, as we have an increasing pattern here, we can assume that these calculations support the first hypothesis that if democracies are challengers they are most likely to prevail in international crisis. 
+
+mean(winlose$chaldemc, na.rm = TRUE)#Challenger's Democracy Score
+mean(winlose$defdemoc, na.rm = TRUE)#Defender's Democracy Score
+## So, Defender's democracy score is quite high (11.7) compared to challenger's democracy score (7.6).This might support the democratic peace theory that democracies do not wage war with each other. But here we should consider that 11.7 is not quite high score for the defender in order to call it democratic that is why we cannot consider that this type of analysis whould be appropriate.
+library(ggplot2)
+ggplot(winlose,aes(x=factor(chalnuke),y=chaldemc)) + 
+  geom_boxplot()+
+  labs(title="", x="Challenger Nuclear Capable ", y="Challenger's Democracy Score(0-21)")
+##according to the plot, with regard to democracy score, challengers with nuclear capabilities (1 means country with nuclear capability) have higher democracy score than the challengers without nuclear weapon (0 means country without nuclear weapon). But there is a possibility that this happened by a random chance. In order to check if it is so, we should conduct a test statistic (t-test)
+
+t.test(chaldemc~chalnuke,winlose)
+#As we see, we have very low P-value (0.000008) here and at the same time the confidence interval is we can definitely be confident that there is a difference between these two groups
+
+#transforming the variable relres4 which contains negative values. Change negative values to NA
+winlose$relres4[winlose$relres4 < 0] <- NA
+
+chalDefDemScore <- lm(chalwin4~chaldemc+defdemoc, chalWinlose)
+summary(chalDefDemScore)
+##when we ran the regression model we saw that R-squared is 0.035. We have estimate for the intercept 1.69. Additionally, we have a positive index for challengers' and defenders' democracy score. Herewith, P value for challengers' democracy score is significant, but for defenders' democracy score is not. Also, p-value of intercept is low, so this important result gives us the reason to reject the null hypothesis. Briefly to say, we can argue that the first hypothesis is true. 
+
+militaryCap <- lm(relcapbl~chaldemc+defdemoc+rlstake3, winlose)
+summary(militaryCap)
+
+library(ggplot2)
+ggplot(winlose, aes(x=chalwin4, y=relcapbl))+
+geom_point(aes(colour=chaldemc,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="Challengers in conflicts and Democracy Score",
+x="Challenger Wins orLoses",
+y ="Challengers Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+##on the diagram we can see that when the challenger loses, democracy score is lower and when the challenger wins, the democracy score is higher. So, this chart once more proves that the first hypothesis is true - democratic challengers will more likely to prevail in conflict than the other challengers.
+
+
+#now let's see what happens when defender loses and wins, how looks like their democracy score?
+
+winlose$defWin4[winlose$chalwin4==1] <- 4
+winlose$defWin4[winlose$chalwin4==2] <- 2
+winlose$defWin4[winlose$chalwin4==3] <- 3
+winlose$defWin4[winlose$chalwin4==4] <- 1
+library(ggplot2)
+ggplot(winlose, aes(x=defWin4, y=relcapbl))+
+geom_point(aes(colour=defdemoc ,size=rlstake3))+
+#geom_smooth(method="lm")+
+labs(title="Defenders in conflict and Democracy Score",
+x="Defender Wins or Loses",
+y ="Defender's Military Capabilities",color = "Democracy Score",size= "Relative interests at stake")
+#according to the plot, the defender countries that lost in conflict, show higher democracy scores than those that won, therefore, the second hypothesis that democracies are rich with military capabilities, and therefore democratic countries are more likely to win either as challengers or as defenders is not true - Because of the fact that it matters if you are defender democracy or challenger democracy with regard to winning or losing in conflict. Also,when we ran the regression model regarding military capabilities of democracies, t-value is not far away from zero and is not large compared to standard error; p-value for the intercept is not small -  these findings do not allow us to reject the null hypothesis and we can conclude that there is not a relationship between having military capabilities by democracies and winning the conflict regardless being democratic challenger or defender, as 2nd hypothesis tells us.
+#Furthermore, this plot once more proves the first hypothesis that democratic defenders will be less likely to prevail in the international conflict than other defenders.
+
+
+
+
+
+```
+

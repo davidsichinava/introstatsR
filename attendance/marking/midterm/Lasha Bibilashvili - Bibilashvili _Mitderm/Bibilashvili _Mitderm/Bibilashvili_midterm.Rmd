@@ -1,0 +1,93 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+setwd("C:/Users/user/Desktop/Bibilashvili _Mitderm")
+data<-read.csv("data.csv")
+summary(data)
+
+data#create tree categories 
+data$agegroup[data$age<=18-35]<-1
+data$agegroup[data$age<=36-55]<-2
+data$agegroup[data$age<=56]<-3
+table(data$agegroup)
+install.packages("Hmisc")
+library(Hmisc)
+label(data$sex) <- "Variable label for sex" 
+describe(data)
+names(data)[1]<- "This is the label for male"
+names(data)[2]<- "This is the label for famale"
+
+
+label(data$exp) <- "Variable label for exp" 
+
+data$knowledge <- 0
+### !is.na tells R to ignore missing values during the calculation process
+data$knowledge[data$q28 == 2 & !is.na(data$q28)] <- data$knowledge+1
+data$knowledge[data$q29 == 2 & !is.na(data$q29)] <- data$knowledge+1
+data$knowledge[data$q30 == 2 & !is.na(data$q30)] <- data$knowledge+1
+data$knowledge[data$q31 == 2 & !is.na(data$q31)] <- data$knowledge+1
+table(data$knowledge)
+mean(data$knowledge)
+##political knowledgeable is 0
+
+#studyproxy measure 
+data$proxymeasure<-rowMeans(subset(data, select = c("q40_1","q40_2","q40_3","q40_4","q40_5")), na.rm = TRUE)
+(mean(data$q40_1, na.rm=TRUE) + mean(data$q40_2, na.rm=TRUE) + mean(data$q40_3, na.rm=TRUE) + mean(data$q40_4, na.rm=TRUE) + mean(data$q40_5, na.rm=TRUE) + mean(data$q40_5, na.rm=TRUE))
+#Respodent's economic condition is low, 3.66 from 10. We can say that low level of economic condition would influence participations in election. Low economic condition would induce large number of voters to cast a vote for prefarable candidates, because candidates promised them well being and economic stability. 
+```
+
+```{r}
+summary(data)
+summary(data$gender)
+summary(data$age)
+summary(data$knowledge)
+summary(data$proxymeasure)
+summary(data$q16_part)
+summary(data$aducationallevel)
+
+```
+
+```{r}
+mean(data$knowledge[data$sex=="male"], na.rm = TRUE)
+mean(data$knowledge[data$sex=="female"], na.rm = TRUE)
+
+mean(data$economic[data$sex=="male"], na.rm = TRUE)
+mean(data$economic[data$sex=="female"], na.rm = TRUE)
+
+mean(data$q32[data$sex=="male"], na.rm = TRUE)
+mean(data$q32[data$sex=="female"], na.rm = TRUE)
+
+mean(data$q16_part[data$sex=="male"], na.rm = TRUE)
+mean(data$q16_part[data$sex=="female"], na.rm = TRUE)
+
+
+mean(data$q32[data$knowledge==1], na.rm = TRUE)
+mean(data$q32[data$knowledge==2], na.rm = TRUE)
+mean(data$q32[data$knowledge==3], na.rm = TRUE)
+mean(data$q32[data$knowledge==4], na.rm = TRUE)
+mean(data$q32[data$knowledge==5], na.rm = TRUE)
+
+
+mean(data$economic[data$knowledge==1], na.rm = TRUE)
+mean(data$economic[data$knowledge==2], na.rm = TRUE)
+mean(data$economic[data$knowledge==3], na.rm = TRUE)
+mean(data$economic[data$knowledge==4], na.rm = TRUE)
+mean(data$economic[data$knowledge==5], na.rm = TRUE)
+#political knowladge and education have improtant conection, like economic conditions and political knowladge. in high economic conditons we have high political knowladge 
+
+
+
+```
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

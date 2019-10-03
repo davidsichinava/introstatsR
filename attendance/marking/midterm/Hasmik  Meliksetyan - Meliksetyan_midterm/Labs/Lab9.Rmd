@@ -1,0 +1,26 @@
+---
+title: "Lab8"
+
+---
+
+
+```{r}
+
+setwd("D:/Labs")
+face <-read.csv ("face.csv")
+## two-party vote share for Democrates and Republicans
+face$d.share <-face$d.votes/ (face$d.votes+face$r.votes)
+face$r.share <-face$r.votes/(face$d.votes+face$r.votes)
+face$diff.share <-face$d.share-face$r.share
+cor(face$d.comp, face$diff.share)
+library(ggplot2)
+ggplot(face, aes(x=d.comp, y=diff.share))+geom_point(aes(color=w.party))+labs(title="Facial competence and vote share",
+                                                                             x="Competence score",
+                                                                             y="Vote share difference")+ 
+                                                       scale_color_manual(name="Winning party", values=c("blue", "red"))
+fit <-lm(diff.share~d.comp, data=face) #fit the model
+fit
+
+```
+
+

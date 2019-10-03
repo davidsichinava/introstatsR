@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+setwd("D:/Labs")
+# install.packages("ggplot2")
+library(ggplot2)
+data(mtcars)
+p <- ggplot(mtcars)
+summary (p)
+p <- ggplot(mtcars, aes(x=mpg, y=wt))
+p + geom_point()
+p + geom_point(aes(colour=factor(cyl)))
+ggplot(diamonds, aes(x=carat, y=price, color=cut)) + geom_point()
+ggplot(diamonds, aes(x=carat, y=price))+ geom_point(aes(color=cut)) +geom_smooth()
+ggplot(diamonds, aes(x=carat, y=price))+ geom_point(aes(shape=cut)) +geom_smooth()
+
+gg <- ggplot(diamonds, aes(x=carat, y=price, color=cut))+geom_point()
++labs(title="Scatterplot", x="Carat", y="Price")
+
+print(gg)
+```
+
+

@@ -1,0 +1,149 @@
+---
+title: "Midterm-R.Asatiani"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+```{r}
+setwd("E:\\R-LAB-Rusa\\Midterm")
+
+midt <- read.csv("midt.csv")
+
+dim(midt)
+The data includes 14 variables and 1906 observations for each of them. 
+
+summary(midt)
+
+names(midt)
+
+Creation of new variable with 3 categories
+
+midt$agegroup <- NA
+
+midt$agegroup[midt$age=="18<=midt$age<=35"] <- "18-35"
+midt$agegroup[midt$age=="36<=midt$age<=55"] <- "36-55"
+midt$agegroup[midt$age=="56<="]<-"56 or older"
+
+Labeling the variable sex
+
+midt$sex[midt$sex==1] <- "Male"
+midt$sex[midt$sex==2] <- "Female"
+
+Labeling the variable experimental groups
+
+midt$exp[midt$exp==1]<-"control"
+midt$exp[midt$exp==2]<-"high taxes and government investments"
+midt$exp[midt$exp==3]<-"low taxes and private investments"
+midt$exp[midt$exp==4]<-"low taxes and government investments"
+
+Political knowledge score, calculated by summing up the right unswers of q28, q29, q30, q31 questions
+midt$knowledge <- midt$q28+midt$q29+midt$q31+midt$q31
+
+Adding the variable of well-being, calculated by summing up the right answres of q40_1, q40_2, q40_3, q40_4 and q40_5 questions
+
+midt$well<-midt$q40_1+midt$q40_2+midt$q40_3+midt$q40_4+midt$q40_5
+
+Descriptive statistics for questions:
+sex
+summary(midt$sex)
+
+age
+summary(midt$age)
+The average age of respondents is 48 years 2 months and 20 days. Median datum is quite the same 48. The youngest respondents are at the age of 18 and the oldest is 101. 
+
+Political knowledge
+summary(midt$knowledge)
+As the Political knowledge summarizes the number right answres, the minimum is 0 and maximum is 4 for answering each question correctly. For our data, average political knowledge and median of it, are quite similatr, 1.99 and 2 respectively. This indicates, that each respondent, on average, answered 2 questions correctly out of 4.
+
+well-being
+summary(midt$well)
+In case of well-being of respondents, mean and median is quite close here as well, equalled to 2.961 and 3 respectively. We can say that on average, level of well-being of respondents was higher than the average level of economic conditions (2.5 out of 5)
+
+education level
+summary(midt$q32)
+To generalize, education level was quite high equalled to more than 5 point on average. 
+
+likelihood of voting
+summary(midt$q16_part)
+According to summary, we can say that Givi is more inclined to go due to median and mean indexes. 
+
+
+To get know the difference in terms of different variables in men and women, we should calculate the percentage distribution of them. 
+
+table(midt$sex)/length(midt$sex)
+
+Female amount to about 66% of all the respondents and the rest, about 34% are male. 
+
+Average level of political knowledge in men and women. KnowMean
+KnowMean <- table(Female=mean(midt$knowledge[midt$sex=="Female"],Male=mean(midt$knowledge[midt$sex=="Male"]))
+
+Average level of well-being in men and women. WellMean
+Wellmean <- table(Female=mean(midt$well[midt$sex=="Female"]),Male=mean(midt$well[midt$sex=="Male"]))
+
+Average level of education in men and women. EduMean
+Edumean<-table(Female=mean(midt$q32[midt$sex=="Female"]),Male=mean(midt$q32[midt$sex=="Male"]))
+
+To examine the correlation between respondent`s political knowledge and his/her level of education, first we need to calculate the political knowledge by level of education.
+
+EduMeank0<-mean(midt$knowledge[midt$q32==0])
+EduMeank1<-mean(midt$knowledge[midt$q32==1])
+EduMeank2<-mean(midt$knowledge[midt$q32==2])
+EduMeank3<-mean(midt$knowledge[midt$q32==3])
+EduMeank4<-mean(midt$knowledge[midt$q32==4])
+EduMeank5<-mean(midt$knowledge[midt$q32==5])
+EduMeank6<-mean(midt$knowledge[midt$q32==6])
+EduMeank7<-mean(midt$knowledge[midt$q32==7])
+
+According to these calculations We can assume, that mean of political knowledge grows the higher the education level is. 
+
+cor(midt$knowledge,midt$q32)
+
+correlation between those two variables equals to 0.299, which means that the correlation is not high. 
+ 
+Now, we should repeat the same for Political knowledge and level of well-being.
+
+WellMeank0<-mean(midt$knowledge[midt$well==0])
+WellMeank1<-mean(midt$knowledge[midt$well==1])
+WellMeank2<-mean(midt$knowledge[midt$well==2])
+WellMeank3<-mean(midt$knowledge[midt$well==3])
+WellMeank4<-mean(midt$knowledge[midt$well==4])
+WellMeank5<-mean(midt$knowledge[midt$well==5])
+
+At the first sight, calculations indicate the same as for above variables - the mean of political knowledge grows the higher the well-being is.
+
+cor(midt$knowledge,midt$well)
+
+Calculation shows that correlation between is 0.2.
+
+Now let1s change missing values of variable q16_part with 0s and find means for each group
+midt$q16_part[is.na(midt$q16_part)] <- 0
+
+mean1<-mean(midt$q16_part[midt$exp=="control"])
+mean2<-mean(midt$q16_part[midt$exp=="high taxes and government investments"])
+mean3<-mean(midt$q16_part[midt$exp=="low taxes and private investments"])
+mean4<-mean(midt$q16_part[midt$exp=="low taxes and government investments"])
+
+The results show that average likelyhood of voting in elections,is quite the same for control group and group 4 (but still higher for the latter). In group 3 case, the level exceeds the others and relatively less likelyhood is in case of group 2. We can assume, that the unrealistic and inconsistent promises for election campaign only slightly affects the likelihood of voting in comparison with control grouping.
+
+mean1 3.723
+mean2 3.477
+mean3 3.857
+mean4 3.745
+
+Further we should calculate Standard Deviation, which strengthens the above statement. 
+
+sd1<-sd(midt$q16_part[midt$exp=="control"])
+sd2<-sd(midt$q16_part[midt$exp=="high taxes and government investments"])
+sd3<-sd(midt$q16_part[midt$exp=="low taxes and private investments"])
+sd4<-sd(midt$q16_part[midt$exp=="low taxes and government investments"])
+
+sd1 1.628
+sd2 1.6535
+sd3 1.594
+sd4 1.629
+
+
+
+
+```
+

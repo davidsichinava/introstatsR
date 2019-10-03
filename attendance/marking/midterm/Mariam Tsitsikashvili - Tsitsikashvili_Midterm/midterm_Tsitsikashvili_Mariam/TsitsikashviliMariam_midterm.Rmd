@@ -1,0 +1,128 @@
+---
+title: "Midterm"
+author: "Mariam Tsitsikashvili"
+date: "13 ???????????????????????????, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+setwd("E:\\lab\\midterm_Tsitsikashvili_Mariam")
+
+midt <- read.csv("midt.csv")
+
+midt$agegroup <- midt$age
+
+midt$agegroup[midt$age >18 & midt$age <=35] <- 1
+midt$agegroup[midt$age >36 & midt$age <=55] <- 2
+midt$agegroup[midt$age > 56] <- 3
+
+midt$agegroup <- factor(midt$age,
+                        levels = c(1,2,3),
+                        labels = c("young", "middle-aged", "old"))
+
+midt$sex <- factor(midt$sex,
+                   levels = c(1,2),
+                   labels = c("male", "female"))
+
+midt$exp <- factor(midt$exp,
+                   levels = c(1,2,3,4),
+                   labels = c("control", "hightax&govInv", "lowtax&privInv", "lowtax&govInv"))
+
+
+
+midt$knowledge <- 0
+
+midt$knowledge[midt$q28==1 & !is.na(midt$q28)] <- midt$knowledge+1
+
+midt$knowledge[midt$q29==1 & !is.na(midt$q29)] <- midt$knowledge+1
+
+midt$knowledge[midt$q30==1 & !is.na(midt$q30)]<- midt$knowledge+1
+
+midt$knowledge[midt$q31==1 & !is.na(midt$q31)] <- midt$knowledge+1
+
+
+
+
+
+
+## economic conditions
+
+midt$economic <-0
+
+midt$economic[midt$q40_1==1 & !is.na(midt$q40_1)] <- midt$economic+1
+
+midt$economic[midt$q40_2==1 & !is.na(midt$q40_2)] <- midt$economic+1
+
+midt$economic[midt$q40_3==1 & !is.na(midt$q40_3)] <- midt$economic+1
+
+midt$economic[midt$q40_4==1 & !is.na(midt$q40_4)] <- midt$economic+1
+
+midt$economic[midt$q40_5==1 & !is.na(midt$q40_5)] <- midt$economic+1
+
+summary(midt$knowledge)
+summary(midt$economic)
+summary(midt$age)
+summary(midt$sex)
+summary(midt$exp)
+summary(midt$q16_part)
+summary(midt$q32)
+
+```
+Interpretation:Among the respondents there were 646 male and 1260 female. Average age of the respondents was 48.22, however, the youngest respondents were aged 18 and the oldest repsondent was 101 years old. average political knowledge score for the respondents amounted 1.974, which is not that bad, in my opinion. economic conditions score of the respondents varied from 0-5. average score of the respondents in terms of economic conditions is 2.739. education level of the respondents was coded on a five-point scale, where 1 means lowest level and 5 the highest. the average educational level of the respondents amounted 5.133, which says that their evarage attained knowledge was quite high. another variable which stands for the respondents assessment whether a guy like Givi would vote in elections. 1 means that Givi would absolutely not vote in elections, whilst 5 denotes that Givi by all means would get out and vote. mean for this variable is 3.722.in terms of experimental groups, 477 were in control group, so they have not received any treatment. 476 were told that party would promise high taxes and government investment, 470 got treatment that the party would promise low taxes and private investment and fouth group was told that the political party promised discrease in taxes and governments investment.
+
+```{r}
+mean(midt$knowledge[midt$sex=="male"], na.rm = TRUE)
+mean(midt$knowledge[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$economic[midt$sex=="male"], na.rm = TRUE)
+mean(midt$economic[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$q32[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q32[midt$sex=="female"], na.rm = TRUE)
+
+mean(midt$q16_part[midt$sex=="male"], na.rm = TRUE)
+mean(midt$q16_part[midt$sex=="female"], na.rm = TRUE)
+```
+
+Interpretation: difference between man and women in terms of political knowledge, I think is quite obvious, as mean score for political knowledge of women is 1.81, while man has higher average score of political knowledge, which amounts 2.82. So, roughly speaking women have less politica knowledge than men.
+
+there is  slight differentce between man and women in terms of economic conditions, household's economic score in case of women is 2.7, while in case of men mean is 2.8. So, there have more or less similar economic conditions. 
+
+in terms of education, women have higher average score=5.2, while men's mean=5. So, roughly speaking women's educational level is a bit higher than men's. 
+
+in case of their assessment whether Givi would go to elections or not, male as well as female respondents had almost similar average scores.
+
+```{r}
+mean(midt$q32[midt$knowledge==1], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==2], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==3], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==4], na.rm = TRUE)
+mean(midt$q32[midt$knowledge==5], na.rm = TRUE)
+
+
+mean(midt$economic[midt$knowledge==1], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==2], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==3], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==4], na.rm = TRUE)
+mean(midt$economic[midt$knowledge==5], na.rm = TRUE)
+```
+
+INTERPRETATION:there is a correlation between the political knowledge and the education level of the respondents. So,  average education level when respondent had lowest political knowledge was the lowest, as we increased the knowledge score, the mean for education score was increasing. So, yes, there is a correlation between education level and political knowledge. 
+
+in case of economic conditions and its correlation with the political knowledge, respondent with higher economic conditions had higher political knowledge. Even though the correlation in this case was not that straightforward as in the case of education level, still, when political knowledge >=3 the mean for economic conditions was higher. 
+
+```{r}
+mean(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="hightax&govInv"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="lowtax&privInv"], na.rm = TRUE)
+mean(midt$q16_part[midt$exp=="lowtax&govInv"], na.rm = TRUE)
+
+sd(midt$q16_part[midt$exp=="control"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="hightax&govInv"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="lowtax&privInv"], na.rm = TRUE)
+sd(midt$q16_part[midt$exp=="lowtax&govInv"], na.rm = TRUE)
+```
+
+Interpretation: the unrealistic promise was that party would dicrease taxes and at the same time they would increase government spending, which is unrealistic as they would not have smaller amount of money in budget in case of lowering taxes. Even in this unrealistic promise, average score of respondents that assessed Givi's likelihood of voting was 3.8 which is almost the same as was the score for the control group, that did not get any treatment.Even worse, when unrealistic treatment was given to respondents the mean score for the assessement of the likelihood of Givi's voting was higher that of the respndents who fot realistic treatment and were told that party would increase taxes and the government would invest more. therefore, it means that to some extent, bluntly speaking, people get fooled by unrealistic promises.  

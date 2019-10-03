@@ -1,0 +1,87 @@
+---
+title: "antadze_final.rmd"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+setwd("D:\\intro_stats_r4\\labs\\final")
+
+
+trade <- read.csv("tradflo.csv")
+
+summary(trade)
+dim(trade)
+
+summary(trade$YEAR)
+
+trade1 <- aggregate(trade$XIJL, by=list(Year=trade$YEAR), FUN=sum, na.rm=TRUE)
+
+install.packages(gglot2)
+
+library(ggplot2)
+ggplot(trade1, aes(x=Year,
+                   y=x, group=1)) +
+  geom_line()+
+  labs(title="Volume of exports, 1907-1990",
+       x="Year",
+       y="Volume of trade",
+       subtitle="world trade estimates")
+
+
+##the diagram shows the two periods of decline in international trade - first, late 1910s and first half of 1920s,the second, 1930s and 1940s. The first period is from the WWI till 1925, which was caused by the military confrontation. The second period starts from the Great Depression and lasts by the end of WWII.
+
+
+## recoding the variables MID, ALLIAL, DEMDL, BIAL, MULTIAL
+
+
+trade$MIDL[trade$MIDL!=0] <- 1
+trade$ALLIAL[trade$ALLIAL!=0] <- 1
+trade$DEMDL[trade$DEMDL!=0] <- 1
+trade$BIALL[trade$BIALL!=0] <- 1 
+trade$MULTIALL[trade$MULTIALL!=0] <-1 
+
+
+## next step is evalution of average value of export during that time. I will measure it through calculation of mean estimator of XIJL
+
+mean(trade$XIJL, na.rm = TRUE)
+
+##mean volume of export from 5.266335 from 1907 till 1990. 
+
+
+
+
+##Connection between military disputes and export value
+mean(trade$XIJL[trade$MIDL==1], na.rm = TRUE) 
+mean(trade$XIJL[trade$MIDL==0],na.rm = TRUE) 
+
+
+##AS the mean estimator showed states with military disputes have a lower trade value, than states which are not have military issues (in case of disputes volume is 3.85; and in case of abscence it equals to 5.32. This approves the first hypothesis that military disputes, abscence of common interests, have a negative impact on the bilateral trade 
+
+
+##trade flow among the democratic countries 
+
+mean(trade$XIJL[trade$DEMDL==0], na.rm = TRUE)
+mean(trade$XIJL[trade$DEMDL==1], na.rm = TRUE)
+
+## The statistics showed the average value of trade among the democratic countries is 6.21, while among the non-democratic countries it is 4.19 |6.21-4.19=2.02|. The difference of 2.02 is substantial to agree to the second hypothesis that democratic governnce facilitate and increase the trade among countries, than other form of governance. As authors of articles assumed, established efficient and just institutions are factors that attract trade actors and create the stability among parties
+
+
+
+trade2 <- lm(XIJL~MIDL+TAUL+DEMDL+MULTIALL+GNPIL+POPIL+CGNPJL+POPJL+DISTANCL, data = trade)
+summary(trade2)
+
+##According to linear regression, trade flow among the countries are influenced by military disputes, existance of common interests and democratic form of governance. They equally got three stars which means that there is strong correlation between the dependent and independent variables. At the same time, R-squared is 0.6 which points out that model explains the dependency pretty much.
+
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

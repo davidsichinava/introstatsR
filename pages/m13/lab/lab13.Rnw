@@ -1,0 +1,138 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 13: Civil Wars and International Trade}
+\author{David Sichinava, Rati Shubladze}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab13.rmd$. For example,
+
+<<ch1a, eval=FALSE>>=
+sichinava_lab12.Rmd
+@
+
+\section*{Background:}
+\paragraph{}
+
+In this exercise, we will replicate the paper by Re\c{s}at Bayer and Matthew Rupert who explored the effects of civil wars on international trade. The paper has been published in 2004 and specifically, argued that 'traders are worried not only about instability in the relations between the two capitals but also about instability within one trading partner'. Indeed, this is an interesting finding considering the importance of the topic.
+
+Specifically, in this assignment, we will evaluate three hypotheses suggested by Bayer \& Rupert:
+
+\begin{itemize}
+\item{Civil wars lead to decreases in total bilateral trade}
+\item{One country’s participation in another country’s civil war decreases the bilateral trade between the joiner and each trading partner.}
+\end{itemize}
+
+You can reach the paper on this \href{https://www.dropbox.com/s/xsoyht80qkt0jmo/bayer2004.pdf?dl=0}{link}. The dataset can be downloaded from this link: https://goo.gl/AofSPW
+
+\section*{Data Exploration:}
+
+First, explore your data. In the table below, we give a short description of variables used by the authors.
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{ll}
+VARIABLE    & DESCRIPTION                                                                      \\
+dtrade       & Total Logged Dyadic Trade                                               \\
+Ldist       & Natural Log of Geographic Distance                                               \\
+Ldytr       & Natural Log of Barbarie Dyadic Trade                                             \\
+Lgdp1P      & GDP: Log, Country 1                                                              \\
+Lgdp2P      & GDP: Log, Country 2                                                              \\
+Lpop1P      & POP: Log, Country 1                                                              \\
+Lpop2P      & POP: Log, Country 2                                                              \\
+mid         & Militarized interstate dispute (at any level) present in dyad based on COW codin \\
+alliance    & Alliance (defensive, entente, or non-aggression ) present in dyad based on COW c \\
+equwartau   & Expectation of war is 1 based on IIG game (based on Tau-b) in dyad based on COW  \\
+demmultdyad & Side 1's Polity score * Side 2' Polity score                                     \\
+civilwar    & Civil War present in dyad based on COW codings                                   \\
+cw\_join    & Civil War Intervener present in dyad based on COW codings                        \\
+outnegshort & Negotiated settlement in a civil war that terminated in last 5 years present in  \\
+outdecshort & Decisive outcome in a civil war that terminated in last 5 years present in dyad 
+\end{tabular}
+\end{table}
+
+Here, our variable of interest is $dtrade$ which characterizes the amount of trade between two participating partners. Using $ggplot$ package, make a histogram of the variable and describe in your words what it looks like. The very basic syntax for the histogram is given in the code below. Customize the chart and add labels, title, and custom colors.
+
+<<ch1, eval=FALSE>>=
+ggplot(bayrup, aes(x=dtrade))+
+  geom_histogram()
+@
+
+Summarize each variable by calculating summary statistics.
+
+\section*{Hypothesis testing}
+
+Now let's proceed to the hypothesis testing. In order to do so, you have to run simple linear regression, with dependent variable being $dtrade$ and all other variables given in the table - independent variables. Run a multiple linear regression and examine the results.
+
+When describing the results of the regression model look carefully on both confidence intervals and p-values. They will guide you about the statistically significant impacts of independent variables on the dependent variable.
+
+Let's first examine our first hypothesis. What do our results say about the impact of civil wars on international bilateral trade? Take into consideration that the variable $civilwar$ equals 1 if there was a civil war. Give a substantial explanation of the effect.
+
+Now let's look at the second assumption. Here the independent variable measuring the intervention is $cw\_join$. How does the participation in another country's civil war affect the bilateral trade? Give a substantial explanation of the effect.
+
+Again examine the results of your regression. Which variable does not have a statistically significant effect? Overall, what do the results say about hypotheses outlined by Bayer and Rupert?
+
+Finally, export the results of your analysis to a nicely formatted table. In order to do so, you will need a dedicated libraries $stargazer$ and $knitr$ which will do the formatting for you. Install $stargazer$ library ($knitr$ comes with RStudio), load both libraries to your markdown document and type the following:
+
+
+<<ch2, eval=FALSE>>=
+
+### This basically will construct the table with title, based on your regression model. 
+modelprint <- stargazer(model,
+                        title="My Regresison Model",
+                        type = "html",
+                        align=TRUE
+                        )
+						
+#### This will print the table itself:
+kable(modelprint)
+
+@
+
+In case you were wondering, you can freely copy and paste the table to any word processing document.
+
+
+Bonus assignment: Bayer and Rupert also suggested other hypotheses. Read the paper, choose two hypotheses and examine, how does the analysis look for each of these hypotheses. Give a substantial explanation to your results.
+
+
+\subsection*{Where is the Dropbox link?}
+
+Zip the whole folder for the seventh lab. Name the file according to the following format: $surname\_lab13.zip$. Upload the file to \href{https://www.dropbox.com/request/RmKfWCvWKZJHDXdnYFwK}{this link} or here: https://goo.gl/51Gspb before SUNDAY MORNING. We have to mark your assignment on Sunday and submit scores to Pikria.
+
+
+\end{document}

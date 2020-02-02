@@ -1,0 +1,444 @@
+-------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  D:\Dropbox\My projects\Courses\QT_Analysis\website\pages\m12\lab\data\GRT_IO2007\GRT
+> _IO_2007.log
+  log type:  text
+ opened on:  27 Dec 2017, 17:48:18
+
+. 
+. 
+. **************************************
+. * DESCRIBE AND SUMMARIZE RAW DATASET *
+. **************************************
+. 
+. des
+
+Contains data from GRT_IO_2007.dta
+  obs:       381,656                          
+ vars:            25                          15 Jul 2007 18:22
+ size:    45,417,064                          
+-------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------------------------
+name_1          str33   %33s                  NAME_1
+name_2          str33   %33s                  NAME_2
+tomz_1          int     %10.0g                Code for country 1
+tomz_2          int     %10.0g                Code for country 2
+directed_dyad~d float   %9.0g                 FE: one for each directed dyad
+year            int     %10.0g                YEAR
+imports         float   %9.0g                 Imports: log of 1967 US$
+gatt_1          str7    %9s                   GATT: Status of country 1
+gatt_2          str7    %9s                   GATT: Status of country 2
+gatt35_1        byte    %10.0g                GATT35_1
+gatt35_2        byte    %10.0g                GATT35_2
+colorbit        byte    %8.0g                 COL: In same colonial orbit
+currencyunion   byte    %10.0g                Strict currency union (Rose)
+gsp             byte    %8.0g                 GSP: Exists in dyad
+ptarecip        byte    %8.0g                 Reciprocal PTA
+ptanonrecip     byte    %8.0g                 Non-reciprocal PTA
+distance        float   %9.0g                 GEO: Log of distance (km)
+share_border    byte    %10.0g                GEO: Countries share land border
+landlocked      byte    %8.0g                 GEO: # of landlocked countries
+island          byte    %8.0g                 GEO: Number of islands
+land_area       float   %9.0g                 GEO: Log Product land area
+share_language  byte    %10.0g                CULT: Main language in common
+gdp             float   %9.0g                 ECON: GDP Log product ('67 USD)
+industrial_both byte    %8.0g                 ECON: Both industrial
+industrial_none byte    %8.0g                 ECON: None industrial
+-------------------------------------------------------------------------------------------------
+Sorted by: name_1  name_2  year
+
+. su
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      name_1 |          0
+      name_2 |          0
+      tomz_1 |    381,656     526.176    86.13674        383        811
+      tomz_2 |    381,656    525.7769    87.97122        383        811
+directed_d~d |    381,656    526701.8    86145.62     383390     811760
+-------------+---------------------------------------------------------
+        year |    381,656    1980.795    15.55952       1946       2004
+     imports |    381,656    15.17295    2.287846   11.51302   24.55006
+      gatt_1 |          0
+      gatt_2 |          0
+    gatt35_1 |    381,656    .0032045    .0565172          0          1
+-------------+---------------------------------------------------------
+    gatt35_2 |    381,656    .0030918    .0555179          0          1
+    colorbit |    381,656    .0042525    .0650726          0          1
+currencyun~n |    381,656    .0114658    .1064631          0          1
+         gsp |    381,656    .3087126    .4619628          0          1
+    ptarecip |    381,656    .1192383    .3240691          0          1
+-------------+---------------------------------------------------------
+ ptanonrecip |    381,656    .0627738     .242556          0          1
+    distance |    381,656    8.544438    .8510218   4.772036   9.895504
+share_border |    381,656    .0462982    .2101305          0          1
+  landlocked |    381,656    .2542316    .4740178          0          2
+      island |    381,656    .1829213    .4096308          0          2
+-------------+---------------------------------------------------------
+   land_area |    381,656    25.11978    2.651946   13.47495    32.9672
+share_lang~e |    381,656    .1270725    .3330547          0          1
+         gdp |    381,656    45.84444    2.460036   35.82043   55.88262
+industrial~h |    381,656    .0759087    .2648523          0          1
+industrial~e |    381,656     .413257    .4924188          0          1
+
+. 
+. *****************************************************
+. * CREATE DUMMY VARIABLES FOR GATT/WTO PARTICIPATION *
+. *****************************************************
+. 
+. * Gatt: Formal membership
+. gen byte gattF_1 = cond(gatt_1=="wto"|gatt_1=="art33"|gatt_1=="orig"|gatt_1=="art26:5", 1, 0)  
+> /* GATT: Country 1 is formal member */
+
+. gen byte gattF_2 = cond(gatt_2=="wto"|gatt_2=="art33"|gatt_2=="orig"|gatt_2=="art26:5", 1, 0)  
+> /* GATT: Country 2 is formal member */
+
+. 
+. * Gatt: Nonmember participant
+. gen byte gattN_1 = cond(gatt_1=="col"|gatt_1=="df"|gatt_1=="prov", 1, 0) /* GATT: Country 1 is 
+> a NMP */
+
+. gen byte gattN_2 = cond(gatt_2=="col"|gatt_2=="df"|gatt_2=="prov", 1, 0) /* GATT: Country 2 is 
+> a NMP */
+
+. 
+. * Gatt: Participation (EITHER formal OR defacto)
+. gen byte gattP_1 = cond(gatt_1=="out", 0, 1) /* GATT: Country 1 participates */
+
+. gen byte gattP_2 = cond(gatt_2=="out", 0 ,1) /* GATT: Country 2 participates */
+
+. 
+. * Gatt: Interactions
+. gen byte gattPP = cond(gattP_1==1 & gattP_2==1, 1, 0)
+
+. label var gattPP "GATT: Both Participate"
+
+. gen byte gattPO = cond((gattP_1==1 & gattP_2==0)|(gattP_1==0 & gattP_2==1), 1, 0)
+
+. label var gattPO "GATT: Only one participates"
+
+. gen byte gattFF = cond(gattF_1==1 & gattF_2==1,1,0)
+
+. label var gattFF "GATT: Both are formal members"
+
+. gen byte gattFN = cond((gattF_1==1 & gattN_2==1)|(gattN_1==1 & gattF_2==1),1,0)
+
+. label var gattFN "GATT: One formal, one NMP"
+
+. gen byte gattFO = cond((gattF_1==1 & gattP_2==0)|(gattP_1==0 & gattF_2==1),1,0)
+
+. label var gattFO "GATT: One formal, other is out"
+
+. gen byte gattNN = cond(gattN_1==1 & gattN_2==1,1,0)
+
+. label var gattNN "GATT: Both nonmbr participants"
+
+. gen byte gattNO = cond((gattN_1==1 & gattP_2==0)|(gattP_1==0 & gattN_2==1),1,0)
+
+. label var gattNO "GATT: One NMP, other is out"
+
+. drop gattF_1 gattF_2 gattN_1 gattN_2 gattP_1 gattP_2 
+
+. 
+. gen byte round1 = cond(year < 1949, 1, 0)                 /* GATT pre Annecy round */
+
+. gen byte round2 = cond(year >= 1949 & year < 1951, 1, 0)  /* Annecy to Torquay round */
+
+. gen byte round3 = cond(year >= 1951 & year < 1956, 1, 0)  /* Torquay to Geneva */
+
+. gen byte round4 = cond(year >= 1956 & year < 1961, 1, 0)  /* Geneva to Dillon */
+
+. gen byte round5 = cond(year >= 1961 & year < 1967, 1, 0)  /* Dillon to Kennedy */
+
+. gen byte round6 = cond(year >= 1967 & year < 1979, 1, 0)  /* Kennedy to Tokyo */
+
+. gen byte round7 = cond(year >= 1979 & year < 1994, 1, 0)  /* Tokyo to Uruguay */
+
+. gen byte round8 = cond(year >= 1994, 1, 0)                /* After Uruguay round */
+
+. forvalues i = 1/8 {                                  /* create variables for each of 8 rounds *
+> / 
+  2.    gen byte gattPP_round`i' = gattPP * round`i'
+  3.    label var gattPP_round`i' "GATT: Both Participate, Round `i'"              
+  4.    gen byte gattPO_round`i' = gattPO * round`i'
+  5.    label var gattPO_round`i' "GATT: One Participates, Round `i'"             
+  6.    local gattPPbyround `gattPPbyround' gattPP_round`i'
+  7.    local gattPObyround `gattPObyround' gattPO_round`i'
+  8. }
+
+. drop round1-round8
+
+. 
+. * Article 35 invoked by one or both countries?
+. gen byte gatt35x1 = cond((gatt35_1==1 & gatt35_2==0)|(gatt35_1==0 & gatt35_2==1),1,0) /* only o
+> ne invokes */
+
+. label var gatt35x1 "GATT: One invokes Art 35"
+
+. gen byte gatt35x2 = cond(gatt35_1==1 & gatt35_2==1,1,0)  /* both invoke */
+
+. label var gatt35x2 "GATT: Both invoke Art 35"
+
+. 
+. ****************************
+. * GENERATE OTHER VARIABLES *
+. ****************************
+. 
+. quietly tab year, gen(yeardummy)
+
+. gen byte ptarecip_nohigher = cond(ptarecip == 1 & colorbit==0, 1, 0)
+
+. gen byte ptarecip_withhigher = cond(ptarecip == 1 & colorbit==1, 1, 0)
+
+. gen byte gattPP_nocolrecip = cond(gattPP == 1 & colorbit==0 & ptarecip==0, 1, 0)
+
+. gen byte gattPP_withcolrecip = cond(gattPP == 1 & (colorbit==1 | ptarecip==1),1,0)
+
+. gen byte gattPO_nocolrecip = cond(gattPO == 1 & colorbit==0 & ptarecip==0, 1, 0)
+
+. gen byte gattPO_withcolrecip = cond(gattPO == 1 & (colorbit==1 | ptarecip==1),1,0)
+
+. gen byte nonrecip_nohigher = cond((gsp==1 | ptanonrecip==1) & colorbit == 0 & ptarecip==0 & gat
+> tPP==0 & gattPO==0,1,0)
+
+. gen byte nonrecip_withhigher = cond((gsp==1 | ptanonrecip==1) & (colorbit==1 | ptarecip==1 | ga
+> ttPP==1 | gattPO==1),1,0)
+
+. 
+. ************************************************************
+. * TABLE 1: THE APPARENT IRRELEVANCE OF GATT/WTO MEMBERSHIP *
+. ************************************************************
+. 
+. di in white _n(2) "Formal membership only: full gravity model with time effects"
+
+
+Formal membership only: full gravity model with time effects
+
+. areg imports gattFF gattFO ptarecip ptanonrecip gsp currencyunion colorbit gdp distance share_l
+> anguage share_border landlocked island land_area, absorb(year) cluster(directed_dyad_id) robust
+
+Linear regression, absorbing indicators         Number of obs     =    381,656
+                                                F(  14,  17358)   =    2455.43
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.6130
+                                                Adj R-squared     =     0.6129
+                                                Root MSE          =     1.4234
+
+                    (Std. Err. adjusted for 17,359 clusters in directed_dyad_id)
+--------------------------------------------------------------------------------
+               |               Robust
+       imports |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+        gattFF |  -.0700806   .0257039    -2.73   0.006    -.1204628   -.0196984
+        gattFO |   -.211151   .0250057    -8.44   0.000    -.2601647   -.1621373
+      ptarecip |   .3344102   .0266018    12.57   0.000      .282268    .3865525
+   ptanonrecip |   .1393633   .0349939     3.98   0.000     .0707717     .207955
+           gsp |  -.0970094   .0216108    -4.49   0.000    -.1393686   -.0546501
+ currencyunion |   1.009628    .075064    13.45   0.000      .862495    1.156761
+      colorbit |    1.75482   .1039452    16.88   0.000     1.551077    1.958563
+           gdp |   .7711781   .0051803   148.87   0.000     .7610242    .7813321
+      distance |  -.7084821   .0149929   -47.25   0.000    -.7378697   -.6790946
+share_language |   .3565317    .034017    10.48   0.000     .2898549    .4232084
+  share_border |    .576952   .0594964     9.70   0.000      .460333    .6935709
+    landlocked |  -.1421373   .0197549    -7.20   0.000    -.1808589   -.1034158
+        island |   .2368898   .0316585     7.48   0.000      .174836    .2989437
+     land_area |  -.0950277   .0048734   -19.50   0.000    -.1045799   -.0854754
+         _cons |  -11.75428   .2517323   -46.69   0.000     -12.2477   -11.26086
+---------------+----------------------------------------------------------------
+          year |   absorbed                                      (59 categories)
+
+. estimates store t1_c1
+
+. di in white _n(2) "Formal membership only: gravity model with directed-dyad and time effects, s
+> ample=`i'"
+
+
+Formal membership only: gravity model with directed-dyad and time effects, sample=
+
+. areg import gattFF gattFO ptarecip ptanonrecip gsp currencyunion colorbit gdp yeardummy*, absor
+> b(directed_dyad_id) cluster(directed_dyad_id) robust
+
+Linear regression, absorbing indicators         Number of obs     =    381,656
+                                                F(  66,  17358)   =     270.70
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8393
+                                                Adj R-squared     =     0.8316
+                                                Root MSE          =     0.9389
+
+                   (Std. Err. adjusted for 17,359 clusters in directed_dyad_id)
+-------------------------------------------------------------------------------
+              |               Robust
+      imports |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+       gattFF |   .0702185   .0195365     3.59   0.000      .031925     .108512
+       gattFO |  -.0156404   .0189956    -0.82   0.410    -.0528737    .0215929
+     ptarecip |   .3481917   .0223486    15.58   0.000     .3043861    .3919973
+  ptanonrecip |  -.0701052   .0320732    -2.19   0.029     -.132972   -.0072385
+          gsp |   -.104901   .0191837    -5.47   0.000     -.142503    -.067299
+currencyunion |   .4912259     .08788     5.59   0.000     .3189723    .6634795
+     colorbit |   .8804374   .0813432    10.82   0.000     .7209965    1.039878
+          gdp |   .6650066   .0114862    57.90   0.000     .6424924    .6875208
+   yeardummy1 |    .225406   .0710721     3.17   0.002     .0860975    .3647144
+   yeardummy2 |   .4120749   .0667006     6.18   0.000      .281335    .5428148
+   yeardummy3 |   .3557828   .0630739     5.64   0.000     .2321517    .4794139
+   yeardummy4 |   .3735603   .0624168     5.98   0.000      .251217    .4959036
+   yeardummy5 |   .1794244   .0583078     3.08   0.002     .0651352    .2937135
+   yeardummy6 |    .328537   .0569043     5.77   0.000     .2169989     .440075
+   yeardummy7 |   .0862652    .055446     1.56   0.120    -.0224146     .194945
+   yeardummy8 |  -.0003171   .0545896    -0.01   0.995    -.1073182    .1066839
+   yeardummy9 |   .0421247   .0531305     0.79   0.428    -.0620165    .1462659
+  yeardummy10 |    .067026   .0514368     1.30   0.193    -.0337953    .1678474
+  yeardummy11 |   .0396717   .0500511     0.79   0.428    -.0584335    .1377769
+  yeardummy12 |   .0524128   .0494433     1.06   0.289    -.0445009    .1493266
+  yeardummy13 |   .0174915   .0491716     0.36   0.722    -.0788898    .1138728
+  yeardummy14 |   .0211253   .0481871     0.44   0.661    -.0733264    .1155769
+  yeardummy15 |   .0180224   .0466812     0.39   0.699    -.0734774    .1095222
+  yeardummy16 |    .006873   .0452418     0.15   0.879    -.0818055    .0955515
+  yeardummy17 |  -.0191236   .0441234    -0.43   0.665    -.1056099    .0673627
+  yeardummy18 |  -.0394926   .0424563    -0.93   0.352    -.1227113    .0437261
+  yeardummy19 |  -.0369986   .0406449    -0.91   0.363    -.1166668    .0426695
+  yeardummy20 |  -.0774965   .0393191    -1.97   0.049     -.154566   -.0004271
+  yeardummy21 |  -.0853343   .0384854    -2.22   0.027    -.1607696    -.009899
+  yeardummy22 |  -.1209191   .0375718    -3.22   0.001    -.1945637   -.0472745
+  yeardummy23 |  -.0407666   .0372117    -1.10   0.273    -.1137053    .0321721
+  yeardummy24 |  -.0611641   .0365253    -1.67   0.094    -.1327574    .0104292
+  yeardummy25 |   -.057239   .0355746    -1.61   0.108    -.1269688    .0124907
+  yeardummy26 |  -.1024802   .0345952    -2.96   0.003    -.1702903   -.0346701
+  yeardummy27 |  -.1280015    .031942    -4.01   0.000    -.1906111   -.0653919
+  yeardummy28 |  -.1446651   .0296448    -4.88   0.000    -.2027718   -.0865585
+  yeardummy29 |  -.0247013   .0288018    -0.86   0.391    -.0811556    .0317531
+  yeardummy30 |  -.0832627   .0285936    -2.91   0.004     -.139309   -.0272164
+  yeardummy31 |  -.0940093   .0278492    -3.38   0.001    -.1485965    -.039422
+  yeardummy32 |  -.0577265   .0272724    -2.12   0.034    -.1111833   -.0042698
+  yeardummy33 |  -.1016977   .0264727    -3.84   0.000    -.1535868   -.0498086
+  yeardummy34 |  -.0610622   .0261771    -2.33   0.020     -.112372   -.0097524
+  yeardummy35 |  -.0292177   .0262153    -1.11   0.265    -.0806023    .0221669
+  yeardummy36 |  -.0149619   .0265493    -0.56   0.573    -.0670013    .0370774
+  yeardummy37 |  -.0475068    .026653    -1.78   0.075    -.0997493    .0047357
+  yeardummy38 |  -.0587694   .0269685    -2.18   0.029    -.1116303   -.0059084
+  yeardummy39 |  -.0060615   .0272107    -0.22   0.824    -.0593972    .0472741
+  yeardummy40 |  -.0290861   .0272935    -1.07   0.287    -.0825841    .0244118
+  yeardummy41 |  -.1368526   .0258933    -5.29   0.000     -.187606   -.0860992
+  yeardummy42 |  -.1594117   .0249026    -6.40   0.000    -.2082234      -.1106
+  yeardummy43 |  -.1404974   .0246005    -5.71   0.000    -.1887169   -.0922778
+  yeardummy44 |  -.1188577   .0241529    -4.92   0.000    -.1661999   -.0715155
+  yeardummy45 |  -.1392437   .0232254    -6.00   0.000    -.1847678   -.0937196
+  yeardummy46 |  -.1964654   .0228775    -8.59   0.000    -.2413077   -.1516232
+  yeardummy47 |  -.2279794   .0225389   -10.11   0.000    -.2721579    -.183801
+  yeardummy48 |  -.1976941   .0221038    -8.94   0.000    -.2410197   -.1543685
+  yeardummy49 |  -.1572138   .0214885    -7.32   0.000    -.1993334   -.1150942
+  yeardummy50 |  -.1303692   .0204954    -6.36   0.000    -.1705423   -.0901961
+  yeardummy51 |  -.1412078   .0202038    -6.99   0.000    -.1808093   -.1016062
+  yeardummy52 |   -.119418   .0198439    -6.02   0.000     -.158314    -.080522
+  yeardummy53 |   -.096618     .01984    -4.87   0.000    -.1355064   -.0577295
+  yeardummy54 |  -.1213295   .0196832    -6.16   0.000    -.1599107   -.0827484
+  yeardummy55 |  -.0683679   .0197841    -3.46   0.001    -.1071467   -.0295891
+  yeardummy56 |  -.0453603   .0197411    -2.30   0.022    -.0840548   -.0066658
+  yeardummy57 |   -.056606   .0191498    -2.96   0.003    -.0941414   -.0190705
+  yeardummy58 |  -.0629518   .0186018    -3.38   0.001    -.0994131   -.0264904
+  yeardummy59 |          0  (omitted)
+        _cons |  -15.29083   .5422336   -28.20   0.000    -16.35366     -14.228
+--------------+----------------------------------------------------------------
+directed_dy~d |   absorbed                                   (17359 categories)
+
+. estimates store t1_c2
+
+. estimates table t1_c1 t1_c2, se b(%5.2f) keep(gattFF gattFO ptarecip ptanonrecip gsp currencyun
+> ion colorbit gdp distance share_language share_border landlocked island land_area) stats(rmse r
+> 2 N N_clust) stfmt(%9.2f) title("Table 1, page 53") varwidth(15)
+
+Table 1, page 53
+
+-----------------------------------------
+       Variable |   t1_c1       t1_c2    
+----------------+------------------------
+         gattFF |     -0.07        0.07  
+                |      0.03        0.02  
+         gattFO |     -0.21       -0.02  
+                |      0.03        0.02  
+       ptarecip |      0.33        0.35  
+                |      0.03        0.02  
+    ptanonrecip |      0.14       -0.07  
+                |      0.03        0.03  
+            gsp |     -0.10       -0.10  
+                |      0.02        0.02  
+  currencyunion |      1.01        0.49  
+                |      0.08        0.09  
+       colorbit |      1.75        0.88  
+                |      0.10        0.08  
+            gdp |      0.77        0.67  
+                |      0.01        0.01  
+       distance |     -0.71              
+                |      0.01              
+ share_language |      0.36              
+                |      0.03              
+   share_border |      0.58              
+                |      0.06              
+     landlocked |     -0.14              
+                |      0.02              
+         island |      0.24              
+                |      0.03              
+      land_area |     -0.10              
+                |      0.00              
+----------------+------------------------
+           rmse |      1.42        0.94  
+             r2 |      0.61        0.84  
+              N |    381656      381656  
+        N_clust |  17359.00    17359.00  
+-----------------------------------------
+                             legend: b/se
+
+. 
+. **********************************************************
+. * TABLE 2: THE EFFECT OF PARTICIPATION IN THE GATT/WTO   *
+. * TABLE 3: INCREASE IN TRADE AMONG GATT/WTO PARTICIPANTS *
+. **********************************************************
+. 
+. di in white _n(2) "Participation: 5 categories, dyadic fixed effects"
+
+
+Participation: 5 categories, dyadic fixed effects
+
+. areg imports gattFF gattNN gattFN gattFO gattNO ptarecip ptanonrecip gsp currencyunion colorbit
+>  gdp yeardummy*, absorb(directed_dyad_id) cluster(directed_dyad_id) robust
+
+Linear regression, absorbing indicators         Number of obs     =    381,656
+                                                F(  69,  17358)   =     261.22
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8397
+                                                Adj R-squared     =     0.8320
+                                                Root MSE          =     0.9377
+
+                   (Std. Err. adjusted for 17,359 clusters in directed_dyad_id)
+-------------------------------------------------------------------------------
+              |               Robust
+      imports |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+       gattFF |   .3409027   .0345514     9.87   0.000     .2731784     .408627
+       gattNN |   .4471286   .0698475     6.40   0.000     .3102204    .5840369
+       gattFN |   .3806567   .0366728    10.38   0.000     .3087744    .4525391
+       gattFO |   .2004111   .0302796     6.62   0.000       .14106    .2597622
+       gattNO |   .1726317   .0402371     4.29   0.000      .093763    .2515004
+     ptarecip |   .3444058   .0222439    15.48   0.000     .3008055    .3880061
+  ptanonrecip |  -.0517946   .0319807    -1.62   0.105    -.1144799    .0108908
+          gsp |  -.0980247   .0191047    -5.13   0.000    -.1354718   -.0605776
+currencyunion |   .4959544   .0881149     5.63   0.000     .3232403    .6686685
+     colorbit |   .8078108   .0817046     9.89   0.000     .6476615    .9679601
+          gdp |   .6612795   .0114423    57.79   0.000     .6388514    .6837077
+   yeardummy1 |   .4824021   .0761627     6.33   0.000     .3331155    .6316887
+   yeardummy2 |   .6735692   .0723787     9.31   0.000     .5316996    .8154388
+   yeardummy3 |   .4631341   .0639081     7.25   0.000     .3378678    .5884004
+   yeardummy4 |   .4695663   .0631823     7.43   0.000     .3457227      .59341
+   yeardummy5 |   .2345984   .0586089     4.00   0.000     .1197191    .3494777
+   yeardummy6 |   .3686484   .0570595     6.46   0.000     .2568061    .4804908
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. exit, clear

@@ -1,0 +1,341 @@
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Second Meeting</div>
+
+Quantitative Research Methods – Introduction to Applied Statistics
+========================================================
+author: DAVID SICHINAVA, RATI SHUBLADZE
+date: 11 October 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Second meeting</span>
+
+
+
+
+Today's meeting
+========================================================
+incremental: true
+- Why we need R in IR
+- R environment
+
+
+Why do we need statistics in IR?
+========================================================
+incremental: true
+
+- Ethnic Minorities and the Clash of Civilizations: A Quantitative Analysis of Huntington's Thesis
+
+ 
+- An article by JONATHAN FOX (2002), that uses the Minorities at Risk dataset to provide a quantitative element to the civilizations debate
+
+
+Purpose of the article:
+========================================================
+incremental: true
+- To find, whether there has been a rise in both the quantity and intensity of ethnic conflicts between groups belonging to different civilizations since the end of the Cold War.
+
+- To verify Huntington's Thesis using quantitative methods
+
+- To provide working tools for theory validation
+
+
+Why it matters?
+========================================================
+incremental: true
+- Ever since Huntington proposed his "clash of civilizations" thesis there has been a vigorous debate over its validity.
+
+- Controversial argument that the end of the Cold War resulted in a change in the nature of world conflict
+
+
+What did Huntington miss? 
+========================================================
+incremental: false
+
+- Huntington ignored some important phenomenon that will impact on conflict, thereby making his theory irrelevant.
+ + Improved conflict management techniques
+ + World wide trends toward secularism
+ + Information technology
+ + Ethnopolitical conflicts result from protracted discrimination rather than cultural roots
+
+ What did Huntington do wrong? 
+========================================================
+incremental: true
+
+- Huntington ignored some important phenomenon that will impact on conflict, thereby making his theory irrelevant.
+
+- Pfaff (1997) accuses Huntington of ignoring facts.
+
+- Hassner (1997), even goes as far as to accuse Huntington of bending the facts to fit his theory.
+
+What did Huntington get wrong?
+========================================================
+incremental: true
+
+<img src="img/fishing.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Did Huntington's opponents behave better?   
+========================================================
+incremental: true
+
+- The most of Huntington's critics as well as Huntington himself, rely mostly on anecdotal evidence.
+
+Did Huntington's opponents behave better?   
+========================================================
+incremental: true
+
+<img src="img/anecdotal.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+Aim of the paper
+========================================================
+incremental: true
+
+- To assess quantitatively whether some of Huntington's predictions are correct with regard to ethnic conflict
+
+- To identify if clashes between minority and majority groups of different civilizations within the state are more common and more intense than those between groups who are both of the same civilization
+
+- To prove that Huntington was wrong, using __STATISTICAL EVIDENCE__
+
+Methodology
+========================================================
+incremental: true
+
+- Minorities at Risk Phase 3 (MAR3) dataset
+
+- The unit of analysis in this dataset is the minority group within a state. 
+
+- For each of the 275 cases there is a minority and a majority group.
+
+- Comparing mean scores of the dataset using Student's T-test
+
+What is T-test?
+========================================================
+incremental: true
+
+<img src="img/mean.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+
+Results 
+========================================================
+incremental: false
+
+- Civilizational conflicts make up only a minority of ethnic conflicts in the post-Cold War era
+
+
+<img src="img/picture1.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+
+Results 
+========================================================
+incremental: false
+
+- The mean intensity of civilizational vs. non-civilizational rebellion also provides no confirmation for Huntington's theory.
+
+
+<img src="img/picture2.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Results 
+========================================================
+incremental: false
+
+- Nor does the mean intensity of civilizational vs. noncivilizational protest support Huntington?s hypothesis. 
+
+<img src="img/picture3.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+Conclusion
+========================================================
+incremental: true
+
+- The results of this analysis do not support Huntington's "clash of civilizations"" argument.
+
+- Civilizational conflicts constitute a minority of ethnic conflicts both during and after the Cold War.
+
+- In fact, the largest percentage of ethnic conflicts occur within civilizations
+
+
+Lessons learned 
+========================================================
+incremental: true
+
+- Simplistic hypothesis testing is bad for International Relations 
+
+- Why validating the theories using the data matters
+
+- T-test 
+
+Back to R!
+========================================================
+<img src="img/jim_carrey.gif" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Data types and vector objects:
+========================================================
+
+
+```r
+eList<-c("I'm the first element!", "I'm the second one", "I'm the third one")
+
+eList[1] ### First element
+
+eList[2] ### Second element
+
+eList[3] ### Third element
+```
+
+Atomic objects:
+========================================================
+
+```r
+logical<-c(TRUE, FALSE, T, F)
+integer<-c(1L, 4L, 8L, 0L)
+double<-c(1, 3.6, 90, 4)
+characters<-c("a", "b", "სამი", "four")
+```
+
+List:
+========================================================
+
+```r
+simpleList<-list(TRUE, FALSE, T, F)
+combiList<-list(c("a", "b"), c("იყო არაბეთს როსტევან"), c(1L, 4L, 8L, 0L), 98)
+multidimList<-list(list(c("a", "b"), 7), c("რომელმან შექმნა სამყარო"))
+```
+
+Attribute:
+========================================================
+
+```r
+attr(x, "Attribute") <- "Attribute"
+
+attributes(x)
+```
+
+Attribute:
+========================================================
+
+```r
+myObject<- c(10, 20, 30)
+names(myObject) <- c("Age", "Height", "Weight")
+```
+
+Factors:
+========================================================
+
+```r
+eyes<-factor(c(1, 2, 3, 4), levels=c("Brown", "Green", "Blue", "Grey"))
+```
+
+Array and Matrix
+========================================================
+
+<img src="img/bullets.gif" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+
+Array and Matrix
+========================================================
+
+
+```r
+a<-c(1, 2)
+b<-c(10, 20, 30, 40, 50, 60)
+
+ab.array<-array(c(a, b), dim=c(3, 3, 2))
+print(ab.array)
+```
+
+
+Array and Matrix
+========================================================
+
+
+```r
+a<-c(1, 2)
+b<-c(10, 20, 30, 40, 50, 60)
+column.name <-c("Column1", "Column2", "Column3")
+row.name <- c("Row1", "Row2", "Row3")
+matrix.name<- c("Thomas Anderson", "Neo")
+ab.array <- array(c(a,b),dim = c(3,3,2),dimnames = list(row.name, column.name, matrix.name))
+print(ab.array)
+```
+
+
+Array and Matrix
+========================================================
+
+```r
+my.matrix <- matrix(c(1:15), nrow=5)
+print(my.matrix)
+
+### You could only indicate the number of columns:
+my.matrix <- matrix(c(1:15), ncol=5)
+print(my.matrix)
+```
+
+
+Array and Matrix
+========================================================
+
+
+```r
+col.names <- c("First", "Second", "Third", "Fourth", "Fifth")
+row.names <- c("Row1", "Row2", "Row3")
+my.matrix <- matrix(c(1:15), ncol=5, dimnames=list(row.names, col.names))
+print(my.matrix)
+```
+
+Array and Matrix
+========================================================
+<img src="img/dataStructuresNew.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Array and Matrix
+========================================================
+
+
+```r
+df <- data.frame(
+   my.id = c (1:11), 
+   region.name = c("Samegrelo-Zemo Svaneti","Racha-Lechkhumi-Kvemo Svaneti","Imereti","Guria","Adjara", "Samtskhe-Javakheti", "Shida Kartli", "Kvemo Kartli", "Mtskheta-Mtianeti", "Tbilisi", "Kakheti"),
+   value.added = c(1807.4, NA, 2685.2, 584.4, 2039.7, 724.6, 1485.21, 2162.9, NA, 12147.1, 1459.1),
+   stringsAsFactors = FALSE
+	)
+print(df)
+```
+
+Operations
+========================================================
+
+```r
+x <- c(10, 2, 45, 7, 89, 11)
+abs(x)
+sqrt(x)
+log(x)
+log10(x)
+exp(x)
+sum(x)
+median(x)
+mean(x)
+max(x)
+min(x)
+```
+
+Selecting parts of the data frame
+========================================================
+
+
+```r
+df <- data.frame(
+   my.id = c (1:11), 
+   region.name = c("Samegrelo-Zemo Svaneti","Racha-Lechkhumi-Kvemo Svaneti","Imereti","Guria","Adjara", "Samtskhe-Javakheti", "Shida Kartli", "Kvemo Kartli", "Mtskheta-Mtianeti", "Tbilisi", "Kakheti"),
+   value.added = c(1807.4, NA, 2685.2, 584.4, 2039.7, 724.6, 1485.21, 2162.9, NA, 12147.1, 1459.1),
+   stringsAsFactors = FALSE
+	)
+
+df[which(df$region.name == "Shida Kartli"), ] # Select only Shida Kartli
+
+df[which(df$value.added > 1000), ] # Select those regions producing added value of more than 1 million GEL
+```

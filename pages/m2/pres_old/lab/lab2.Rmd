@@ -1,0 +1,43 @@
+---
+title: "Class 3!"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{r}
+eList<-c("I'm the first element!", "I'm the second one", "I'm the third one")
+
+eList[3]
+
+germany <- c("Bayern", "Leipzig", "Borussia")
+
+germany[3]
+
+TSU <- list(c(1918), c("SP", "PSY", "EB", "H", "L", "Sc"), c(40000), c("1st", "9th", "Maglivi"))
+
+attr(TSU, "Attribute") <- "Here I store information about TSU!"
+
+attributes(TSU)
+
+human <- c(22, 165, 75)
+
+names(human) <- c("Age", "Height", "Weight")
+
+names(human)
+
+humans <- data.frame(
+		human.id = c(1:3),
+		human.name = c("Rati", "Dato", "Tsisana"),
+		human.soft = c("STATA", "PYTHON", "SPSS"),
+		human.age = c(28, 29, 30),
+		stringsAsFactors = FALSE
+)
+
+humans[which(humans$human.name == "Rati" | humans$human.name == "Tsisana"), ]
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).

@@ -1,0 +1,221 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 4: Leader Assasination as a Natural Experiment}
+\author{David Sichinava, Rati Shubladze}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+\section*{Topics}
+\begin{itemize}
+\item Read external files
+\item Recoding variables
+\item Simple arithmetic operations
+\end{itemize}
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab4.rmd$. For example,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{shubladze_lab4.Rmd}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Introduction:}
+\paragraph{}
+In their \href{https://www.dropbox.com/s/vcrob2ameksvy7t/Jones%26Olken_2009.pdf?dl=0}{article} Benjamin Jones and Benjamin Olken analyze the effect of assassinating political leaders in the subsequent democratization of the nations. More importantly, this article demonstrates that seemingly random effects (e.g. killing a dictator, or assassination of JFK) could have pronounced effect on history. The authors here use \emph{natural experiment}, in which the success of the assassination attempt may be considered as a random event. 
+
+As we found, people are having some problems with downloading the data to computers. Go to this \href{https://www.dropbox.com/s/7wbt3h0wyi2yelz/leaders.csv?dl=0}{link} or type the following address in the browser: https://goo.gl/spon8J . Save $.csv$ file to your computer in the same directory where you keep $.rmd$ file for the assignment.
+
+Please note that this assignment is based on the exercise given in Imai's book (page 72, section 2.8.3).
+
+First of all, create a new notebook and read the data to R. Do not forget to indicate working directory. Read downloaded $.csv$ file to $r$. Name the new data frame $leader$. 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{leader} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"leaders.csv"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Function $names()$ will allow you to check what variables are included in the table. Run $names$ and write down variable names in your $R-notebook$
+
+Great. Our variables of interest are $country$, $polity$, $result$, $interwarbefore$, $interwarafter$, $civilwarbefore$, $civilwarafter$. Variable $polity$ is so called \emph{Polity Score} which documents political regime types since 1800. Polity Project is administered by Monty G. Marshall and its data is \href{http://www.systemicpeace.org/polity/polity4.htm}{freely available}. Polity Score is a 21-point scale where -10 corresponds to the hereditary monarchy and +10 to the consolidated monarchy. $result$ variable records the result of the assassination attempt. Variables $interwarbefore$, $interwarafter$ record whether the country was involved into international conflicts before ($interwarbefore$) and after ($interwarafter$) the assassination attempt. Variables $civilwarbefore$ and $civilwarafter$ record the prevalence of civil wars before ($civilwarbefore$) and after ($civilwarafter$) the assassination attempt. All four variables  are binary variables - 0 means that there was no war and 1 means that there was a war :) Finally, variable $country$ records where the assassination attempt happened.
+
+\section*{Descriptive Statistics}
+\paragraph{}
+
+How many assassination attempts are recorded into $leader$ table? How many countries experienced at least one leader assassination attempt? You may want to use $unique()$ function in order to check that:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{unique}\hlstd{(leader}\hlopt{$}\hlstd{country)}
+\end{alltt}
+\begin{verbatim}
+##  [1] Afghanistan       Albania           Algeria          
+##  [4] Argentina         Australia         Austria          
+##  [7] Belgium           Bhutan            Bolivia          
+## [10] Brazil            Burundi           Bulgaria         
+## [13] Cambodia          Canada            Ivory Coast      
+## [16] Chad              Chile             China            
+## [19] Colombia          Congo Brazzaville Costa Rica       
+## [22] Cuba              Cyprus            Czechoslovakia   
+## [25] Dominican Rep     Congo Kinshasa    Ecuador          
+## [28] Egypt             Ethiopia          France           
+## [31] Ghana             Germany           Greece           
+## [34] Georgia           Guatemala         Guinea           
+## [37] Haiti             Honduras          India            
+## [40] Indonesia         Iran              Iraq             
+## [43] Israel            Italy             Jordan           
+## [46] Japan             Kenya             Kuwait           
+## [49] Liberia           Lebanon           Libya            
+## [52] Madagascar        Mexico            Myanmar (Burma)  
+## [55] Nepal             Nicaragua         Niger            
+## [58] Netherlands       Oman              Pakistan         
+## [61] Panama            Peru              Poland           
+## [64] Portugal          Korea South       Russia           
+## [67] Vietnam South     Rwanda            South Africa     
+## [70] El Salvador       Saudi Arabia      Senegal          
+## [73] Somalia           Spain             Sri Lanka        
+## [76] Sudan             Sweden            Syria            
+## [79] Togo              Turkey            Uganda           
+## [82] United Kingdom    Uruguay           United States    
+## [85] Uzbekistan        Venezuela         Yemen North      
+## [88] Yugoslavia       
+## 88 Levels: Afghanistan Albania Algeria Argentina Australia ... Yugoslavia
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+You may notice that there is a record about Georgia. Assassination attempt on which leader is there recorded? In which years the assassinations happened?
+
+What is the average number of assassination attempt?
+
+\section*{Data manipulation}
+\paragraph{}
+
+Create a new binary variable $success$ that is equal to 1 if a leader dies from the attack and 0 if the leader survives. Store this new variable as part of the original data frame. What is the overall success rate of leader assassination? For creating $success$ variable you may use the following code:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{leader}\hlopt{$}\hlstd{success} \hlkwb{<-} \hlnum{0}
+\hlstd{leader}\hlopt{$}\hlstd{success[leader}\hlopt{$}\hlstd{result}\hlopt{==}\hlstr{"dies between a day and a week"}\hlstd{]} \hlkwb{<-} \hlnum{1}
+\hlstd{leader}\hlopt{$}\hlstd{success[leader}\hlopt{$}\hlstd{result}\hlopt{==}\hlstr{"dies between a week and a month"}\hlstd{]} \hlkwb{<-} \hlnum{1}
+\hlstd{leader}\hlopt{$}\hlstd{success[leader}\hlopt{$}\hlstd{result}\hlopt{==}\hlstr{"dies within a day after the attack"}\hlstd{]} \hlkwb{<-} \hlnum{1}
+\hlstd{leader}\hlopt{$}\hlstd{success[leader}\hlopt{$}\hlstd{result}\hlopt{==}\hlstr{"dies, timing unknown"}\hlstd{]} \hlkwb{<-} \hlnum{1}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Data analysis}
+\paragraph{}
+
+Investigate whether the average polity score over three years prior to an assassination attempt differs on average between successful and failed attempts. Also, examine whether there is any difference in the age of targeted leaders between successful and failed attempts. Briefly interpret the results in light of the validity of the aforementioned assumption.
+
+Just keep in mind that you only need to calculate difference in means estimator. If you don't remember what it is, refer to the slides and chapters 2.5-2.7 in Imai's book.
+
+Repeat the same analysis as in the previous question, but this time using the country’s experience of civil and international war. Create a new binary variable in the data frame called $warbefore$. Code the variable such that it is equal to 1 if a country is in either civil or international war during the three years prior to an assassination attempt. Provide a brief interpretation of the result.
+
+In this case, you may want to use variables $interwarbefore$ and $civilwarbefore$ in order to calculate $warbefore$ variable. 
+
+\section*{Conclusion}
+\paragraph{}
+
+Does successful leader assassination cause democratization? Does successful leader assassination lead countries to war? When analyzing these data, be sure to state your assumptions and provide a brief interpretation of the results.
+
+\subsection*{Done. Could you please tell me how to submit my assignment?}
+
+Zip the whole folder for the fourth lab. Name the file according to the following format: $surname\_lab4.zip$ like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{shubladze_lab4.zip}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Upload the file to \href{https://www.dropbox.com/request/6uV9hJ3jvKsMdUM7gnKj}{this link} before the start of our next meeting.
+
+
+\end{document}

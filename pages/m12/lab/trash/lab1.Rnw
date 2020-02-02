@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage[english, georgian]{babel}
+\usepackage{fontspec}
+\usepackage{geometry, graphicx}
+
+\setmainfont[
+Extension=.ttf,
+UprightFont={*},
+BoldFont = {arial_geo-bold},
+ItalicFont = {arial_geo-italic},
+BoldItalicFont = {arial_geo-bold-italic}
+]{arial_geo}
+
+\title{ლაბორატორული სამუშაო 1: შესავალი R-გარემოში}
+\date{\today}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+
+
+
+\end{document}

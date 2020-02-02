@@ -1,0 +1,2673 @@
+-------------------------------------------------------------------------------
+       log:  C:\My Documents\ps299\paper4\log\moderchecks.log
+  log type:  text
+ opened on:  24 Feb 2002, 15:07:20
+
+. * table 10;
+. #delimit ;
+delimiter now ;
+. * log of energy consumption per capita;
+. relogit kosimo intcivdy postcold diffbloc border mindem logen postciv blocciv
+>         bordeciv demciv civen peaceyrs _spline1 _spline2 _spline3 dymilbal 
+>         majpow distance, wc(.0079) cluster(dyad);
+(383 missing values generated)
+
+
+Corrected logit estimates                             Number of obs =    42461
+
+------------------------------------------------------------------------------
+             |               Robust
+      kosimo |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    intcivdy |    -2.7986   .9576402    -2.92   0.003    -4.675541   -.9216601
+    postcold |  -.4039391    .292764    -1.38   0.168    -.9777459    .1698677
+    diffbloc |   .4395633   .3570521     1.23   0.218    -.2602459    1.139373
+      border |   2.330374   .3507754     6.64   0.000     1.642867    3.017881
+      mindem |  -.0868804   .0242072    -3.59   0.000    -.1343256   -.0394352
+       logen |    .166074   .0977579     1.70   0.089     -.025528    .3576761
+     postciv |   .0827778   .4377781     0.19   0.850    -.7752514     .940807
+     blocciv |   .7386371   .4405347     1.68   0.094     -.124795    1.602069
+    bordeciv |   1.091029   .4662829     2.34   0.019     .1771309    2.004926
+      demciv |    .079483   .0302812     2.62   0.009     .0201328    .1388331
+       civen |   .1124344   .1194447     0.94   0.347    -.1216728    .3465417
+    peaceyrs |  -1.766193   .0971115   -18.19   0.000    -1.956528   -1.575858
+    _spline1 |  -.0172854   .0011485   -15.05   0.000    -.0195364   -.0150344
+    _spline2 |   .0123066   .0009322    13.20   0.000     .0104795    .0141338
+    _spline3 |   -.003861   .0004059    -9.51   0.000    -.0046565   -.0030656
+    dymilbal |  -1.816843   .5753741    -3.16   0.002    -2.944556   -.6891309
+      majpow |   2.819362    .231715    12.17   0.000     2.365209    3.273515
+    distance |  -.2955212   .1335465    -2.21   0.027    -.5572674   -.0337749
+       _cons |  -.2971619   1.260538    -0.24   0.814    -2.767771    2.173448
+------------------------------------------------------------------------------
+
+. #delimit ;
+delimiter now ;
+. gen pren=.;
+(42844 missing values generated)
+
+. gen enaxis=_n+4 in 1/6;
+(42838 missing values generated)
+
+. setx intcivdy min 
+>      postcold max postciv min 
+>      diffbloc min blocciv min 
+>      border max bordeciv min 
+>      mindem 10 demciv min 
+>      civen 0
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local e = 5
+
+. while `e' <=10 {
+  2.       setx logen `e'
+  3.       relogitq, listx
+  4.       replace pren  = r(Pr)  if enaxis==float(`e')
+  5.       local e = `e' + 1
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |          5        5     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01638
+   95% Confidence Interval =  0.00477 to .05457126
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |          6        6     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01904
+   95% Confidence Interval =  0.00694 to .05482933
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |          7        7     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02236
+   95% Confidence Interval =  0.00857 to .06498628
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |          8        8     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02719
+   95% Confidence Interval =  0.00999 to .0657698
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |          9        9     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03153
+   95% Confidence Interval =  0.01249 to .07577376
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+    civen |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          0       min    
+    logen |         10        10    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03731
+   95% Confidence Interval =  0.01460 to .09326517
+(1 real change made)
+
+. 
+. #delimit ; 
+delimiter now ;
+. gen pren1=.;
+(42844 missing values generated)
+
+. setx mean;
+
+. setx intcivdy max 
+>      postcold max postciv max 
+>      diffbloc min blocciv min 
+>      border max bordeciv max 
+>      mindem 10 demciv 10 
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local f = 5
+
+. while `f' <=10 {
+  2.       setx logen `f' civen `f'
+  3.       relogitq, listx
+  4.       replace pren1  = r(Pr)  if enaxis==float(`f')
+  5.       local f = `f' + 1
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |          5        5     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |          5        5     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01278
+   95% Confidence Interval =  0.00404 to .03694807
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |          6        6     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |          6        6     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01638
+   95% Confidence Interval =  0.00549 to .0449804
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |          7        7     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |          7        7     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02142
+   95% Confidence Interval =  0.00786 to .05976413
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |          8        8     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |          8        8     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02847
+   95% Confidence Interval =  0.01052 to .06965349
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |          9        9     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |          9        9     
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03775
+   95% Confidence Interval =  0.01337 to .09865687
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+    civen |         10        10    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141128       mean   
+ dymilbal |   .3252239       mean   
+ intcivdy |          1       max    
+    logen |         10        10    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04928
+   95% Confidence Interval =  0.01751 to .11852288
+(1 real change made)
+
+. 
+. #delimit ;
+delimiter now ;
+. replace pren=pren*100;
+(6 real changes made)
+
+. replace pren1=pren1*100;
+(6 real changes made)
+
+. #delimit ;
+delimiter now ;
+. sort enaxis;
+
+. graph pren pren1 enaxis, connect(ll) s(ST) xlabel(5,6,7,8,9,10) ylabel 
+>       l1title("Pr(Conflict)") title("              Energy Consumption") 
+>       b2title(" ") l2title(" ") t1(" ") 
+>       saving("C:\My Documents\ps299\paper4\paper\figure3a.gph", replace);
+
+. ***
+> #delimit ;
+. * urbanization;
+. relogit kosimo intcivdy postcold diffbloc border mindem urb postciv blocciv
+>         bordeciv demciv civurb peaceyrs _spline1 _spline2 _spline3 dymilbal 
+>         majpow distance, wc(.0079) cluster(dyad);
+(384 missing values generated)
+
+
+Corrected logit estimates                             Number of obs =    42460
+
+------------------------------------------------------------------------------
+             |               Robust
+      kosimo |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    intcivdy |  -2.077277   .3878262    -5.36   0.000    -2.837402   -1.317152
+    postcold |  -1.597446   .4892765    -3.26   0.001     -2.55641   -.6384812
+    diffbloc |   .6075456   .3232497     1.88   0.060    -.0260122    1.241103
+      border |   2.243418   .3419552     6.56   0.000     1.573198    2.913638
+      mindem |   -.095797   .0228047    -4.20   0.000    -.1404934   -.0511005
+         urb |   .0407961   .0100943     4.04   0.000     .0210115    .0605806
+     postciv |  -.3021694   .6634932    -0.46   0.649    -1.602592    .9982533
+     blocciv |   .5571913   .4084616     1.36   0.173    -.2433787    1.357761
+    bordeciv |   1.211774   .4551991     2.66   0.008     .3195999    2.103948
+      demciv |   .0805934    .030219     2.67   0.008     .0213653    .1398215
+      civurb |   .0137731   .0126108     1.09   0.275    -.0109437    .0384899
+    peaceyrs |  -1.737099   .0936963   -18.54   0.000     -1.92074   -1.553457
+    _spline1 |  -.0169682    .001112   -15.26   0.000    -.0191477   -.0147887
+    _spline2 |   .0121508   .0009101    13.35   0.000     .0103669    .0139346
+    _spline3 |  -.0038529   .0004017    -9.59   0.000    -.0046401   -.0030656
+    dymilbal |  -1.745012   .5830332    -2.99   0.003    -2.887737   -.6022884
+      majpow |   2.742628   .2315276    11.85   0.000     2.288842    3.196414
+    distance |  -.2593034   .1334895    -1.94   0.052     -.520938    .0023312
+       _cons |   .2394674   1.035511     0.23   0.817    -1.790096    2.269031
+------------------------------------------------------------------------------
+
+. #delimit ;
+delimiter now ;
+. gen prur=.;
+(42844 missing values generated)
+
+. gen urbaxis=(_n-1)*5 in 1/12;
+(42832 missing values generated)
+
+. setx intcivdy min 
+>      postcold max postciv min 
+>      diffbloc min blocciv min 
+>      border max bordeciv min 
+>      mindem 10 demciv min 
+>      civurb 0
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local g = 0
+
+. while `g' <=55 {
+  2.       setx urb `g'
+  3.       relogitq, listx
+  4.       replace prur  = r(Pr)  if urbaxis==float(`g')
+  5.       local g = `g' + 5
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |          0        0     
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00378
+   95% Confidence Interval =  0.00099 to .01493843
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |          5        5     
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00455
+   95% Confidence Interval =  0.00116 to .01662971
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         10        10    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00562
+   95% Confidence Interval =  0.00161 to .02163339
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         15        15    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00710
+   95% Confidence Interval =  0.00223 to .02011096
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         20        20    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00876
+   95% Confidence Interval =  0.00280 to .02406763
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         25        25    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01059
+   95% Confidence Interval =  0.00352 to .03083992
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         30        30    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01273
+   95% Confidence Interval =  0.00435 to .03440591
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         35        35    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01527
+   95% Confidence Interval =  0.00557 to .0434395
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         40        40    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01925
+   95% Confidence Interval =  0.00804 to .05036771
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         45        45    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02265
+   95% Confidence Interval =  0.00892 to .0569655
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         50        50    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02766
+   95% Confidence Interval =  0.01063 to .07143423
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+      urb |         55        55    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03454
+   95% Confidence Interval =  0.01277 to .08245987
+(1 real change made)
+
+. 
+. #delimit ; 
+delimiter now ;
+. gen prur1=.;
+(42844 missing values generated)
+
+. setx mean;
+
+. setx intcivdy max 
+>      postcold max postciv max 
+>      diffbloc min blocciv min 
+>      border max bordeciv max 
+>      mindem 10 demciv 10 
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local h = 0
+
+. while `h' <=55 {
+  2.       setx urb `h' civurb `h'
+  3.       relogitq, listx
+  4.       replace prur1  = r(Pr)  if urbaxis==float(`h')
+  5.       local h = `h' + 5
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |          0        0     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |          0        0     
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00263
+   95% Confidence Interval =  0.00067 to .01033022
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |          5        5     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |          5        5     
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00338
+   95% Confidence Interval =  0.00092 to .0137081
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         10        10    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         10        10    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00459
+   95% Confidence Interval =  0.00140 to .01570056
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         15        15    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         15        15    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00594
+   95% Confidence Interval =  0.00178 to .01807597
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         20        20    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         20        20    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00811
+   95% Confidence Interval =  0.00245 to .02423883
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         25        25    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         25        25    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01014
+   95% Confidence Interval =  0.00351 to .0294106
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         30        30    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         30        30    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01334
+   95% Confidence Interval =  0.00457 to .03587612
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         35        35    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         35        35    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01771
+   95% Confidence Interval =  0.00650 to .04852069
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         40        40    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         40        40    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02312
+   95% Confidence Interval =  0.00861 to .05791972
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         45        45    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         45        45    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03060
+   95% Confidence Interval =  0.01101 to .0745118
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         50        50    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         50        50    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03787
+   95% Confidence Interval =  0.01507 to .09196114
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+   civurb |         55        55    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141116       mean   
+ dymilbal |     .32522       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+      urb |         55        55    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.05107
+   95% Confidence Interval =  0.02077 to .12457325
+(1 real change made)
+
+. 
+. #delimit ;
+delimiter now ;
+. replace prur=prur*100;
+(12 real changes made)
+
+. replace prur1=prur1*100;
+(12 real changes made)
+
+. #delimit ;
+delimiter now ;
+. sort urbaxis;
+
+. graph prur prur1 urbaxis, connect(ll) s(ST) xlabel(0,10,20,30,40,50) ylabel 
+>       l1title("Pr(Conflict)") title("           Urbanization") 
+>       b2title(" ") l2title(" ") t1(" ") 
+>       saving("C:\My Documents\ps299\paper4\paper\figure3b.gph", replace);
+
+. ***
+> #delimit ;
+. * education;
+. relogit kosimo intcivdy postcold diffbloc border mindem peduc postciv blocciv
+>         bordeciv demciv civeduc peaceyrs _spline1 _spline2 _spline3 dymilbal 
+>         majpow distance, wc(.0079) cluster(dyad);
+(656 missing values generated)
+
+
+Corrected logit estimates                             Number of obs =    42188
+
+------------------------------------------------------------------------------
+             |               Robust
+      kosimo |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    intcivdy |  -1.200716   .5729549    -2.10   0.036    -2.323687   -.0777449
+    postcold |  -.2058595   .2701564    -0.76   0.446    -.7353564    .3236374
+    diffbloc |   .3614817   .3559972     1.02   0.310    -.3362599    1.059223
+      border |   1.911106    .336736     5.68   0.000     1.251115    2.571096
+      mindem |  -.0859154   .0222524    -3.86   0.000    -.1295293   -.0423016
+       peduc |   .1665118    .037611     4.43   0.000     .0927955    .2402281
+     postciv |   .2761839   .4137285     0.67   0.504     -.534709    1.087077
+     blocciv |   .8500369   .4295878     1.98   0.048     .0080603    1.692013
+    bordeciv |    1.30971   .4625144     2.83   0.005     .4031981    2.216221
+      demciv |   .0852273   .0287484     2.96   0.003     .0288814    .1415732
+     civeduc |  -.0935258   .0425607    -2.20   0.028    -.1769433   -.0101084
+    peaceyrs |  -1.779367    .097333   -18.28   0.000    -1.970136   -1.588597
+    _spline1 |  -.0170765   .0011373   -15.02   0.000    -.0193056   -.0148475
+    _spline2 |   .0119493   .0009182    13.01   0.000     .0101497    .0137488
+    _spline3 |  -.0036365   .0003983    -9.13   0.000    -.0044172   -.0028557
+    dymilbal |  -2.221412   .5911277    -3.76   0.000    -3.380001   -1.062823
+      majpow |   3.185822   .2397593    13.29   0.000     2.715903    3.655742
+    distance |  -.3704077   .1465853    -2.53   0.012    -.6577097   -.0831057
+       _cons |   .1292087   1.077103     0.12   0.905    -1.981875    2.240292
+------------------------------------------------------------------------------
+
+. #delimit ;
+delimiter now ;
+. gen pred=.;
+(42844 missing values generated)
+
+. gen edaxis=_n*2 in 1/8;
+(42836 missing values generated)
+
+. setx intcivdy min 
+>      postcold max postciv min 
+>      diffbloc min blocciv min 
+>      border max bordeciv min 
+>      mindem 10 demciv min 
+>      civeduc 0
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local i = 2
+
+. while `i' <=16 {
+  2.       setx peduc `i'
+  3.       relogitq, listx
+  4.       replace pred  = r(Pr)  if edaxis==float(`i')
+  5.       local i = `i' + 2
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          2        2     
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00698
+   95% Confidence Interval =  0.00207 to .02338533
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          4        4     
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.00972
+   95% Confidence Interval =  0.00280 to .03151598
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          6        6     
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01331
+   95% Confidence Interval =  0.00479 to .03814527
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          8        8     
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01875
+   95% Confidence Interval =  0.00701 to .05089526
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         10        10    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02615
+   95% Confidence Interval =  0.00956 to .06267332
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         12        12    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03600
+   95% Confidence Interval =  0.01523 to .08431456
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         14        14    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.05000
+   95% Confidence Interval =  0.02115 to .11178184
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+  civeduc |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         16        16    
+  postciv |          0       min    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.06814
+   95% Confidence Interval =  0.02678 to .1583655
+(1 real change made)
+
+. 
+. #delimit ; 
+delimiter now ;
+. gen pred1=.;
+(42844 missing values generated)
+
+. setx mean;
+
+. setx intcivdy max 
+>      postcold max postciv max 
+>      diffbloc min blocciv min 
+>      border max bordeciv max 
+>      mindem 10 demciv 10 
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local l = 2
+
+. while `l' <=16 {
+  2.       setx peduc `l' civeduc `l'
+  3.       relogitq, listx
+  4.       replace pred1  = r(Pr)  if edaxis==float(`l')
+  5.       local l = `l' + 2
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |          2        2     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          2        2     
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01899
+   95% Confidence Interval =  0.00661 to .05212461
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |          4        4     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          4        4     
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02211
+   95% Confidence Interval =  0.00822 to .05623848
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |          6        6     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          6        6     
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02602
+   95% Confidence Interval =  0.00923 to .06829501
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |          8        8     
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |          8        8     
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03033
+   95% Confidence Interval =  0.01041 to .07855884
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |         10        10    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         10        10    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03511
+   95% Confidence Interval =  0.01197 to .08910688
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |         12        12    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         12        12    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03965
+   95% Confidence Interval =  0.01470 to .1033324
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |         14        14    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         14        14    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04625
+   95% Confidence Interval =  0.01662 to .12225008
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+  civeduc |         16        16    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.140221       mean   
+ dymilbal |   .3250432       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+    peduc |         16        16    
+  postciv |          1       max    
+ postcold |          1       max    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.05408
+   95% Confidence Interval =  0.01795 to .15359505
+(1 real change made)
+
+. 
+. #delimit ;
+delimiter now ;
+. replace pred=pred*100;
+(8 real changes made)
+
+. replace pred1=pred1*100;
+(8 real changes made)
+
+. #delimit ;
+delimiter now ;
+. sort edaxis;
+
+. graph pred pred1 edaxis, connect(ll) s(ST) xlabel(2,4,6,8,10,12,14,16) ylabel
+>  
+>       l1title("Pr(Conflict)") title("           Education") 
+>       b2title(" ") l2title(" ") t1(" ") 
+>       saving("C:\My Documents\ps299\paper4\paper\figure3c.gph", replace);
+
+. ***
+> #delimit ;
+. * radio;
+. relogit kosimo intcivdy postcold diffbloc border mindem radio postciv blocciv
+>         bordeciv demciv civradio peaceyrs _spline1 _spline2 _spline3 dymilbal
+>  
+>         majpow distance, wc(.0079) cluster(dyad);
+(660 missing values generated)
+
+
+Corrected logit estimates                             Number of obs =    42184
+
+------------------------------------------------------------------------------
+             |               Robust
+      kosimo |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    intcivdy |  -2.009371   .3813645    -5.27   0.000    -2.756832   -1.261911
+    postcold |    -.62112   .3645173    -1.70   0.088    -1.335561    .0933208
+    diffbloc |   .5039374   .3437421     1.47   0.143    -.1697847     1.17766
+      border |   2.342657   .3650684     6.42   0.000     1.627136    3.058178
+      mindem |  -.1003205   .0252758    -3.97   0.000    -.1498601   -.0507808
+       radio |   .0002558   .0001129     2.27   0.023     .0000345     .000477
+     postciv |   .4341377   .4858155     0.89   0.372    -.5180432    1.386319
+     blocciv |   .7123492    .424521     1.68   0.093    -.1196967    1.544395
+    bordeciv |   .9590236   .4627448     2.07   0.038     .0520606    1.865987
+      demciv |    .100788   .0307185     3.28   0.001     .0405809    .1609952
+    civradio |   -.000064   .0001206    -0.53   0.596    -.0003003    .0001723
+    peaceyrs |    -1.7651   .0991595   -17.80   0.000    -1.959449   -1.570751
+    _spline1 |  -.0173221   .0011639   -14.88   0.000    -.0196032   -.0150409
+    _spline2 |   .0123354   .0009329    13.22   0.000     .0105069    .0141639
+    _spline3 |  -.0038581   .0003983    -9.69   0.000    -.0046388   -.0030773
+    dymilbal |  -2.124534   .5890565    -3.61   0.000    -3.279063   -.9700044
+      majpow |   2.859758   .2385427    11.99   0.000     2.392222    3.327293
+    distance |  -.3149501   .1346219    -2.34   0.019    -.5788042   -.0510961
+       _cons |   .9734876   1.043377     0.93   0.351    -1.071493    3.018468
+------------------------------------------------------------------------------
+
+. #delimit ;
+delimiter now ;
+. gen prrd=.;
+(42844 missing values generated)
+
+. gen rdaxis=(_n-1)*500+50 in 1/10;
+(42834 missing values generated)
+
+. setx intcivdy min 
+>      postcold max postciv min 
+>      diffbloc min blocciv min 
+>      border max bordeciv min 
+>      mindem 10 demciv min 
+>      civradio 0
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local m = 50
+
+. while `m' <=4550 {
+  2.       setx radio `m'
+  3.       relogitq, listx
+  4.       replace prrd  = r(Pr)  if rdaxis==float(`m')
+  5.       local m = `m' + 500
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |         50        50    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01536
+   95% Confidence Interval =  0.00497 to .0498142
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |        550       550    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.01727
+   95% Confidence Interval =  0.00634 to .05023974
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       1050       1050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02025
+   95% Confidence Interval =  0.00704 to .05464283
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       1550       1550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02195
+   95% Confidence Interval =  0.00821 to .05669481
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       2050       2050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02508
+   95% Confidence Interval =  0.00946 to .06436698
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       2550       2550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02886
+   95% Confidence Interval =  0.01172 to .07047034
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       3050       3050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03237
+   95% Confidence Interval =  0.01233 to .07943253
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       3550       3550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03574
+   95% Confidence Interval =  0.01475 to .09569949
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       4050       4050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04221
+   95% Confidence Interval =  0.01579 to .11086191
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          0       min    
+   border |          1       max    
+ civradio |          0        0     
+   demciv |          0       min    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          0       min    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          0       min    
+ postcold |          1       max    
+    radio |       4550       4550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04749
+   95% Confidence Interval =  0.01758 to .11749884
+(1 real change made)
+
+. 
+. #delimit ; 
+delimiter now ;
+. gen prrd1=.;
+(42844 missing values generated)
+
+. setx mean;
+
+. setx intcivdy max 
+>      postcold max postciv max 
+>      diffbloc min blocciv min 
+>      border max bordeciv max 
+>      mindem 10 demciv 10 
+>      dymilbal mean 
+>      majpow 1 
+>      distance mean 
+>      peaceyrs 18 _spline1 -3700.529 _spline2 -3887 _spline3 -2630.118;
+
+. #delimit cr
+delimiter now cr
+. local n = 50
+
+. while `n' <=4550 {
+  2.       setx radio `n' civradio `n'
+  3.       relogitq, listx
+  4.       replace prrd1  = r(Pr)  if rdaxis==float(`n')
+  5.       local n = `n' + 500
+  6.       }
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |         50        50    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |         50        50    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02267
+   95% Confidence Interval =  0.00834 to .05944036
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |        550       550    
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |        550       550    
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02494
+   95% Confidence Interval =  0.01043 to .06322124
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       1050       1050   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       1050       1050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02660
+   95% Confidence Interval =  0.00995 to .06860337
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       1550       1550   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       1550       1550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.02940
+   95% Confidence Interval =  0.01083 to .07156793
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       2050       2050   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       2050       2050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03265
+   95% Confidence Interval =  0.01298 to .07892626
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       2550       2550   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       2550       2550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03625
+   95% Confidence Interval =  0.01371 to .09012067
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       3050       3050   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       3050       3050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.03968
+   95% Confidence Interval =  0.01470 to .09641293
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       3550       3550   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       3550       3550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04344
+   95% Confidence Interval =  0.01640 to .11249292
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       4050       4050   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       4050       4050   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.04811
+   95% Confidence Interval =  0.01831 to .11217535
+(1 real change made)
+
+You have set the following values for the explanatory variables:
+
+------------------------------------
+ Variable |    Value     Description
+----------+-------------------------
+ _spline1 |  -3700.529    -3700.529 
+ _spline2 |      -3887      -3887   
+ _spline3 |  -2630.118    -2630.118 
+  blocciv |          0       min    
+ bordeciv |          1       max    
+   border |          1       max    
+ civradio |       4550       4550   
+   demciv |         10        10    
+ diffbloc |          0       min    
+ distance |   8.141715       mean   
+ dymilbal |   .3254425       mean   
+ intcivdy |          1       max    
+   majpow |          1        1     
+   mindem |         10        10    
+ peaceyrs |         18        18    
+  postciv |          1       max    
+ postcold |          1       max    
+    radio |       4550       4550   
+------------------------------------
+
+Probabilities and confidence intervals based on initial X-values
+   Pr(kosimo==1)  =  0.05229
+   95% Confidence Interval =  0.01939 to .12368908
+(1 real change made)
+
+. 
+. #delimit ;
+delimiter now ;
+. replace prrd=prrd*100;
+(10 real changes made)
+
+. replace prrd1=prrd1*100;
+(10 real changes made)
+
+. #delimit ;
+delimiter now ;
+. sort rdaxis;
+
+. graph prrd prrd1 rdaxis, connect(ll) s(ST) xlabel(50,1050,2050,3050,4050) yla
+> bel 
+>       l1title("Pr(Conflict)") title("           Radios") 
+>       b2title(" ") l2title(" ") t1(" ") 
+>       saving("C:\My Documents\ps299\paper4\paper\figure3d.gph", replace);
+
+. #delimit ;
+delimiter now ;
+. graph using "C:\My Documents\ps299\paper4\paper\figure3a.gph" 
+>             "C:\My Documents\ps299\paper4\paper\figure3b.gph"
+>             "C:\My Documents\ps299\paper4\paper\figure3c.gph"
+>             "C:\My Documents\ps299\paper4\paper\figure3d.gph",
+>             margin(5)
+>             saving("C:\My Documents\ps299\paper4\paper\figure3.gph", replace)
+> ;
+
+. #delimit ;
+delimiter now ;
+. * table 11;
+. * Modernization checks: "strong link" assumption;
+. relogit kosimo intcivdy postcold diffbloc border mindem hmod postciv blocciv
+>         bordeciv demciv hmodciv peaceyrs _spline1 _spline2 _spline3 dymilbal 
+>         majpow distance, wc(.0079) cluster(dyad);
+(383 missing values generated)
+
+
+Corrected logit estimates                             Number of obs =    42461
+
+------------------------------------------------------------------------------
+             |               Robust
+      kosimo |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    intcivdy |  -2.225267   .7485519    -2.97   0.003    -3.692402   -.7581325
+    postcold |  -1.008083   .4036777    -2.50   0.013    -1.799277   -.2168893
+    diffbloc |   .5262429   .3367264     1.56   0.118    -.1337287    1.186215
+      border |    2.31917   .3618835     6.41   0.000     1.609891    3.028449
+      mindem |  -.0915361   .0212334    -4.31   0.000    -.1331528   -.0499194
+        hmod |   4.739557   1.386098     3.42   0.001     2.022855    7.456259
+     postciv |   -.067603   .5155591    -0.13   0.896     -1.07808    .9428743
+     blocciv |    .563697   .4237495     1.33   0.183    -.2668367    1.394231
+    bordeciv |   1.379349   .4816747     2.86   0.004     .4352835    2.323414
+      demciv |   .0899076   .0275048     3.27   0.001     .0359992     .143816
+     hmodciv |   .3444245   1.529032     0.23   0.822    -2.652423    3.341272
+    peaceyrs |  -1.750177   .0947205   -18.48   0.000    -1.935826   -1.564529
+    _spline1 |  -.0171664   .0011167   -15.37   0.000    -.0193551   -.0149776
+    _spline2 |   .0123418   .0009052    13.63   0.000     .0105676    .0141159
+    _spline3 |  -.0039485   .0003951    -9.99   0.000    -.0047229   -.0031742
+    dymilbal |   -2.16373   .5497868    -3.94   0.000    -3.241293   -1.086168
+      majpow |   2.426475   .2358912    10.29   0.000     1.964137    2.888813
+    distance |  -.3610378   .1306934    -2.76   0.006    -.6171921   -.1048835
+       _cons |  -.2525576   1.144491    -0.22   0.825    -2.495718    1.990603
+------------------------------------------------------------------------------
+
+. log close;
+       log:  C:\My Documents\ps299\paper4\log\moderchecks.log
+  log type:  text
+ closed on:  24 Feb 2002, 15:22:18
+-------------------------------------------------------------------------------

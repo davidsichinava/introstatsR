@@ -1,0 +1,255 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 3: Small Classes and Early Education}
+\author{David Sichinava}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+\section*{Topics}
+\begin{itemize}
+\item Read external files
+\item Recoding variables
+\item Simple arithmetic operations
+\end{itemize}
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab3.rmd$. For example,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sichinava_lab3.Rmd}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Introduction:}
+\paragraph{}
+This assignment is based on the study by \href{https://en.wikipedia.org/wiki/Frederick_Mosteller}{Frederick Mosteller} published in the \emph{The Future of Children} in 1995. Mosteller wanted to identify how does class size affect students' academic achievement and whether the effect is long-term. 
+
+\section*{Data Manipulation and Descriptive Statistics}
+\paragraph{}
+
+First of all, create a new notebook and read the data to R. Do not forget to indicate working directory. As you may notice, we name the newly created table $star$. You can read data files from the web, or alternatively, you may want to download them to your computer and read offline.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{### link to download data file: https://goo.gl/pnNug3}
+
+\hlstd{star} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"STAR.csv"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in file(file, "{}rt"{}): cannot open file 'STAR.csv': No such file or directory}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(file, "{}rt"{}): cannot open the connection}}\end{kframe}
+\end{knitrout}
+
+It is a rule of thumb that you do a descriptive statistics before you start analyzing your data. First let's check the variables included in the $star$ table: 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{names}\hlstd{(star)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'star' not found}}\end{kframe}
+\end{knitrout}
+
+Display the dimensions of $star$ table and the descriptive statistics (mean, maximum, minimum and median values). You can find the corresponding syntax \href{https://davidsichinava.github.io/introstatsr/pages/m4/pres/meeting_4.html}{here} and \href{https://davidsichinava.github.io/introstatsr/pages/m5/pres/meeting_5.html}{here}.
+
+There are seven variables in the $star$ table which take the following values:
+
+\begin{tabular}{ |p{3cm}|p{10cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Description} \\
+ \hline
+ Variable and Variable Value\\
+ \hline
+		race       & Race (1-white, 2-black, 3-asian, 4-hispanic, 5-native American, 6-Other \\
+		classType  & Type of kindergarten class (small = 1, regular = 2, regular with aid = 3)\\ 
+		g4math     & Total scaled score for the math portion of the fourth-grade standardized test \\
+		g4reading  & Total scaled score for the reading portion of the fourth-grade standardized test \\
+		yearssmall & Number of years in small classes\\
+		hsgrad     & High-school graduation (did graduate = 1, did not graduate = 0)\\
+\hline
+\end{tabular}
+
+Create a new variable $kinder$ out of $classType$ variable. This variable should recode classtype by changing integer values to their corresponding informative labels (e.g., change 1 to small etc.). Similarly, recode the $race$ variable into a factor variable with four levels (white, black, hispanic, others) by combining the Asian and Native American categories with the others category. For the $race$ variable, overwrite the original variable in the data frame rather than creating a new one.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{### Create a new variable}
+
+\hlstd{star}\hlopt{$}\hlstd{kinder}\hlkwb{<-}\hlkwd{factor}\hlstd{(star}\hlopt{$}\hlstd{classtype,}
+      \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{),}
+      \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"small"}\hlstd{,} \hlstr{"regular"}\hlstd{,} \hlstr{"regular w/aid"}\hlstd{)}
+      \hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in factor(star\$classtype, levels = c(1, 2, 3), labels = c("{}small"{}, : object 'star' not found}}\begin{alltt}
+\hlkwd{table}\hlstd{(star}\hlopt{$}\hlstd{kinder)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in table(star\$kinder): object 'star' not found}}\begin{alltt}
+\hlcom{### Recode race into new categories:}
+
+\hlkwd{table}\hlstd{(star}\hlopt{$}\hlstd{race)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in table(star\$race): object 'star' not found}}\begin{alltt}
+\hlstd{star}\hlopt{$}\hlstd{race[star}\hlopt{$}\hlstd{race} \hlopt{==} \hlnum{4}\hlstd{]} \hlkwb{<-} \hlnum{4}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in star\$race[star\$race == 4] <- 4: object 'star' not found}}\end{kframe}
+\end{knitrout}
+
+Great. The hardes part is behind. Now let's check what do variables $g4math$ and $g4reading$ look like. These variables are so called \emph{quantitative variables}, therefore you should calculate their mean, median and standard deviation. The necessary syntax was given during the previous presentation.
+
+\section*{Analysis}
+
+\paragraph{}
+
+Mosteller was interested whether the reading and numeric comprehension of fourth-graders differ across classrooms of different sizes. In order to check that we have to calculate, what were \emph{average scores} in math and reading.
+
+The following code will calculate the mean values for small classes. Use the same approach and calculate means for regular and regular with aid classes. Notice that we also indicate $na.rm=TRUE$ option. It tells $R$ to ignore missing values. Otherwise the code will break.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(star}\hlopt{$}\hlstd{g4math[star}\hlopt{$}\hlstd{kinder}\hlopt{==}\hlstr{"small"}\hlstd{],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean(star\$g4math[star\$kinder == "{}small"{}], na.rm = TRUE): object 'star' not found}}\end{kframe}
+\end{knitrout}
+
+Based on these results, write a paragraph summarizing the effect of class size on the academic achievements of the students. Additionally, use $standard deviation$ of scores, which would help you evaluating how dispersed or concentrated the scores are.
+
+Apart from the average, you may also want to asses high and low scores, that is a $quantile effect$ of the experiment. To put it in simple terms, the experiment may have no effect on the average, however, it may affect students who scored high or low. Maybe small classes are better for better students? Let's calculate scores for low (33\%) and high (66\%) quantiles of math and reading scores and write a short interpretation. The example below describes how to calculate these scores for reading in small classes.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(star}\hlopt{$}\hlstd{g4reading[star}\hlopt{$}\hlstd{kinder}\hlopt{==}\hlstr{"small"}\hlstd{],} \hlkwd{c}\hlstd{(}\hlnum{.33}\hlstd{,} \hlnum{.66}\hlstd{),} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in quantile(star\$g4reading[star\$kinder == "{}small"{}], c(0.33, 0.66), : object 'star' not found}}\end{kframe}
+\end{knitrout}
+
+As we can see, only a portion of kids studied in small classes throughout all four years. Others were put back to the regular classes or were assigned to the regular classes with special aid. Using $kinder$ and $yearssmall$ variables calculate the proportion of students who spend one, two, three, or four years in small classes. How do you think, does spending long time in small classes affect kids' math and reading comprehension? Hint: you should calculate the mean and the median of scores for each year. Write a short interpretation.
+
+Assess the difference in reading and math comprehension between white and black kids. However, in this case use data for only regular and small classes. Calculate average scores of reading and math comprehension for each group. Write a short paragraph describing the results.
+
+Finally, examine the long-term effect of spending time in small classes. Compare the graduation level for each class type and examine, whether there is a difference in graduation level between kids who spend different time in small classes. Additionally, check whether spending time in small classes yielded different graduation level among white and minority kids. Write a short interpretation of your analysis.
+
+
+\section*{Annotated bibliography}
+\paragraph{}
+
+Höfler, M. (2005). \href{https://www.dropbox.com/s/7qo4c0g85xw0zer/Hoefler2005.pdf?dl=0}{Causal inference based on counterfactuals}. \emph{BMC medical research methodology}, 5(1), 28.
+
+Holland, P. W. (1986). \href{https://www.dropbox.com/s/8dza8acflt1ige4/Holland1986.pdf?dl=0}{Statistics and causal inference}. \emph{Journal of the American statistical Association}, 81(396), 945-960.
+
+
+
+\subsection*{Thanks God, finished! Want to submit my assignment A.S.A.P!}
+
+Zip the whole folder for the second lab. Name the file according to the following format: $surname\_lab3.zip$ like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sichinava_lab3.zip}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Upload the file to \href{https://www.dropbox.com/request/sR0YYr1utGRwXEal9Hq5}{this link} before the start of our next meeting.
+
+
+\end{document}

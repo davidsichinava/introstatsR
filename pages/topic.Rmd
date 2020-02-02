@@ -1,0 +1,314 @@
+---
+title: "Topics"
+output: html_document
+
+---
+
+_This class is based on the [program](http://imai.princeton.edu/teaching/files/syl345.pdf) designed by [Kosuke Imai](http://imai.princeton.edu/) (Princeton)_
+
+### Turned labs and attendance
+
+Refer to this [file](https://www.dropbox.com/s/iw5n0wp4bqrc7l2/labs.xlsx?dl=0) to see labs which we have received so far
+
+Refer to this [file](https://www.dropbox.com/s/s4uaahx7cwtue7h/attendance.xlsx?dl=0) to check the attendance
+
+
+### Meeting 1: Introduction
+
+#### ![](ico/teacher.png) Lecture:
+
+- Introduction and logistics
+  - Necessary software
+  - Assessment, assignments, labs, etc.
+
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, Ch 1, section 1.3
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m1/pres/meeting_1.html">Presentation</a>
+
+
+#### ![](ico/flask-outline.png) Lab:
+* Intro to `R`
+* Intro to `R` GUI: `R-Studio`
+* Key elements of R-Studio
+* Creating R-Markdown document
+* 'Literate programming' and the best practice for organizing projects 
+* [Assignment](https://www.dropbox.com/s/9hjogzu3tj23zfk/lab1.pdf?dl=0)
+
+#### ![](ico/book_stack.png) Readings for annotated bibliography:
+
+Goodman, S. N., Fanelli, D., & Ioannidis, J. P. (2016). [What does research reproducibility mean?](https://www.dropbox.com/s/4io57pvabqw539s/Goodman%2C%202016.pdf?dl=0). _Science translational medicine_, 8(341).
+
+Iqbal, S. A., Wallach, J. D., Khoury, M. J., Schully, S. D., & Ioannidis, J. P. (2016). [Reproducible research practices and transparency across the biomedical literature](https://www.dropbox.com/s/dgl3tbskfjjn5ib/iqbal_et_al%2C%202016.PDF?dl=0). _PLoS Biol_, 14(1).
+
+Stodden, V. (2010). [Data sharing in social science repositories: facilitating reproducible computational research](https://www.dropbox.com/s/uh7vd6diud8tcyu/Stodden%2C%202010.pdf?dl=0). _NIPS_ 2010.
+
+
+![](ico/book.png) Submit your assignment [to this link](https://www.dropbox.com/request/fJXwi6SVJ0D7r1WvxyG9)
+
+### Meeting 2: Getting acquainted with R environment
+
+#### ![](ico/flask-outline.png) Lab:
+
+* Data types and vector objects
+	+ Atomic objects (character, logical, integer/double)
+	+ List
+	+ Attributes
+	+ Factors
+	+ Arrays and matrices
+	+ Data frame
+
+* Arithmetic functions and operators
+
+* Data processing
+	+ Subsetting,
+	+ Replacement
+
+* [Assignment](https://www.dropbox.com/s/j9u1nuh33e2o21p/lab2.pdf?dl=0)
+
+![](ico/open-book.png) Complementary reading:
+
+Fox, J. (2002). [Ethnic minorities and the clash of civilizations: A quantitative analysis of Huntington's thesis](https://www.dropbox.com/s/8sg1ljhydxggvcc/fox2002.pdf?dl=0). _British journal of political science_, 32(3), 415-434.
+
+#### ![](ico/book_stack.png) Readings for annotated bibliography:
+
+Mearsheimer, J. J., & Walt, S. M. (2013). [Leaving theory behind: Why simplistic hypothesis testing is bad for International Relations](https://www.dropbox.com/s/um04p1wipvgh5pt/mearsheimer2013.pdf?dl=0). _European Journal of International Relations_, 19(3), 427-457.
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m2/pres/meeting_2.html">Presentation</a>
+
+![](ico/book.png) Submit your assignment [to this link](https://www.dropbox.com/request/caLOyeOsr6IHgGltizgq)
+
+
+### Meeting 3: Causality
+
+#### ![](ico/teacher.png) Lecture:
+
+* Randomized experiments
+	+ Causal effects
+	+ Counterfactuals
+	+ Randomized control trials
+
+![](ico/open-book.png) Readings:
+
+
+* QSS, Ch. 2, section 2.1-2.4
+
+#### ![](ico/flask-outline.png) Lab:
+
+* [Assignment](https://www.dropbox.com/s/ebdukzmbj70y2bd/lab3.pdf?dl=0)
+* [Answers to the assignment](https://www.dropbox.com/s/i8w9xr1gvqlabdo/lab3_key.R?dl=0)
+
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m3/pres/meeting_3.html">Presentation</a>
+
+
+![](ico/book.png) Submit your assignment [to this link](https://www.dropbox.com/request/sR0YYr1utGRwXEal9Hq5)
+
+#### ![](ico/book_stack.png) Readings for annotated bibliography:
+
+
+Höfler, M. (2005). [Causal inference based on counterfactuals](https://www.dropbox.com/s/7qo4c0g85xw0zer/Hoefler2005.pdf?dl=0). BMC medical research methodology, 5(1), 28.
+
+Holland, P. W. (1986). [Statistics and causal inference](https://www.dropbox.com/s/8dza8acflt1ige4/Holland1986.pdf?dl=0). Journal of the American statistical Association, 81(396), 945-960.
+
+
+### Topic 4: Causality
+
+#### ![](ico/teacher.png) Lecture:
+
+
+- Causality
+	+ Observation
+- Confounding bias
+- Before-and-after design
+
+
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, Chapter 2, section 2.5-2.7.
+
+
+#### ![](ico/flask-outline.png) Lab:
+* [Assignment](https://www.dropbox.com/s/28udx20aki4s7uo/lab4.pdf?dl=0)
+* Jones, B. F., & Olken, B. A. (2009). [Hit or miss? The effect of assassinations on institutions and war](https://www.dropbox.com/s/vcrob2ameksvy7t/Jones%26Olken_2009.pdf?dl=0). American Economic Journal: Macroeconomics, 55-87.
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m4/pres/meeting_4.html">Presentation</a>
+
+
+
+#### ![](ico/book_stack.png) Annotated bibliography:
+
+Card, D., & Krueger, A. B. (1993). [Minimum wages and employment: A case study of the fast food industry in New Jersey and Pennsylvania](https://www.dropbox.com/s/34x5ilchdjxs35t/njmin-aer.pdf?dl=0) (No. w4509). National Bureau of Economic Research.
+
+
+### Topic 5: Causality
+
+#### ![](ico/teacher.png) Lecture:
+
+- Difference-in-Difference estimate
+- Observational studies:
+	+ Statistics for one variable
+	+ Quantiles
+	+ Root of mean squares (RMS)
+	+ Standard deviation
+- Survey sampling
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, chapter 3, section 3.1-3.4
+
+
+#### ![](ico/flask-outline.png) Lab:
+
+* Data types and vector objects
+* Arithmetic operations
+* Data processing
+* Random number generation
+* [Assignment](https://davidsichinava.github.io/introstatsr/pages/m5/lab/lab5.pdf)
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m5/pres/meeting_5.html">Presentation</a>
+
+
+
+### Topic 6: Data processing
+
+* Data processing
+* Subsetting
+
+#### ![](ico/flask-outline.png) Lab:
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m6/pres/meeting_6.html">Presentation</a>
+
+
+
+### Topic 7: Measurement
+
+#### ![](ico/teacher.png) Lecture:
+
+* Bivariate relationship
+
+![](ico/open-book.png) Reading:
+
+* QSS, chapter 3, section 3.6-3.7
+* [Assignment](https://davidsichinava.github.io/introstatsr/pages/m7/lab/lab7.pdf)
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m7/pres/meeting_7.html">Presentation</a>
+
+### Topic 8: Data visualization
+
+#### ![](ico/teacher.png) Lecture:
+
+* Data visualization with `ggplot2`
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, chapter 3, section 3.3-3.4
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m8/pres/meeting_8.html">Presentation</a>
+
+#### ![](ico/book_stack.png) Annotated bibliography:
+
+Powsner, S. M., & Tufte, E. R. (1994). [Graphical summary of patient status](https://www.dropbox.com/s/2fgyc2cwf3thlf8/Powsner%26Tufte.pdf?dl=0). The Lancet, 344(8919), 386-389.
+
+Edward Tufte. (1983). The visual display of quantitative information. [Chapter 9](https://www.dropbox.com/s/4ommrdiokew9h54/VDQI_Ch9.pdf?dl=0).
+
+
+### Topic 9: Prediction
+
+#### ![](ico/teacher.png) Lecture:
+
+* Prediction
+* Linear regression
+
+
+![](ico/open-book.png) Reading:
+
+* QSS, chapter 4, section 4.1-4.3
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m9/pres/meeting_9.html">Presentation</a>
+
+
+### Topic 10: Prediction
+
+#### ![](ico/teacher.png) Lecture:
+
+* Assumptions of the linear regression
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m10/pres/meeting_10.html">Presentation</a>
+
+
+### Topic 11: Prediction
+
+#### ![](ico/teacher.png) Lecture:
+
+* Regression and causality
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, chapter 4, section 4.2-4.3
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m11/pres/meeting_11.html">Presentation</a>
+
+
+### Topic 12: Uncertainty
+
+#### ![](ico/teacher.png) Lecture:
+
+* Estimation
+* Hypothesis testing
+* [Assignment](https://www.dropbox.com/s/wukbfutcnrhpv6t/lab12.pdf?dl=0)
+* Submit your assignment to this [link](https://www.dropbox.com/request/4wIEMUItR5v7ZNBYIUJ4)
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, chapter 7, section 7.1
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m12/pres/meeting_12.html">Presentation</a>
+
+
+### Topic 13: Uncertainty
+
+#### ![](ico/teacher.png) Lecture:
+* Uncertainty
+	+ Hypothesis testing;
+	+ One and two sample testing;
+	+ Statistical power;
+* Linear regression with uncertainty
+* [Assignment](https://davidsichinava.github.io/introstatsr/pages/m13/lab/lab13.pdf)
+* [Paper by Bayer and Rupert](https://www.dropbox.com/s/xsoyht80qkt0jmo/bayer2004.pdf?dl=0)
+
+![](ico/open-book.png) Reading:
+
+
+* QSS, chapter 7, section 7.2-7.4
+
+<img src="ico/teacher.png" alt="Drawing" style="width: 16px; vertical-align:middle;"/> 
+<a href="https://davidsichinava.github.io/introstatsr/pages/m13/pres/meeting_13.html">Presentation</a>
+
+#### ![](ico/book_stack.png) Annotated bibliography:
+
+Gelman, A., & Loken, E. (2014). [The Statistical Crisis in Science Data-dependent analysis—a “garden of forking paths”—explains why many statistically significant comparisons don't hold up](https://www.dropbox.com/s/eu8jky7q5urj3mi/gelman_loken_2014_the_statistical_crisis_in_science.pdf?dl=0). Am Sci, 102(6), 460.
+
+
+_Icon source: [Flaticon](http://www.flaticon.com)_

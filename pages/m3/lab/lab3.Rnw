@@ -1,0 +1,169 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 3: Small Classes and Early Education}
+\author{David Sichinava}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+\section*{Topics}
+\begin{itemize}
+\item Read external files
+\item Recoding variables
+\item Simple arithmetic operations
+\end{itemize}
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab3.rmd$. For example,
+
+<<ch1a, eval=FALSE>>=
+sichinava_lab3.Rmd
+@
+
+\section*{Introduction:}
+\paragraph{}
+This assignment is based on the study by \href{https://en.wikipedia.org/wiki/Frederick_Mosteller}{Frederick Mosteller} published in the \emph{The Future of Children} in 1995. Mosteller wanted to identify how does class size affect students' academic achievement and whether the effect is long-term. 
+
+\section*{Data Manipulation and Descriptive Statistics}
+\paragraph{}
+
+First of all, create a new notebook and read the data to R. Do not forget to indicate working directory. As you may notice, we name the newly created table $star$. You can read data files from the web, or alternatively, you may want to download them to your computer and read offline.
+
+
+<<ch1, eval=TRUE>>=
+
+### link to download data file: https://goo.gl/pnNug3
+
+star <- read.csv("STAR.csv")
+
+@
+
+It is a rule of thumb that you do a descriptive statistics before you start analyzing your data. First let's check the variables included in the $star$ table: 
+
+
+<<ch2, eval=TRUE>>=
+
+names(star)
+
+
+@
+
+Display the dimensions of $star$ table and the descriptive statistics (mean, maximum, minimum and median values). You can find the corresponding syntax \href{https://davidsichinava.github.io/introstatsr/pages/m4/pres/meeting_4.html}{here} and \href{https://davidsichinava.github.io/introstatsr/pages/m5/pres/meeting_5.html}{here}.
+
+There are seven variables in the $star$ table which take the following values:
+
+\begin{tabular}{ |p{3cm}|p{10cm}|  }
+ \hline
+ \multicolumn{2}{|c|}{Description} \\
+ \hline
+ Variable and Variable Value\\
+ \hline
+		race       & Race (1-white, 2-black, 3-asian, 4-hispanic, 5-native American, 6-Other \\
+		classType  & Type of kindergarten class (small = 1, regular = 2, regular with aid = 3)\\ 
+		g4math     & Total scaled score for the math portion of the fourth-grade standardized test \\
+		g4reading  & Total scaled score for the reading portion of the fourth-grade standardized test \\
+		yearssmall & Number of years in small classes\\
+		hsgrad     & High-school graduation (did graduate = 1, did not graduate = 0)\\
+\hline
+\end{tabular}
+
+Create a new variable $kinder$ out of $classType$ variable. This variable should recode classtype by changing integer values to their corresponding informative labels (e.g., change 1 to small etc.). Similarly, recode the $race$ variable into a factor variable with four levels (white, black, hispanic, others) by combining the Asian and Native American categories with the others category. For the $race$ variable, overwrite the original variable in the data frame rather than creating a new one.
+
+<<ch3a, eval=TRUE>>=
+
+### Create a new variable
+
+star$kinder<-factor(star$classtype,
+      levels = c(1,2,3),
+      labels = c("small", "regular", "regular w/aid")
+      )
+table(star$kinder)
+
+### Recode race into new categories:
+
+table(star$race)
+star$race[star$race == 4] <- 4
+
+@
+
+Great. The hardes part is behind. Now let's check what do variables $g4math$ and $g4reading$ look like. These variables are so called \emph{quantitative variables}, therefore you should calculate their mean, median and standard deviation. The necessary syntax was given during the previous presentation.
+
+\section*{Analysis}
+
+\paragraph{}
+
+Mosteller was interested whether the reading and numeric comprehension of fourth-graders differ across classrooms of different sizes. In order to check that we have to calculate, what were \emph{average scores} in math and reading.
+
+The following code will calculate the mean values for small classes. Use the same approach and calculate means for regular and regular with aid classes. Notice that we also indicate $na.rm=TRUE$ option. It tells $R$ to ignore missing values. Otherwise the code will break.
+
+<<ch5, eval=TRUE>>=
+mean(star$g4math[star$kinder=="small"], na.rm=TRUE)
+
+@
+
+Based on these results, write a paragraph summarizing the effect of class size on the academic achievements of the students. Additionally, use $standard deviation$ of scores, which would help you evaluating how dispersed or concentrated the scores are.
+
+Apart from the average, you may also want to asses high and low scores, that is a $quantile effect$ of the experiment. To put it in simple terms, the experiment may have no effect on the average, however, it may affect students who scored high or low. Maybe small classes are better for better students? Let's calculate scores for low (33\%) and high (66\%) quantiles of math and reading scores and write a short interpretation. The example below describes how to calculate these scores for reading in small classes.
+
+<<ch6, eval=TRUE>>=
+quantile(star$g4reading[star$kinder=="small"], c(.33, .66), na.rm=TRUE)
+@
+
+As we can see, only a portion of kids studied in small classes throughout all four years. Others were put back to the regular classes or were assigned to the regular classes with special aid. Using $kinder$ and $yearssmall$ variables calculate the proportion of students who spend one, two, three, or four years in small classes. How do you think, does spending long time in small classes affect kids' math and reading comprehension? Hint: you should calculate the mean and the median of scores for each year. Write a short interpretation.
+
+Assess the difference in reading and math comprehension between white and black kids. However, in this case use data for only regular and small classes. Calculate average scores of reading and math comprehension for each group. Write a short paragraph describing the results.
+
+Finally, examine the long-term effect of spending time in small classes. Compare the graduation level for each class type and examine, whether there is a difference in graduation level between kids who spend different time in small classes. Additionally, check whether spending time in small classes yielded different graduation level among white and minority kids. Write a short interpretation of your analysis.
+
+
+\section*{Annotated bibliography}
+\paragraph{}
+
+Höfler, M. (2005). \href{https://www.dropbox.com/s/7qo4c0g85xw0zer/Hoefler2005.pdf?dl=0}{Causal inference based on counterfactuals}. \emph{BMC medical research methodology}, 5(1), 28.
+
+Holland, P. W. (1986). \href{https://www.dropbox.com/s/8dza8acflt1ige4/Holland1986.pdf?dl=0}{Statistics and causal inference}. \emph{Journal of the American statistical Association}, 81(396), 945-960.
+
+
+
+\subsection*{Thanks God, finished! Want to submit my assignment A.S.A.P!}
+
+Zip the whole folder for the second lab. Name the file according to the following format: $surname\_lab3.zip$ like this:
+
+<<ch3, eval=FALSE>>=
+sichinava_lab3.zip
+
+@
+
+Upload the file to \href{https://www.dropbox.com/request/sR0YYr1utGRwXEal9Hq5}{this link} before the start of our next meeting.
+
+
+\end{document}

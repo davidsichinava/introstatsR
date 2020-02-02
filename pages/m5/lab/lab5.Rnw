@@ -1,0 +1,97 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 5: Canvassing and the Attiudes towards Gay Marriage}
+\author{David Sichinava, Rati Shubladze}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab5.rmd$. For example,
+
+<<ch1a, eval=FALSE>>=
+shubladze_lab5.Rmd
+@
+
+\section*{Background:}
+\paragraph{}
+Lacour \& Green's \href{https://www.dropbox.com/s/aseyh1yl142o2ut/lacour2014.pdf?dl=0}{article} stirred much discussion about honesty in academic research. In a seemingly ground-breaking study the two authors argued that gay canvasers were much more likely to convince voters to support same-sex marriage bill, and the effect could have a long-term consequences rather than the same job done by straight canvassers. Given the importance of the topic, the article was published in \emph{Science} magazine. Moreover, it made a big blast well beneath the academic circles and made a headline in \href{https://www.nytimes.com/2014/12/12/health/gay-marriage-canvassing-study-science.html?_r=0}{The New York Times}. However, two graduate students managed to prove that the authors (in fact, the lead author, Michael LaCour) simply \href{http://web.stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf}{made up} the dataset used in the analysis. 
+If you are interested, refer to this excellent reporting from \href{https://fivethirtyeight.com/features/how-two-grad-students-uncovered-michael-lacour-fraud-and-a-way-to-change-opinions-on-transgender-rights/}{FiveThirtyEight}. For our purposes, let's consider that LaCour and the coauthor were completely honest and indeed found something important. Let's check whether gay canvassers in fact had any effect on the voting behavior.
+
+Please note that this assignment is based on the exercise given in Imai's book (page 71, section 2.8.2).
+
+\section*{Data Preparation:}
+\paragraph{}
+
+First of all, create a new notebook and read the data to R. Do not forget to indicate the working directory. Download data from \href{https://www.dropbox.com/s/3wbrhg7byzltqlm/gay.csv?dl=0}{dropbox} or directly from this link: https://goo.gl/KbtFbK. Read downloaded $.csv$ file to $r$. Name the new data frame $lacour$. 
+
+Display variable names and show summary statistics. Hint: use $summary$ function, if you don't remember how to do that, refer Google or slides from second and third meeting.
+
+In the table below you can find the description of each variable.
+
+% Please add the following required packages to your document preamble:
+\begin{table}[]
+\centering
+\caption{Descriptive Statistics}
+\label{my-label}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Variable  & Description                                                            \\ \midrule
+study     & source of the data (1 = study 1, 2 = study 2)                          \\
+treatment & five possible treatment assignment options                             \\
+wave      & survey wave (a total of seven waves)                                   \\
+ssm       & five-point scale on same-sex marriage, higher scores indicate support. \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Variable $study$ denotes the studies which were conducted under the auspicies of this research. 1 stands for Lacour and Green's original fake research, while 2 denotes a follow-up study done by the same authors using a slightly different treatments. In total, each study consisted of seven waves, where the first wave measuring the attitudes before treatment (canvassing).
+
+Variable $treatment$ measures what type of canvassing treatment was administered on the respondent. Make a frequency table of this variable and list the possible assignment options.
+
+
+\section*{Estimating Treatment Effect}
+\paragraph{}
+
+Nice try! Our variable of interest is $ssm$ which measures people's support of gay marriage, higher scores denoting more support. We try to estimate how $ssm$ changes across waves depending on the type of intervention. Remember that in this assignment we only refer to the first study (study == 1), therefore you may want to subset data for the first study and do your calculations on that dataset.
+
+The second wave of the survey was implemented two months after canvassing. Using study 1, estimate the average treatment effects of gay and straight canvassers on support for same-sex marriage, separately. Give a brief interpretation of the results. If you don't remember what treatment effect is, refer to the book or slides.
+
+In study 1, the authors reinterviewed the respondents six different times (in waves 2 to 7) after treatment, at two-month intervals. The last interview, in wave 7, occurs one year after treatment. Do the effects of canvassing last? If so, under what conditions? Answer these questions by separately computing the average effects of straight and gay canvassers with the same-sex marriage script for each of the subsequent waves (relative to the control condition).
+
+\subsection*{Where is the Dropbox link?}
+
+Zip the whole folder for the fifth lab. Name the file according to the following format: $surname\_lab5.zip$. Upload the file to \href{https://www.dropbox.com/request/BuKoKCJDOZPZg221ZCJG}{this link} before the start of our next meeting.
+
+
+\end{document}

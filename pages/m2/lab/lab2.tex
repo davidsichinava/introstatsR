@@ -1,0 +1,289 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 2: Intro to R}
+\author{David Sichinava}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+\section*{Topics}
+\begin{itemize}
+\item Read external files
+\item Simple tables
+\item Simple arithmetic operations
+\end{itemize}
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab2.rmd$. For example,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sichinava_lab2.Rmd}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Assignments:}
+
+\subsection*{Reading external data to R}
+
+First of all, create a working directory for your work in your computer. Add a subfolder $labs$ and create a folder for the first lab: $lab\_2$.
+
+Open `R-studio` and create new $R$-notebook. Assign a name and save it into $lab\_2$ folder. 
+
+You can analyze variety of data formats in R including MS Excel, text files, Stata, SPSS, SAS, SQL tables, spatial data formats (\.shp), javascript notation documents (.json) and so forth. Files can be stored into your computer or ,,somewhere'' in the internet.
+
+Usually, datasets are stored in tabular format, where each row represents a \emph{case} and a column represents \emph{variable}. Of course, there exist numerous other paradigms of organizing data (e.g. tidy data, document databases, relational tables), however we won't cover them throughout this course.
+
+R's base functions easily read tab and comma separated data files. Usually, these data are stored in a text files having \emph{.csv}, \emph{.txt} or \emph{dat} extensions. They look like as follows:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{### tab separated files}
+
+1   6   a
+2   7   b
+3   8   c
+4   9   d
+5   10  e
+
+\hlcom{### comma separated files}
+
+v1,v2,v3
+1,2,3
+4,5,6
+7,8,9
+a,b,c
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+Insert code chunk in your notebook. Be sure that your code is active. Write down a code between the accent marks which will navigate you to your working directory. From this \href{https://www.dropbox.com/s/yfmdhohpp31utwt/Galton.csv?dl=0}{link} download $Galton.csv$ file and save it to your working directory.
+
+As I mentioned, reading text files to R is pretty straightforward. Please note that our file is \emph{comma delimited}, that is, the columns in the file are separated with commas. You can easily see that if you open the file with notepad. For reading csv file, you should use $read.csv$ function.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"Galton.csv"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Note that the first $galton$ is a name of a new table which will store the information into R environment. The function is $read.csv$. Note that file names should be enclosed with quotation marks.
+
+Sir Francis Galton, famous British statistician, geographer (and apparently, racist and eugenicist) was interested in studying how human physical characteristics are influenced by the treats of one's ancestor. He collected data for about two hundred families and studied, how childrens' height were affected by parents' physical characteristics.
+
+Let's examine our data. Use function $names$ to check what variables the dataset does contain. How many variables are there? Write down their names into your markdown document.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{names}\hlstd{(galton)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection*{Simple descriptive statistics in R}
+
+Perfect. Now let's examine variable $height$. In order to refer objects in R, you should use dollar sign. The code below will show you the whole variable $height$ into your console:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Let's calculate mean, median and standard deviation of variable $height$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(galton}\hlopt{$}\hlstd{height)}
+
+\hlkwd{median}\hlstd{(galton}\hlopt{$}\hlstd{height)}
+
+\hlkwd{sd}\hlstd{(galton}\hlopt{$}\hlstd{height)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+As I mentioned, Galton was linking parents' physical treats to those of children. Write a code which would calculate mean, median and standard deviation for variables $father$ and $mother$. Write a very simple description of the dataset.
+
+\subsection*{Data transformation in R}
+
+You might notice that heights are in the dataset are given in inches. There are 2.54 centimeters in one inch. Let's create a new variable $height_cm$ which will store newly calculated values for kids' height.
+
+Creating new variables in R are straightforward: you tell $R$ that it should create a variable named $height_cm$ in table $galton$ which is $height$ times 2.54. To put it simple:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height_cm} \hlkwb{<-} \hlstd{galton}\hlopt{$}\hlstd{height}\hlopt{*}\hlnum{2.54}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Now summarize newly created variable and calculate its mean, median and standard deviation.
+
+Create new variables for the centimeter equivalent for $father$ and $mother$ and calculate mean, median and standard deviation of these new variables.
+
+Often we need to group certain values of a variable together, for example, to create a new variable which instead of actual ages will show age groups (e.g. whether the person is millennial, x-gener, baby-boomer, etc.). We will this on the following example. Let's create a new variable which would have four values: 1 would stand for children who are shorter than 150cm, 2 would correspond people whose height is between 150 and 169, 3 those who are 170-189 cm tall and 4 would stand for the tallest (190+) people. Remember we need to create a new variable $height_gr$ first.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height_gr} \hlkwb{<-} \hlstd{galton}\hlopt{$}\hlstd{height_cm}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+Nice. Here we will tell R to replace $height_gr$ with $1$ where $height_cm$ is less than $150$. That is, when \emph{filtering} the dataset we can refer to any variable existing in $R$ environment. Let's see how this works:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height_gr[galton}\hlopt{$}\hlstd{height_cm} \hlopt{<} \hlnum{150}\hlstd{]} \hlkwb{<-} \hlnum{1}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+As you can see, square brackets indicate the code which filters the observations. You can have more complicated syntax as well:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height_gr[galton}\hlopt{$}\hlstd{height_cm}\hlopt{>=}\hlnum{150} \hlopt{&} \hlstd{galton}\hlopt{$}\hlstd{height_cm}\hlopt{<}\hlnum{170} \hlstd{]} \hlkwb{<-} \hlnum{2}
+
+\hlstd{galton}\hlopt{$}\hlstd{height_gr[galton}\hlopt{$}\hlstd{height_cm}\hlopt{>=}\hlnum{170} \hlopt{&} \hlstd{galton}\hlopt{$}\hlstd{height_cm}\hlopt{<}\hlnum{190} \hlstd{]} \hlkwb{<-} \hlnum{3}
+
+\hlstd{galton}\hlopt{$}\hlstd{height_gr[galton}\hlopt{$}\hlstd{height_cm}\hlopt{>=}\hlnum{190}\hlstd{]} \hlkwb{<-} \hlnum{4}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Easy, right? You can also attach labels, that is, textual meanings to the categories! In order to do that, you should turn the variable from $numeric$ into $factor$ type and then add labels.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{galton}\hlopt{$}\hlstd{height_gr} \hlkwb{<-} \hlkwd{factor}\hlstd{(galton}\hlopt{$}\hlstd{height_gr,} \hlkwc{labels}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"Short"}\hlstd{,} \hlstr{"Medium"}\hlstd{,} \hlstr{"Tall"}\hlstd{,} \hlstr{"Very tall"}\hlstd{))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Now let's do the same for mother's height. Please note that you should use mother's height in centimeters in order to calculate the new groups.
+
+\subsection*{Frequency tables in R}
+
+Now let's see how many short, medium, tall and very tall individuals were in Galton's dataset. In order to do that, you should make a table of $height_gr$ variable. A table, simple frequency table.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{table}\hlstd{(galton}\hlopt{$}\hlstd{height_gr)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Similarly make table of newly created variable which shows categories for mothers' height.
+
+
+\subsection*{Phew. Ready. Want to submit my assignment as soon as possible!}
+
+Zip the whole folder for the second lab. Name the file according to the following format: $surname\_lab2.zip$ like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{shubladze_lab2.zip}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Upload the file to \href{https://www.dropbox.com/request/caLOyeOsr6IHgGltizgq}{this link} before the start of our next meeting.
+
+
+Good luck!
+
+
+\end{document}

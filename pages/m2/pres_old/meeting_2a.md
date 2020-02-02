@@ -1,0 +1,166 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Second Meeting</div>
+
+Quantitative Research Methods - Introduction to Applied Statistics
+========================================================
+author: DAVID SICHINAVA, RATI SHUBLADZE
+date: 11 October 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Ice breaker before the Second meeting</span>
+
+<span style="color:red;font-weight:bold">Why do we need statistics in IR? </span>
+
+Why do we need statistics in IR?
+========================================================
+incremental: true
+
+- Ethnic Minorities and the Clash of Civilizations: A Quantitative Analysis of Huntington's Thesis
+
+ 
+- An article by JONATHAN FOX (2002), that uses the Minorities at Risk dataset to provide a quantitative element to the civilizations debate
+
+
+Purpose of the article:
+========================================================
+incremental: true
+- To find, whether there has been a rise in both the quantity and intensity of ethnic conflicts between groups belonging to different civilizations since the end of the Cold War.
+
+- To verify Huntington's Thesis using quantitative methods
+
+- To provide working tools for theory validation
+
+
+Why it matters?
+========================================================
+incremental: true
+- Ever since Huntington proposed his "clash of civilizations" thesis there has been a vigorous debate over its validity.
+
+- Controversial argument that the end of the Cold War resulted in a change in the nature of world conflict
+
+
+What did Huntington miss? 
+========================================================
+incremental: false
+
+- Huntington ignored some important phenomenon that will impact on conflict, thereby making his theory irrelevant.
+
+ 1. Improved conflict management techniques
+ 2. World wide trends toward secularism
+ 3. Information technology
+ 4. Ethnopolitical conflicts result from protracted discrimination rather than cultural roots
+
+ What did Huntington did wrong? 
+========================================================
+incremental: true
+
+- Huntington ignored some important phenomenon that will impact on conflict, thereby making his theory irrelevant.
+
+- Pfaff (1997) accuses Huntington of ignoring facts.
+
+- Hassner (1997), even goes as far as to accuse Huntington of bending the facts to fit his theory.
+
+ What did Huntington did wrong? 
+========================================================
+incremental: true
+
+<img src="img/fishing.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Did Huntington's opponents behave better?   
+========================================================
+incremental: true
+
+- The most of Huntington's critics as well as Huntington himself, rely mostly on anecdotal evidence.
+
+Did Huntington's opponents behave better?   
+========================================================
+incremental: true
+
+<img src="img/anecdotal.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+Aim of the paper
+========================================================
+incremental: true
+
+- To assess quantitatively whether some of Huntington's predictions are correct with regard to ethnic conflict
+
+- To identify if clashes between minority and majority groups of different civilizations within the state are more common and more intense than those between groups who are both of the same civilization
+
+- To prove that Huntington was wrong, using STATISTICAL EVIDENCE 
+
+Methodology
+========================================================
+incremental: true
+
+- Minorities at Risk Phase 3 (MAR3) dataset
+
+- The unit of analysis in this dataset is the minority group within a state. 
+
+- For each of the 275 cases there is a minority and a majority group.
+
+- Comparing mean scores of the dataset using Student's T-test
+
+What is T-test?
+========================================================
+incremental: true
+
+<img src="img/mean.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+
+Results 
+========================================================
+incremental: false
+
+- Civilizational conflicts make up only a minority of ethnic conflicts in the post-Cold War era
+
+
+<img src="img/picture1.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+
+Results 
+========================================================
+incremental: false
+
+- The mean intensity of civilizational vs. noncivilizational rebellion also provides no confirmation for Huntington's theory.
+
+
+<img src="img/picture2.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+
+Results 
+========================================================
+incremental: false
+
+Nor does the mean intensity of civilizational vs. noncivilizational protest support Huntington?s hypothesis. 
+
+<img src="img/picture3.png" alt="Drawing" style="width: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+
+To conclude 
+========================================================
+incremental: true
+
+- The results of this analysis do not support Huntington's "clash of civilizations"" argument.
+
+- Civilizational conflicts constitute a minority of ethnic conflicts both during and after the Cold War.
+
+- In fact, the largest percentage of ethnic conflicts occur within civilizations
+
+Lessons learned 
+========================================================
+incremental: true
+
+- Simplistic hypothesis testing is bad for International Relations 
+
+- Why validating the theories using the data matters
+
+- T-test 
+

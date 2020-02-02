@@ -1,0 +1,142 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 8: Voting in Georgia revisited}
+\author{David Sichinava}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab8.rmd$. For example,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sichinava_lab8.Rmd}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Background:}
+\paragraph{}
+
+You definitely remember this exercise - we analyzed this particular dataset in one of the previous labs. Today we are going to do a more "sophisticated" analysis and explore the dataset more in depth.
+
+In this exercise, we are going to analyze the how Georgians voted for the United National Movement (UNM) in the national electionts held between 2008 and 2016. We will check how various socio-demographic characteristics affect election outcomes in Georgia's electoral districts.
+
+For this exercise, download the dataset from this  \href{https://goo.gl/QoCMrD}{link} or directly copy and paste the link to your browser: https://goo.gl/QoCMrD
+
+\section*{Data Description}
+\paragraph{}
+
+First of all, create a new notebook and read the dataset to R. Do not forget to indicate the working directory. Name the data frame $geo$.
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{lab1}
+\begin{tabular}{ll}
+Variable    & Definition                                                      \\
+UNMProp     & Proportion of UNM votes per district                            \\
+TurnoutProp & Total electoral turnout                                         \\
+Urban       & Proportion of urban population                                  \\
+Georgian    & Proportion of Georgian speakers                                 \\
+Orthodox    & Proportion of orthodox population                               \\
+HiEd        & Proportion of population with higher education                  \\
+WHC         & Proportion of white collar workers among working age population \\
+District    & District ID                                                     \\
+Elections   & Election wave                                                  
+\end{tabular}
+\end{table}
+
+Table \ref{lab1} shows the variables in election dataset. Note that each case denotes a separate electoral district and its characteristics. Each district is represented with five records corresponding to each election year. Overall, we present the data for 2008 presidential and parliamentary, 2012 parliamentary, 2013 presidential and 2016 parliamentary elections.
+
+\section*{Data Analysis}
+\paragraph{}
+
+Run three separate regression models explaining UNM vote share with turnout, the proportion of higher education holders and the proportion Georgian speakers in the district. For each model run regression diagnostics (the magic plot from meeting 11 and 10) and describe, how well does these models fit to the regression assumptions. For each model, give a substantial explanation of the observed pattern. How do each of these variables influence UNM vote share? To your mind, what would be the explanation of these results?
+
+Another bonus question: if we only focus on turnout as an explanatory variable, do the results differ across different election waves? Give a substantial explanation of your findings.
+
+
+\subsection*{Where is the Dropbox link?}
+
+Zip the whole folder for the seventh lab. Name the file according to the following format: $surname\_lab8.zip$. Upload the file to \href{https://www.dropbox.com/request/nfTibH7VznLYZkP6La8S}{this link} or here: http://bit.ly/2Seucds before the start of our next meeting.
+
+
+\end{document}

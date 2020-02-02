@@ -1,0 +1,131 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 4: Leader Assasination as a Natural Experiment}
+\author{David Sichinava, Rati Shubladze}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+\section*{Topics}
+\begin{itemize}
+\item Read external files
+\item Recoding variables
+\item Simple arithmetic operations
+\end{itemize}
+
+\section*{Instruction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file in a following format: $your\_surname\_lab4.rmd$. For example,
+
+<<ch1a, eval=FALSE>>=
+shubladze_lab4.Rmd
+@
+
+\section*{Introduction:}
+\paragraph{}
+In their \href{https://www.dropbox.com/s/vcrob2ameksvy7t/Jones%26Olken_2009.pdf?dl=0}{article} Benjamin Jones and Benjamin Olken analyze the effect of assassinating political leaders in the subsequent democratization of the nations. More importantly, this article demonstrates that seemingly random effects (e.g. killing a dictator, or assassination of JFK) could have pronounced effect on history. The authors here use \emph{natural experiment}, in which the success of the assassination attempt may be considered as a random event. 
+
+As we found, people are having some problems with downloading the data to computers. Go to this \href{https://www.dropbox.com/s/7wbt3h0wyi2yelz/leaders.csv?dl=0}{link} or type the following address in the browser: https://goo.gl/spon8J . Save $.csv$ file to your computer in the same directory where you keep $.rmd$ file for the assignment.
+
+Please note that this assignment is based on the exercise given in Imai's book (page 72, section 2.8.3).
+
+First of all, create a new notebook and read the data to R. Do not forget to indicate working directory. Read downloaded $.csv$ file to $r$. Name the new data frame $leader$. 
+
+
+<<ch1, eval=TRUE>>=
+
+leader <- read.csv("leaders.csv")
+
+@
+
+Function $names()$ will allow you to check what variables are included in the table. Run $names$ and write down variable names in your $R-notebook$
+
+Great. Our variables of interest are $country$, $polity$, $result$, $interwarbefore$, $interwarafter$, $civilwarbefore$, $civilwarafter$. Variable $polity$ is so called \emph{Polity Score} which documents political regime types since 1800. Polity Project is administered by Monty G. Marshall and its data is \href{http://www.systemicpeace.org/polity/polity4.htm}{freely available}. Polity Score is a 21-point scale where -10 corresponds to the hereditary monarchy and +10 to the consolidated monarchy. $result$ variable records the result of the assassination attempt. Variables $interwarbefore$, $interwarafter$ record whether the country was involved into international conflicts before ($interwarbefore$) and after ($interwarafter$) the assassination attempt. Variables $civilwarbefore$ and $civilwarafter$ record the prevalence of civil wars before ($civilwarbefore$) and after ($civilwarafter$) the assassination attempt. All four variables  are binary variables - 0 means that there was no war and 1 means that there was a war :) Finally, variable $country$ records where the assassination attempt happened.
+
+\section*{Descriptive Statistics}
+\paragraph{}
+
+How many assassination attempts are recorded into $leader$ table? How many countries experienced at least one leader assassination attempt? You may want to use $unique()$ function in order to check that:
+
+<<ch2, eval=TRUE>>=
+
+unique(leader$country)
+
+@
+
+You may notice that there is a record about Georgia. Assassination attempt on which leader is there recorded? In which years the assassinations happened?
+
+What is the average number of assassination attempt?
+
+\section*{Data manipulation}
+\paragraph{}
+
+Create a new binary variable $success$ that is equal to 1 if a leader dies from the attack and 0 if the leader survives. Store this new variable as part of the original data frame. What is the overall success rate of leader assassination? For creating $success$ variable you may use the following code:
+
+<<ch3, eval=TRUE>>=
+
+leader$success <- 0
+leader$success[leader$result=="dies between a day and a week"] <- 1 
+leader$success[leader$result=="dies between a week and a month"] <- 1 
+leader$success[leader$result=="dies within a day after the attack"] <- 1 
+leader$success[leader$result=="dies, timing unknown"] <- 1 
+
+@
+
+\section*{Data analysis}
+\paragraph{}
+
+Investigate whether the average polity score over three years prior to an assassination attempt differs on average between successful and failed attempts. Also, examine whether there is any difference in the age of targeted leaders between successful and failed attempts. Briefly interpret the results in light of the validity of the aforementioned assumption.
+
+Just keep in mind that you only need to calculate difference in means estimator. If you don't remember what it is, refer to the slides and chapters 2.5-2.7 in Imai's book.
+
+Repeat the same analysis as in the previous question, but this time using the country’s experience of civil and international war. Create a new binary variable in the data frame called $warbefore$. Code the variable such that it is equal to 1 if a country is in either civil or international war during the three years prior to an assassination attempt. Provide a brief interpretation of the result.
+
+In this case, you may want to use variables $interwarbefore$ and $civilwarbefore$ in order to calculate $warbefore$ variable. 
+
+\section*{Conclusion}
+\paragraph{}
+
+Does successful leader assassination cause democratization? Does successful leader assassination lead countries to war? When analyzing these data, be sure to state your assumptions and provide a brief interpretation of the results.
+
+\subsection*{Done. Could you please tell me how to submit my assignment?}
+
+Zip the whole folder for the fourth lab. Name the file according to the following format: $surname\_lab4.zip$ like this:
+
+<<ch4, eval=FALSE>>=
+shubladze_lab4.zip
+
+@
+
+Upload the file to \href{https://www.dropbox.com/request/6uV9hJ3jvKsMdUM7gnKj}{this link} before the start of our next meeting.
+
+
+\end{document}

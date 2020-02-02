@@ -1,0 +1,215 @@
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Eleventh Meeting</div>
+
+Quantitative Research Methods: Introduction to Applied Statistics
+========================================================
+author: David Sichinava, Rati Shubladze
+date: December 20, 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Eleventh Meeting</span>
+
+
+Today's plans
+========================================================
+- From ideas to regression models
+- Regression diagnostics (recap)
+
+From ideas to regression models
+========================================================
+* Remember that replication is a cornerstone for the quantitative (social) science
+* Acemoglu, D., Johnson, S., Robinson, J. A., & Yared, P. (2008). Income and democracy. _American Economic Review_, 98(3), 808-42.
+
+From ideas to regression models
+========================================================
+* To slightly paraphrase Acemoglu and colleagues,
+	+ Why are all OECD countries democracies, whilst most of non-democracies are located in sub-Saharan Africa or Southeast Asia?
+* Influential modernization theory tries to answer this question:
+	+ Specifically, higher per-capita income causes the country to become a democracy
+	
+From ideas to regression models
+========================================================
+* Therefore, our hypothesis would be as follows:
+	+ Higher GDP should be associated to increased democracy in the countries
+* In this very example, we will use replication data from Acemoglu et al.
+	+ DV: Freedom House Democracy score by country;
+	+ IV: Logged GDP per capita by country
+	+ We look at average figures characterizing countries in the 1990s
+	
+From ideas to regression models
+========================================================
+Now, let's load the data:
+
+
+```r
+### Download it from this link: https://goo.gl/6vhv55 or ask for the flash drive
+figure1 <- read.csv("figure1.csv", stringsAsFactors = FALSE)
+```
+
+From ideas to regression models: variables
+========================================================
+| Variable name|Definition|
+|--------------|----------|
+|code		|Country code (like 'GEO' for Georgia)|
+|country	|Country name (like 'Georgia')|
+|fhpolrigaug|Freedom House score of democracy|
+|lrgdpch	|Logged per capita GDP|
+
+
+From ideas to regression models: hypothesis
+========================================================
+* DV: variable $fhpolrigaug$
+* IV: variable $lrgdpch$
+* We expect that GDP predicts democracy scores
+	
+From ideas to regression models
+========================================================
+First, let's visualize relationship
+
+
+```r
+ggplot(figure1, aes(x=lrgdpch, y=fhpolrigaug))+
+  geom_text(aes(label=code), size=2)+
+  geom_smooth(method="lm")+
+  labs(x="Log GDP per Capita (Penn World Tables)",
+       y="Freedom House Measure of Democracy",
+       title="Figure 1",
+       subtitle="Democracy and Income, 1990s")
+```
+
+	
+From ideas to regression models
+========================================================
+Looks promising, so let's run the model:
+
+
+```r
+acem <- lm(fhpolrigaug~lrgdpch, data=figure1)
+
+summary(acem)
+
+acem$r.squared
+```
+
+R-squared:
+========================================================
+* R-squared measures how much of the variation in the dataset is explained by our model
+* R-squared changes between 0 and 1:
+	+ 0 means that the model explains none of the variation in the dataset
+
+	
+Regression Assumptions:
+========================================================
+* Linearity
+* Homoscedasticity
+* Independence 
+* Normal distribution
+
+Quickly check the quality of our assumptions:
+========================================================
+
+```r
+par(mfrow=c(2,2))
+
+plot(acem)
+
+mean(acem$residuals)
+```
+
+From ideas to regression models
+========================================================
+* How would you interpret the results?
+* Potentially, what would be better model to assess the effect of economic development on democracy?
+
+From ideas to regression models
+========================================================
+* Well, in theory, change into GDP should predict the change in democracy scores
+* Let's check this assumption!
+
+
+From ideas to regression models
+========================================================
+Now, let's load the data:
+
+
+```r
+### Download it from this link: https://goo.gl/ygPv3j or ask for the flash drive
+figure1 <- read.csv("figure2.csv", stringsAsFactors = FALSE)
+```
+
+From ideas to regression models: variables
+========================================================
+
+| Variable name|Definition|
+|--------------|----------|
+|code		|Country code (like 'GEO' for Georgia)|
+|country	|Country name (like 'Georgia')|
+|democ|Change in Democracy |
+|growth	|Change in Log GDP per Capita, 1500-2000|
+
+From ideas to regression models
+========================================================
+
+```r
+acem2 <- lm(democ~growth, data=figure2)
+
+summary(acem2)
+```
+
+From ideas to regression models
+========================================================
+* How would you interpret the results?
+* What would be the problem with this analysis?
+	+ Forget statistics, just think from the _conceptual_ perspective
+	
+From ideas to regression models
+========================================================
+* Incorporation of additional variables into our model almost removes the effect of GDP on democracy
+	+ Constraint on the executive at independence
+	+ Year of independence/100
+	+ catholics % of population
+	+ muslim % of population
+	+ protestant % of population
+
+	
+From ideas to regression models (optional)
+========================================================
+
+```r
+### data can be loaded from here: https://goo.gl/uWMEuc
+figure3 <- read.csv("figure3.csv", stringsAsFactors = FALSE, sep="\t")
+
+democracy <- lm(democ~consfirstaug+indcent+
+              rel_catho80+rel_muslim80+rel_protmg80, 
+              data=figure3)
+growth <- lm(growth~consfirstaug+indcent+
+               rel_catho80+rel_muslim80+rel_protmg80, 
+             data=figure3)
+democracy$residuals <- as.numeric(democracy$residuals)
+growth$residuals <- as.numeric(growth$residuals)
+
+residuals <- as.data.frame(cbind(democracy$residuals, growth$residuals))
+
+names(residuals) <- c("democracy", "growth")
+```
+	
+From ideas to regression models (optional)
+========================================================
+
+```r
+ggplot(residuals, aes(x=growth, y=democracy))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  labs(x="Change in Log GDP per Capita, Independent of Historical Factors",
+       y="Change in Democracy Independent of Historical Factors",
+       title="Change in Democracy and Change in Income, 1500-2000",
+       subtitle="Conditional on Historical Factors")
+```
+
+From ideas to regression models
+========================================================
+* Interesting?
+<img src="img/img2.png" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 30px;"/>
+
+

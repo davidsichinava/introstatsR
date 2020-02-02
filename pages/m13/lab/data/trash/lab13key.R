@@ -1,0 +1,2 @@
+setwd("D:\\Dropbox\\My projects\\Courses\\QT_Analysis\\website\\pages\\m13\\lab\\data")
+hunt <- read.csv("mardatav02.2005.csv")

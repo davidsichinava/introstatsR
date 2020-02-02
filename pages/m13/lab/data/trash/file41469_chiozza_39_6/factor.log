@@ -1,0 +1,56 @@
+-------------------------------------------------------------------------------
+       log:  C:\My Documents\ps299\paper4\log\factor.log
+  log type:  text
+ opened on:  23 Feb 2002, 21:06:00
+
+. factor logen urb peduc radio, factors(1);
+(obs=5713)
+
+            (principal factors; 1 factor retained)
+  Factor     Eigenvalue     Difference    Proportion    Cumulative
+------------------------------------------------------------------
+     1        1.61005         1.43174      1.1240         1.1240
+     2        0.17831         0.29345      0.1245         1.2485
+     3       -0.11514         0.12564     -0.0804         1.1681
+     4       -0.24078               .     -0.1681         1.0000
+
+               Factor Loadings
+    Variable |      1    Uniqueness
+-------------+---------------------
+       logen |   0.76762    0.41075
+         urb |   0.66681    0.55536
+       peduc |   0.17797    0.96833
+       radio |   0.73790    0.45551
+
+. score mod;
+            (based on unrotated factors)
+               Scoring Coefficients
+    Variable |      1
+-------------+----------
+       logen |   0.40099
+         urb |   0.25622
+       peduc |   0.04899
+       radio |   0.34989
+
+. impute mod logen urb peduc radio, gen(imod);
+  9.14% (575) observations imputed
+
+. egen max=max(imod);
+
+. egen min=min(imod);
+
+. gen mmod=(imod-min)/(-min+max);
+(1 missing value generated)
+
+. sum mod mmod;
+
+    Variable |     Obs        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------
+         mod |    5713    4.83e-10   .8634574  -2.023506    3.68763
+        mmod |    6287    .3752215   .1470033          0          1
+
+. log close;
+       log:  C:\My Documents\ps299\paper4\log\factor.log
+  log type:  text
+ closed on:  23 Feb 2002, 21:06:03
+-------------------------------------------------------------------------------

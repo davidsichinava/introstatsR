@@ -1,0 +1,139 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unknown </title></head><body>
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Third Meeting</div>
+
+<h1 id="quantitative-research-methods-introduction-to-applied-statistics">Quantitative Research Methods – Introduction to Applied Statistics</h1>
+<p>author: DAVID SICHINAVA, RATI SHUBLADZE
+date: October 25, 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Third meeting</span></p>
+<h1 id="todays-meeting">Today's meeting</h1>
+<ul>
+<li>Causality</li>
+<li>Causal effects</li>
+<li>Counterfactuals</li>
+<li>Randomized Controlled Experiments (RCTs)</li>
+</ul>
+<h1 id="bertrand-mullainathan-2004">Bertrand &amp; Mullainathan (2004)</h1>
+<ul>
+<li>Set working directory;</li>
+<li>Open a new notebook document;</li>
+</ul>
+<h1 id="bertrand-mullainathan-2004_1">Bertrand &amp; Mullainathan (2004)</h1>
+<p><em>Are Emily and Greg more employable than Lakisha and Jamal? A field experiment on labor market discrimination</em>. American Economic Review, vol. 94, no. 4, pp. 991–1013.</p>
+<h1 id="bertrand-mullainathan-2004_2">Bertrand &amp; Mullainathan (2004)</h1>
+<p><img src="haley-1.jpg" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/></p>
+<h1 id="bertrand-mullainathan-2004_3">Bertrand &amp; Mullainathan (2004)</h1>
+<ul>
+<li>Is there any racial discrimination in the US job market?</li>
+</ul>
+<h1 id="bertrand-mullainathan-2004_4">Bertrand &amp; Mullainathan (2004)</h1>
+<table>
+<thead>
+<tr>
+<th>variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firstname</td>
+<td>Jobseeker's name</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>Gender</td>
+</tr>
+<tr>
+<td>race</td>
+<td>Race</td>
+</tr>
+<tr>
+<td>call</td>
+<td>Callback?</td>
+</tr>
+</tbody>
+</table>
+<h1 id="bertrand-mullainathan-2004_5">Bertrand &amp; Mullainathan (2004)</h1>
+<p>```r
+resume &lt;- read.csv("https://davidsichinava.github.io/introstatsr/pages/m3/data/resume.csv")</p>
+<h3 id="or-download-it-manually-from-here">or download it manually from here:</h3>
+<h3 id="httpsgooglw3ys1i">https://goo.gl/W3YS1i</h3>
+<p>resume &lt;- read.csv("resume.csv")
+```</p>
+<h1 id="bertrand-mullainathan-2004_6">Bertrand &amp; Mullainathan (2004)</h1>
+<p><code>r
+head(resume)</code></p>
+<h1 id="bertrand-mullainathan-2004_7">Bertrand &amp; Mullainathan (2004)</h1>
+<p><code>r
+race.call.tab &lt;- table(race = resume$race, call = resume$call)
+addmargins(race.call.tab)
+race.call.tab</code></p>
+<h1 id="bertrand-mullainathan-2004_8">Bertrand &amp; Mullainathan (2004)</h1>
+<p><code>r
+sum(race.call.tab[, 2]) / nrow(resume)  # Overall proportions
+race.call.tab[1, 2] / sum(race.call.tab[1, ]) # African Americans
+race.call.tab[2, 2] / sum(race.call.tab[2, ]) # White Americans</code>
+Bertrand &amp; Mullainathan (2004)
+========================================================</p>
+<p><code>r
+mean(resume$call[resume$race == "black"])</code></p>
+<h1 id="neyman-rubin-holland-model-of-causal-inference">Neyman-Rubin-Holland Model of Causal Inference</h1>
+<p>incremental = TRUE
+- For every $i$, The $T{i}$ treatment effect could be defined, as $Y_{i}(1) - Y_{i}(0)$, where $Y_{i}(1)$ is the outcome in the treatment group, while $Y_{i}(0)$ represents the outcome in the control group
+- Fundamental problem of causal inference</p>
+<h1 id="counterfactuals">Counterfactuals</h1>
+<ul>
+<li>Counterfactuals<ul>
+<li>What if...</li>
+</ul>
+</li>
+<li>David Hume</li>
+</ul>
+<h1 id="counterfactuals_1">Counterfactuals</h1>
+<blockquote>
+<blockquote>
+<p>The key goal of causal inference is to predict <em>counterfactuals</em></p>
+</blockquote>
+</blockquote>
+<h1 id="the-role-of-randomization">The role of randomization</h1>
+<ul>
+<li>Randomization creates homogeneous groups, therefore the difference between the two groups could be attributed to the treatment</li>
+<li>It eliminates selection bias</li>
+<li>Rule of Large Numbers</li>
+<li>Hawthorne effect</li>
+</ul>
+<h1 id="randomized-controlled-experiments-rcts">Randomized Controlled Experiments (RCTs)</h1>
+<p>$Y_{i}(1) - Y_{i}(0)$</p>
+<p>Sample Average Treatment Effect (SATE): a <em>sample average</em> of individual-level causal effects</p>
+<p>$SATE = \frac{1}{n}\sum_{n}^{i=1}\left { Y_{i}(1) - Y_{i}(0) \right }$</p>
+<h1 id="randomized-controlled-experiments-rcts_1">Randomized Controlled Experiments (RCTs)</h1>
+<p>incremental = TRUE</p>
+<ul>
+<li>Can we really observe SATE?</li>
+<li>Not really, that's why we use __difference-in-means_ estimator
+$\hat{\tau} = \frac{1}{n_{1}}\sum_{i=1}^{n}T_{i}Y_{i} - \frac{1}{n_{0}}\sum_{i=1}^{n}(1-T_{i})Y_{i}$</li>
+</ul>
+<h1 id="challenges-imai-2012">Challenges (Imai, 2012)</h1>
+<ul>
+<li>RCTs could be hard to analyze</li>
+<li>Violation of the protocol<ul>
+<li>Contamination;</li>
+<li>Non-compliance;</li>
+<li>Missing values;</li>
+<li>Measurement error;</li>
+</ul>
+</li>
+<li>Experimental effect<ul>
+<li>Heterogeneity</li>
+<li>Failure of correctly understanding the causal effect</li>
+</ul>
+</li>
+<li>Generalization of the results<ul>
+<li>Internal vs. external validity</li>
+</ul>
+</li>
+</ul>
+</body></html>

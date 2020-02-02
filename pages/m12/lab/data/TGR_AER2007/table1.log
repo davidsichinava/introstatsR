@@ -1,0 +1,96 @@
+---------------------------------------------------------------------------------------
+       log:  /afs/ir.stanford.edu/users/t/o/tomz/AER2007/table1.log
+  log type:  text
+ opened on:  18 Jun 2007, 21:45:27
+
+. 
+. ***********************************
+. * TOMZ, GOLDSTEIN, RIVERS TABLE 1 *
+. ***********************************
+. 
+. use TGR2007, clear
+(Tomz Goldstein Rivers AER)
+
+. tempvar gattp gattf rosembr
+
+. 
+. * Create a single variable that summarizes GATT participation
+. gen `gattp' = 0                         /* initialize to "none in" */
+
+. replace `gattp' = -1 if onep == 1       /* -1 if only one participates */
+(71908 real changes made)
+
+. replace `gattp' = -2 if bothp == 1      /* -2 if both participate */
+(152986 real changes made)
+
+. label define mbr -2 "BothIn" -1 "OneIn" 0 "NoneIn" 
+
+. label values `gattp' mbr
+
+. label var `gattp' "Participation"
+
+. 
+. * Create a single variable that summarizes true formal membership
+. gen `gattf' = 0                                    /* initialize to "none formal" */
+
+. replace `gattf' = -1 if gattfo == 1 | gattfn == 1  /* -1 if only one is a formal memb
+> er */
+(100398 real changes made)
+
+. replace `gattf' = -2 if gattff == 1                /* -2 if both are formal members *
+> /
+(112520 real changes made)
+
+. label values `gattf' mbr
+
+. label var `gattf' "Formal Membership"
+
+. 
+. * Create a single variable that summarizes rose's membership variable
+. gen `rosembr' = 0                                  /* initialize to "none formal */
+
+. replace `rosembr' = -1 if onein == 1               /* -1 if only one is a formal memb
+> er */
+(98810 real changes made)
+
+. replace `rosembr' = -2 if bothin == 1              /* -2 if both are formal members *
+> /
+(114750 real changes made)
+
+. label values `rosembr' mbr
+
+. label var `rosembr' "Rose Formal Membership"
+
+. 
+. tab `gattp' `gattf'     /* tabulate participation against true formal membership vari
+> able */
+
+Participat |        Formal Membership
+       ion |    BothIn      OneIn     NoneIn |     Total
+-----------+---------------------------------+----------
+    BothIn |   112,520     37,237      3,229 |   152,986 
+     OneIn |         0     63,161      8,747 |    71,908 
+    NoneIn |         0          0      9,703 |     9,703 
+-----------+---------------------------------+----------
+     Total |   112,520    100,398     21,679 |   234,597 
+
+
+. tab `gattp' `rosembr'   /* tabulate participation against Rose's formal membership va
+> riable */
+
+Participat |      Rose Formal Membership
+       ion |    BothIn      OneIn     NoneIn |     Total
+-----------+---------------------------------+----------
+    BothIn |   114,151     35,903      2,932 |   152,986 
+     OneIn |       599     62,862      8,447 |    71,908 
+    NoneIn |         0         45      9,658 |     9,703 
+-----------+---------------------------------+----------
+     Total |   114,750     98,810     21,037 |   234,597 
+
+
+. 
+. log close
+       log:  /afs/ir.stanford.edu/users/t/o/tomz/AER2007/table1.log
+  log type:  text
+ closed on:  18 Jun 2007, 21:45:34
+---------------------------------------------------------------------------------------

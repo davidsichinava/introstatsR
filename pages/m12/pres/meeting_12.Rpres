@@ -1,0 +1,159 @@
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Twelveth Meeting</div>
+
+Quantitative Research Methods: Introduction to Applied Statistics
+========================================================
+author: David Sichinava, Rati Shubladze
+date: December 27, 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Twelveth Meeting</span>
+
+
+
+
+Today's plans
+========================================================
+
+* Uncertainty
+	+ Estimation
+	+ Hypothesis Testing
+
+Estimation
+========================================================
+* Parameter and Estimator
+* Random Sample: We try to estimate unknown parameter of _population_
+
+Estimation: Ideal case
+========================================================
+* Estimation error = $\overline{X}_{n} - p$
+*  However, the true value of the population is never known. Thus, we try to calculate what will be the average _magnitude_ of error.
+
+Estimation: Ideal case
+========================================================
+* Suppose, we are conducting the same experiment (survey, observation etc). In that case, our estimation errors will be independent from each other. Hence, it is _random variable_
+
+$\mathbb{E}(\overline{X}_{n}) = \frac{1}{n}\sum \mathbb{E}(X_{i}) = \mathbb{E}(X)$
+
+Estimation: Sample and Population mean experimental effect
+========================================================
+* Unbiased and consistent estimation
+	+ If expectation equals the parameter;
+	+ If it converges to the parameter as the sample size increases;
+	
+* In randomized controlled trials, the average outcome difference between the treatment and control groups is an unbiased estimator of the sample average treatment effect (SATE). 
+* The estimator is also unbiased and consistent for the population average treatment effect (PATE).
+
+The standard error of the estimate
+========================================================
+* When  an unbiased estimator with a large degree of variability is of little use in practice
+* In that case we should look at the standard error of the estimate
+
+Confidence intervals
+========================================================
+
+* In order to study the properties of an estimator, we should consider characterizing the entire sampling distribution rather than its mean and standard deviation. 
+* Here we need to utilize _Theoretical Distribution_. In many case we can use _Central limit theorem_ and assume,that  sampling distribution of the sample mean is approximately normally distributed:. 
+* We can also apply yet another measure - _Confidence interval_
+
+Confidence intervals
+========================================================
+* Confidence interval is a range, where, in beforehand excising probability we can observ the parameter that is interesting to us:
+* $CI(\alpha) = [\overline{X}_{n}-z_{\alpha/2}*se; \overline{X}_{n}+z_{\alpha/2}*se; ]$
+
+Confidence intervals
+========================================================
+```{r, eval=FALSE}
+n <- 1000 # Sample
+x.bar <- 0.6 #  Point estimate
+s.e. <- sqrt(x.bar * (1 - x.bar) / n) # Standard error
+## 99% CI
+c(x.bar - qnorm(0.995) * s.e., x.bar + qnorm(0.995) * s.e.)
+
+## 95% CI
+c(x.bar - qnorm(0.975) * s.e., x.bar + qnorm(0.975) * s.e.)
+## 90% CI
+c(x.bar - qnorm(0.95) * s.e., x.bar + qnorm(0.95) * s.e.)
+```
+
+Experiment analysis
+========================================================
+```{r, eval=FALSE}
+STAR <- read.csv("STAR.csv", head = TRUE)
+hist(STAR$g4reading[STAR$classtype == 1], freq = FALSE, xlim = c(500, 900),
+ylim = c(0, 0.01), main = "Small class",
+xlab = "Fourth-grade reading test score")
+abline(v = mean(STAR$g4reading[STAR$classtype == 1], na.rm = TRUE),
+col = "blue")
+hist(STAR$g4reading[STAR$classtype == 2], freq = FALSE, xlim = c(500, 900),
+ylim = c(0, 0.01), main = "Regular class",
+xlab = "Fourth-grade reading test score")
+abline(v = mean(STAR$g4reading[STAR$classtype == 2], na.rm = TRUE),
+col = "blue")
+```
+
+Experiment analysis
+========================================================
+```{r, eval=FALSE}
+n.small <-
+sum(STAR$classtype == 1 & !is.na(STAR$g4reading))
+est.small <- mean(STAR$g4reading[STAR$classtype == 1], na.rm = TRUE)
+se.small <- sd(STAR$g4reading[STAR$classtype == 1], na.rm = TRUE) /
+sqrt(n.small)
+est.small
+se.small
+## estimate and standard error for regular class
+n.regular <- sum(STAR$classtype == 2 & !is.na(STAR$classtype) &
+!is.na(STAR$g4reading))
+```
+
+Experiment analysis
+========================================================
+```{r, eval=FALSE}
+est.regular <- mean(STAR$g4reading[STAR$classtype == 2], na.rm = TRUE)
+se.regular <- sd(STAR$g4reading[STAR$classtype == 2], na.rm = TRUE) /
+sqrt(n.regular)
+est.regular
+```
+
+Experiment analysis
+========================================================
+```{r, eval=FALSE}
+alpha <- 0.05
+## 95% confidence intervals for small class
+ci.small <- c(est.small - qnorm(1 - alpha / 2) * se.small,
+est.small + qnorm(1 - alpha / 2) * se.small)
+ci.small
+## [1] 719.6417 727.1406
+## 95% confidence intervals for regular class
+ci.regular <- c(est.regular - qnorm(1 - alpha / 2) * se.regular,
+est.regular + qnorm(1 - alpha / 2) * se.regular)
+ci.regular
+```
+
+Experiment analysis
+========================================================
+```{r, eval=FALSE}
+ate.est <- est.small - est.regular
+ate.se <- sqrt(se.small^2 + se.regular^2)
+ate.ci <- c(ate.est - qnorm(1 - alpha / 2) * ate.se,
+ate.est + qnorm(1 - alpha / 2) * ate.se)
+ate.ci
+```
+
+Experiment analysis: Student T-Test distribution 
+========================================================
+```{r, eval=FALSE}
+c(est.small - qt(0.975, df = n.small - 1) * se.small,
+est.small + qt(0.975, df = n.small - 1) * se.small)
+ci.small
+c(est.regular - qt(0.975, df = n.regular - 1) * se.regular,
+est.regular + qt(0.975, df = n.regular - 1) * se.regular)
+ci.regular
+
+t.ci <- t.test(STAR$g4reading[STAR$classtype == 1],
+STAR$g4reading[STAR$classtype == 2])
+t.ci
+
+```

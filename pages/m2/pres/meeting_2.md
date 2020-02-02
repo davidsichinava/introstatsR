@@ -1,0 +1,210 @@
+<div class="header" style="margin-top:0 px;font-size:60%;">QRM Second meeting</div>
+
+Introduction to Statistics using R
+========================================================
+author: David Sichinava
+date: October 11, 2019
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Third meeting</span>
+
+
+
+
+Today's plan
+========================================================
+incremental: true
+
+
+- R user interface
+
+
+Reading data:
+========================================================
+
+
+```r
+myTable<-read.table("data/myTable.txt")
+
+myTable<-read.table("data/CB_2017_Georgia_public_17.11.17.csv", header = TRUE, sep=",") ### მძიმით გამოყოფილი ცხრილის წაკითხვა
+
+myTable<-read.csv("data/CB_2017_Georgia_public_17.11.17.csv", header=TRUE) ### მძიმით გამოყოფილი ცხრილის წაკითხვა
+
+myTable<-read.table("data/CB_2017_Georgia_public_17.11.17.txt", header = TRUE, sep="\t") ### ტაბით გამოყოფილი ცხრილის წაკითხვა
+
+galton<-read.csv("https://vincentarelbundock.github.io/Rdatasets/csv/HistData/Galton.csv")
+```
+
+Reading foreign data using outside libraries:
+========================================================
+
+
+```r
+install.packages("haven")
+library(haven)
+```
+
+Reading foreign data using outside libraries:
+========================================================
+
+```r
+### haven ბიბლიოთეკა:
+
+cb2017spss<-read_sav("data/CB_2017_Georgia_public_17.11.17.sav")
+cb2017stata<-read_dta("data/CB_2017_Georgia_public_17.11.17.dta")
+```
+
+Reading foreign data using outside libraries:
+========================================================
+
+```r
+install.packages("foreign")
+library(foreign)
+
+cb2017foreign<-read.spss("data/CB_2017_Georgia_public_17.11.17.sav")
+```
+
+Data types:
+========================================================
+
+
+```r
+eList<-c("მე პირველი ელემენტი ვარ", "მე მეორე ელემენტი ვარ", "მე მესამე ელემენტი ვარ")
+
+eList[1] ### First element
+
+eList[2] ### Second element
+
+eList[3] ### Third element
+```
+
+Atomic objects:
+========================================================
+
+```r
+logical<-c(TRUE, FALSE, T, F)
+integer<-c(1L, 4L, 8L, 0L)
+double<-c(1, 3.6, 90, 4)
+characters<-c("a", "b", "სამი", "four")
+```
+
+List:
+========================================================
+
+```r
+simpleList<-list(TRUE, FALSE, T, F)
+combiList<-list(c("a", "b"), c("იყო არაბეთს როსტევან"), c(1L, 4L, 8L, 0L), 98)
+multidimList<-list(list(c("a", "b"), 7), c("რომელმან შექმნა სამყარო"))
+```
+
+Attributes:
+========================================================
+
+| __Attribute__ | __Description__ |
+|--------------|--------------------------------------------------------------------------------|
+|	`class`		| Type of an object or its element|
+|	`comment` 	| Textual comment|
+|	`dim`		| Dimensions, that is, columns and rows|
+|	`dimnames` | Names of dimensions|
+|	`names`	| Object name |
+|	`row.names` | Row names for tables |
+|	`levels`	| Labels, similar to SPSS and STATA data files |
+
+Attribute
+ატრიბუტი:
+========================================================
+
+```r
+attr(x, "Attribute") <- "Some kind of attribute"
+
+attributes(x)
+```
+
+Attribute:
+========================================================
+
+```r
+myObject<- c(10, 20, 30)
+names(myObject) <- c("Age", "Height", "Weight")
+```
+
+Factor:
+========================================================
+
+```r
+eyes<-factor(c(1, 2, 3, 4), levels=c("Brown", "Green", "Blue", "Grey"))
+```
+
+Array and matrix
+========================================================
+
+<img src="img/bullets.gif" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+
+Array and matrix
+========================================================
+
+
+```r
+a<-c(1, 2)
+b<-c(10, 20, 30, 40, 50, 60)
+
+ab.array<-array(c(a, b), dim=c(3, 3, 2))
+print(ab.array)
+```
+
+
+Array and matrix
+========================================================
+
+
+```r
+a<-c(1, 2)
+b<-c(10, 20, 30, 40, 50, 60)
+column.name <-c("სვეტი1", "სვეტი2", "სვეტი3")
+row.name <- c("სტრიქონი1", "სტრიქონი2", "სტრიქონი3")
+matrix.name<- c("Thomas Anderson", "Neo")
+ab.array <- array(c(a,b),dim = c(3,3,2),dimnames = list(row.name, column.name, matrix.name))
+print(ab.array)
+```
+
+
+Array and matrix
+========================================================
+
+```r
+my.matrix <- matrix(c(1:15), nrow=5)
+print(my.matrix)
+
+### შესაძლებელია მხოლოდ სვეტის მითითება:
+my.matrix <- matrix(c(1:15), ncol=5)
+print(my.matrix)
+```
+
+
+Array and matrix
+========================================================
+
+
+```r
+col.names <- c("პირველი", "მეორე", "მესამე", "მეოთხე", "მეხუთე")
+row.names <- c("სტრიქონი1", "სტრიქონი2", "სტრიქონი3")
+my.matrix <- matrix(c(1:15), ncol=5, dimnames=list(row.names, col.names))
+print(my.matrix)
+```
+
+Array and matrix
+========================================================
+
+
+```r
+df <- data.frame(
+   my.id = c (1:11), 
+   region.name = c("Samegrelo-Zemo Svaneti","Racha-Lechkhumi-Kvemo Svaneti","Imereti","Guria","Adjara", "Samtskhe-Javakheti", "Shida Kartli", "Kvemo Kartli", "Mtskheta-Mtianeti", "Tbilisi", "Kakheti"),
+   value.added = c(1807.4, NA, 2685.2, 584.4, 2039.7, 724.6, 1485.21, 2162.9, NA, 12147.1, 1459.1),
+   stringsAsFactors = FALSE
+	)
+print(df)
+```

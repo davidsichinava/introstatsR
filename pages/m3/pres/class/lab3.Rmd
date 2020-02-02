@@ -1,0 +1,35 @@
+---
+title: "Lab 3"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+
+```{r}
+
+## Set Wd
+
+setwd("D:\\Dropbox\\My projects\\Courses\\QT_Analysis\\website\\pages\\m3\\pres\\class")
+
+resume <- read.csv("resume.csv")
+
+## OR
+
+resume <- read.csv("D:\\Dropbox\\My projects\\Courses\\QT_Analysis\\website\\pages\\m3\\pres\\class\\resume.csv")
+
+head(resume)
+
+race.call.tab <- table(race = resume$race, call = resume$call)
+addmargins(race.call.tab)
+race.call.tab
+
+sum(race.call.tab[, 2]) / nrow(resume)  # Overall proportions
+race.call.tab[1, 2] / sum(race.call.tab[1, ]) # African Americans
+race.call.tab[2, 2] / sum(race.call.tab[2, ]) # White Americans
+
+mean(resume$call[resume$sex == "male"])
+
+```
+
+

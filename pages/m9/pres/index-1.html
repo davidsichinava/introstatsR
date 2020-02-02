@@ -1,0 +1,210 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unknown </title></head><body>
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Eighth meeting</div>
+
+<h1 id="quantitative-research-methods-introduction-to-applied-statistics">Quantitative Research Methods - Introduction to Applied Statistics</h1>
+<p>author: David Sichinava, Rati Shubladze
+date: December 6, 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Eighth meeting</span></p>
+<h1 id="todays-topic">Today's topic</h1>
+<ul>
+<li>Linear regression</li>
+</ul>
+<h1 id="practical">Practical :</h1>
+<ul>
+<li>
+<p>Todorov et. al. (2005)
+“Inferences of competence from faces predict election outcomes.” Science, vol. 308, no. 10 (June), pp. 1623–1626.</p>
+</li>
+<li>
+<p>How can one predict election results based on facial appearance?</p>
+</li>
+</ul>
+<h1 id="variables">Variables:</h1>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>congress</td>
+<td>Session of Congress</td>
+</tr>
+<tr>
+<td>year</td>
+<td>Year of the election</td>
+</tr>
+<tr>
+<td>state</td>
+<td>State of the election</td>
+</tr>
+<tr>
+<td>winner</td>
+<td>Name of the winner</td>
+</tr>
+<tr>
+<td>loser</td>
+<td>Name of the runner-up</td>
+</tr>
+<tr>
+<td>w.party</td>
+<td>Party of the winner</td>
+</tr>
+<tr>
+<td>l.party</td>
+<td>Party of the loser</td>
+</tr>
+<tr>
+<td>d.votes</td>
+<td>Number of votes for the Democratic candidate</td>
+</tr>
+<tr>
+<td>r.votes</td>
+<td>Number of votes for the Republican candidate</td>
+</tr>
+<tr>
+<td>d.comp</td>
+<td>Competence measure for the Democratic candidate</td>
+</tr>
+<tr>
+<td>r.comp</td>
+<td>Competence measure for the Republican candidate</td>
+</tr>
+</tbody>
+</table>
+<h1 id="data">Data:</h1>
+<p>```r</p>
+<h2 id="read-your-data">Read your data</h2>
+<h2 id="download-it-from-here-httpsgooglxysjcr">Download it from here: https://goo.gl/xYSjCr</h2>
+<p>face &lt;- read.csv("face.csv")</p>
+<h2 id="two-party-vote-share-for-democrats-and-republicans">two-party vote share for Democrats and Republicans</h2>
+<p>face$d.share &lt;- face$d.votes / (face$d.votes + face$r.votes)
+face$r.share &lt;- face$r.votes / (face$d.votes + face$r.votes)
+face$diff.share &lt;- face$d.share - face$r.share
+```
+Correlation:
+========================================================
+* What is the correlation between perceived competence and vote share differential?</p>
+<p><code>r
+cor(face$d.comp, face$diff.share)</code></p>
+<h1 id="correlation">Correlation:</h1>
+<p><code>r
+library(ggplot2)
+ggplot(face, aes(x=d.comp, y=diff.share)) +
+         geom_point(aes(color=w.party))+
+        labs(title="Facial competence and vote share",
+             x="Competence scores for Democrats",
+             y="Competence scores for Republicans")+
+      scale_color_manual(name="Winning party",
+                           values=c("blue", "red"))</code></p>
+<h1 id="linear-relationship">Linear relationship:</h1>
+<p>$Y = \alpha + \beta X + \epsilon$, 
+where $\alpha$ is an intercept, $X$ independent (explanatory) variable, $\beta$ - regression coefficientS, $\epsilon$ error term.</p>
+<h1 id="linear-relationship_1">Linear relationship:</h1>
+<p><img src="box-1.png" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 30px;"/></p>
+<h1 id="linear-relationship_2">Linear relationship:</h1>
+<ul>
+<li>All models are wrong, but some are useful;</li>
+<li>Our goal is to assess <em>data-generating process</em></li>
+<li>Therefore, in all models, we present <em>estimated coefficients</em></li>
+</ul>
+<h1 id="linear-relationship_3">Linear relationship:</h1>
+<p>$\hat{Y} = \hat{\alpha}+\hat{\beta} x$, where $x$ is some value of $X$;</p>
+<h1 id="linear-relationship_4">Linear relationship:</h1>
+<p>$\hat{\epsilon} = Y-\hat{Y}$, where $x$ is some value of $X$;</p>
+<h1 id="linear-relationship_5">Linear relationship:</h1>
+<p><code>r
+fit &lt;- lm(diff.share ~ d.comp, data = face) # fit the model
+fit</code></p>
+<h1 id="regression-plot">Regression plot:</h1>
+<p><code>r
+ggplot(face, aes(x=d.comp, y=diff.share)) +
+    geom_point(aes(color=w.party))+
+    geom_smooth(method='lm')+
+    labs(title="Facial competence and vote share",
+        x="Competence scores for Democrats",
+        y="Competence scores for Republicans")+
+    scale_color_manual(name="Winning party",
+        values=c("blue", "red"))</code></p>
+<h1 id="least-square-method">Least Square Method</h1>
+<ul>
+<li>The best <em>theoretical</em> line</li>
+<li>We select those paramenters which produce the <em>least</em> errors</li>
+<li>Root-mean-squared error<ul>
+<li>$RMSE = \sqrt{\frac{1}{n}SSR}$</li>
+</ul>
+</li>
+</ul>
+<h1 id="least-square-method_1">Least Square Method</h1>
+<p><code>r
+epsilon.hat &lt;- resid(fit) # Residuals
+sqrt(mean(epsilon.hat^2)) # RMSE</code></p>
+<h1 id="coefficients">Coefficients:</h1>
+<p>$\hat{\alpha}=\bar{Y}-\hat{\beta}\bar{X}$</p>
+<h1 id="beta-coefficients">Beta-coefficients:</h1>
+<p>$\beta = corr(X, Y) * \frac{SD(Y)}{SD(X)}$</p>
+<h1 id="assumptions-no-outliers">Assumptions: no outliers</h1>
+<p><img src="galton-1.png" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 30px;"/></p>
+<h1 id="assumptions-no-outliers_1">Assumptions: no outliers</h1>
+<p><code>r
+outlierTest(fit)
+qqPlot(fit, main="QQ Plot")
+leveragePlots(fit)</code></p>
+<h1 id="assumptions-no-influential-observations">Assumptions: no influential Observations</h1>
+<p>```r</p>
+<h1 id="added-variable-plots">added variable plots</h1>
+<p>av.Plots(fit)</p>
+<h1 id="cooks-d-plot">Cook's D plot</h1>
+<h1 id="identify-d-values-4n-k-1">identify D values &gt; 4/(n-k-1)</h1>
+<p>cutoff &lt;- 4/((nrow(face)-length(fit$coefficients)-2)) 
+plot(fit, which=4, cook.levels=cutoff)</p>
+<h1 id="influence-plot">Influence Plot</h1>
+<p>influencePlot(fit,  id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
+```</p>
+<h1 id="assumptions-normality-of-data">Assumptions: normality of data</h1>
+<ul>
+<li>MASS library</li>
+</ul>
+<p>```r</p>
+<h1 id="normality-of-residuals">Normality of Residuals</h1>
+<h1 id="qq-plot-for-studentized-resid">qq plot for studentized resid</h1>
+<p>qqPlot(fit, main="QQ Plot")</p>
+<h1 id="distribution-of-studentized-residuals">distribution of studentized residuals</h1>
+<p>library(MASS)
+sresid &lt;- studres(fit) 
+hist(sresid, freq=FALSE, 
+   main="Distribution of Studentized Residuals")
+xfit&lt;-seq(min(sresid),max(sresid),length=40) 
+yfit&lt;-dnorm(xfit) 
+lines(xfit, yfit)
+```</p>
+<h1 id="assumptions-homoscedasticity">Assumptions: homoscedasticity</h1>
+<p>```r</p>
+<h1 id="evaluate-homoscedasticity">Evaluate homoscedasticity</h1>
+<h1 id="non-constant-error-variance-test">non-constant error variance test</h1>
+<p>ncvTest(fit)</p>
+<h1 id="plot-studentized-residuals-vs-fitted-values">plot studentized residuals vs. fitted values</h1>
+<p>spreadLevelPlot(fit)
+```</p>
+<h1 id="assumptions-no-multicollinearity">Assumptions: no multicollinearity</h1>
+<p><code>r
+vif(fit) # variance inflation factors 
+sqrt(vif(fit)) &gt; 2 # problem?</code></p>
+<h1 id="assumptions-no-non-linearity">Assumptions: no non-linearity</h1>
+<p>```r</p>
+<h1 id="evaluate-nonlinearity">Evaluate Nonlinearity</h1>
+<h1 id="component-residual-plot">component + residual plot</h1>
+<p>crPlots(fit)</p>
+<h1 id="ceres-plots">Ceres plots</h1>
+<p>ceresPlots(fit)
+```</p>
+<h1 id="assumptions-independence-of-observations">Assumptions: independence of observations</h1>
+<p><code>r
+durbinWatsonTest(fit)</code></p>
+</body></html>

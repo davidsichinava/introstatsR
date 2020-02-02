@@ -1,0 +1,156 @@
+<div class="header" style="margin-top:0 px;font-size:60%;">QRMIAS: Fifth Meeting</div>
+
+Quantitative Research Methods – Introduction to Applied Statistics
+========================================================
+author: DAVID SICHINAVA, RATI SHUBLADZE
+date: November 8, 2017
+autosize: true
+transition: none
+css: css/style.css
+font-family: 'BPG_upper'
+<span style="font-weight:bold; font-family:BPG_upper;">Fifth Meeting</span>
+
+
+
+Today's meeting
+========================================================
+
+- Before-and-after design
+- Difference-in-Difference estimate
+- Observational studies:
+	+ Statistics for one variable
+	+ Quantiles
+	+ Root of mean squares (RMS)
+	+ Standard deviation
+
+Before and after design
+========================================================
+* Longitudinal / panel data yield more credible results on comparisons between treatment and control groups
+* The before-and-after design examines how the outcome variable changed from the pretreatment period to the posttreatment period for the same set of units. The design is able to adjust for any confounding factor that is specific to each unit but does not change over time. However, the design does not address possible bias due to time-varying confounders.
+
+Before and after design
+========================================================
+```{r, eval=FALSE}
+## Full-time employees in the starting period
+minwageNJ$fullPropBefore <- minwageNJ$fullBefore / (minwageNJ$fullBefore + minwageNJ$partBefore)
+
+## Difference-in-means
+NJdiff <- mean(minwageNJ$fullPropAfter) - mean(minwageNJ$fullPropBefore)
+NJdiff
+```
+
+Difference-in-difference design
+========================================================
+* _Difference-in-Difference (Diff-in-Diff)_ design extends the the before-and-after design and addresses the confounding bias;
+* Here we assume that the outcome variable follows a parallel trend when there is no treatment
+
+Difference-in-difference design
+========================================================
+<img src="img/befaft.PNG" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+Difference-in-difference design
+========================================================
+* In Diff-in-Diff designs, our quantity of interest is the _Sample Average Treatment effect for the Treated_ (SATT)
+
+Difference-in-difference design
+========================================================
+<img src="img/did.png" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+
+Difference-in-difference design
+========================================================
+```{r, eval=FALSE}
+## Penn: difference in means
+minwagePA$fullPropBefore <- minwagePA$fullBefore / (minwagePA$fullBefore + minwagePA$partBefore)
+
+
+PAdiff <- mean(minwagePA$fullPropAfter) - mean(minwagePA$fullPropBefore)
+
+
+## NJ: difference in means
+minwageNJ$fullPropBefore <- minwageNJ$fullBefore / (minwageNJ$fullBefore + minwageNJ$partBefore)
+
+NJdiff <- mean(minwageNJ$fullPropAfter) - mean(minwageNJ$fullPropBefore)
+
+## Diff-in-diff
+NJdiff - PAdiff
+```
+
+Descriptive statistics
+========================================================
+* Median describes central value of a distribution. It represents the middle value of a distribution, if the number of observations is odd _OR_ the average of the two values, if the distribution is even
+* <img src="img/median.png" alt="Drawing" style="width: 300px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+* Medians may sometimes give a useful and more truthful idea about the distribution than mean estimates, imagine calculating an average household income in a country which has several billionaires and many poor people (sound familiar?)
+
+Descriptive statistics
+========================================================
+```{r, eval=FALSE}
+## Median difference between states
+median(minwageNJ$fullPropAfter) - median(minwagePA$fullPropAfter)
+## Difference-in-medians between states
+NJdiff.med <- median(minwageNJ$fullPropAfter) - median(minwageNJ$fullPropBefore)
+NJdiff.med
+## Median difference-in-difference
+PAdiff.med <- median(minwagePA$fullPropAfter) - median(minwagePA$fullPropBefore)
+NJdiff.med - PAdiff.med
+```
+
+
+Descriptive statistics
+========================================================
+* In order to describe what different parts of the distribution look like, we use _quintiles_
+	- IQR (interquartile range): difference between 3rd and 1st _quartiles_
+
+Descriptive statistics
+========================================================
+<img src="img/iqr.png" alt="Drawing" style="width: 300px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+Descriptive statistics
+========================================================
+```{r, eval=FALSE}
+summary(minwageNJ$wageBefore)
+
+summary(minwageNJ$wageAfter)
+
+IQR(minwageNJ$wageBefore)
+
+IQR(minwageNJ$wageAfter)
+
+quantile(minwageNJ$wageBefore, probs = seq(from = 0, to = 1, by = 0.1))
+
+```
+
+Descriptive statistics
+========================================================
+* Another measure of describing the spread of variable is Root Mean Square (RMS)
+
+Descriptive statistics
+========================================================
+<img src="img/rms.PNG" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+Descriptive statistics
+========================================================
+```{r, eval=FALSE}
+sqrt(mean((minwageNJ$fullPropAfter - minwageNJ$fullPropBefore)^2))
+mean(minwageNJ$fullPropAfter - minwageNJ$fullPropBefore)
+```
+Descriptive statistics
+========================================================
+* Using root mean square measure, we can describe the dispertion of values from the mean
+* _Standard deviation_ is a root mean square from average value of a distribution
+* _Variance_ is a square of standard deviation
+
+Descriptive statistics
+========================================================
+<img src="img/sd.PNG" alt="Drawing" style="width: 600px; display: block; margin-left: auto; margin-right: auto; margin-top: 40px;"/>
+
+
+Descriptive statistics(standard deviation, variance)
+========================================================
+```{r, eval=FALSE}
+sd(minwageNJ$fullPropBefore)
+sd(minwageNJ$fullPropAfter)
+var(minwageNJ$fullPropBefore)
+var(minwageNJ$fullPropAfter)
+```
+

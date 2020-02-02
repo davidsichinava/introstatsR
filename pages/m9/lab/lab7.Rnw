@@ -1,0 +1,96 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Civil wars and international trade}
+\author{David Sichinava}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Instructions:}
+
+\paragraph{}
+
+Follow the instructions step-by-step. Name your $.rmd$ as follows: $your\_surname\_lab7.rmd$. For instance,
+
+<<ch1a, eval=FALSE>>=
+sichinava_lab7.Rmd
+@
+
+\section*{Context:}
+\paragraph{}
+
+In this exercise, we will replicate a study done by Resat Bayer and Matthew Rupert. Authors investigated the effect of civil wars on international trade. They argue that the countries engaged in international trade perceive their partners' internal instability as a threat. We are going to examine two hypotheses presented by Bayer and Rupert:
+
+\begin{itemize}
+\item{Civil wars reduce bilateral trade}
+\item{One country's participation in the other country's civil war reduces bilateral trade}
+\end{itemize}
+
+Download the paper from  \href{https://www.dropbox.com/s/xsoyht80qkt0jmo/bayer2004.pdf?dl=0}{here}, and the data from here: https://goo.gl/AofSPW
+
+\section*{Descriptive statistics}
+
+First, let's examine what our dataset looks like. In the table below I summarize variables analyzed in this paper. 
+
+\begin{table}[]
+\centering
+\caption{Descriptives}
+\label{my-label}
+\begin{tabular}{ll}
+Variable    & Definition                                                                      \\
+dtrade       & Volume of trade (logged)                                               \\
+civilwar    & Civil war                             \\
+cw\_join    & Member of the dyad participates in another country's civil war 
+\end{tabular}
+\end{table}
+
+
+$dtrade$ is the variable which we are going to analyze. It summarizes the total trade in logged dollars between two countries. Build a histogram of $dtrade$ using $ggplot$ library. Use custom colors and labels for the chart. Below is a minimal example of a such chart.
+
+<<ch1, eval=FALSE>>=
+ggplot(bayrup, aes(x=dtrade))+
+  geom_histogram()
+@
+
+\section*{Hypothesis testing}
+
+In order to evaluate the hypothesis, run two linear regression models. In both cases, the dependent variable is $dtrade$, while in one case we explain it with $civilwar$ and in another case we use  $cw\_join$ as an explanatory variable.
+
+Run both models and give a substantive explanation of results. 
+
+
+\subsection*{How to submit?}
+
+Zip and submit your files to this \href{https://www.dropbox.com/request/HQu4rlcjMgLFhNVbPfO3}{link} before the start of the next class.
+
+
+\end{document}

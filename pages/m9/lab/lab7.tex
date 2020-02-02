@@ -1,0 +1,148 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Civil wars and international trade}
+\author{David Sichinava}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Instructions:}
+
+\paragraph{}
+
+Follow the instructions step-by-step. Name your $.rmd$ as follows: $your\_surname\_lab7.rmd$. For instance,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sichinava_lab7.Rmd}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Context:}
+\paragraph{}
+
+In this exercise, we will replicate a study done by Resat Bayer and Matthew Rupert. Authors investigated the effect of civil wars on international trade. They argue that the countries engaged in international trade perceive their partners' internal instability as a threat. We are going to examine two hypotheses presented by Bayer and Rupert:
+
+\begin{itemize}
+\item{Civil wars reduce bilateral trade}
+\item{One country's participation in the other country's civil war reduces bilateral trade}
+\end{itemize}
+
+Download the paper from  \href{https://www.dropbox.com/s/xsoyht80qkt0jmo/bayer2004.pdf?dl=0}{here}, and the data from here: https://goo.gl/AofSPW
+
+\section*{Descriptive statistics}
+
+First, let's examine what our dataset looks like. In the table below I summarize variables analyzed in this paper. 
+
+\begin{table}[]
+\centering
+\caption{Descriptives}
+\label{my-label}
+\begin{tabular}{ll}
+Variable    & Definition                                                                      \\
+dtrade       & Volume of trade (logged)                                               \\
+civilwar    & Civil war                             \\
+cw\_join    & Member of the dyad participates in another country's civil war 
+\end{tabular}
+\end{table}
+
+
+$dtrade$ is the variable which we are going to analyze. It summarizes the total trade in logged dollars between two countries. Build a histogram of $dtrade$ using $ggplot$ library. Use custom colors and labels for the chart. Below is a minimal example of a such chart.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{(bayrup,} \hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=dtrade))}\hlopt{+}
+  \hlkwd{geom_histogram}\hlstd{()}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section*{Hypothesis testing}
+
+In order to evaluate the hypothesis, run two linear regression models. In both cases, the dependent variable is $dtrade$, while in one case we explain it with $civilwar$ and in another case we use  $cw\_join$ as an explanatory variable.
+
+Run both models and give a substantive explanation of results. 
+
+
+\subsection*{How to submit?}
+
+Zip and submit your files to this \href{https://www.dropbox.com/request/HQu4rlcjMgLFhNVbPfO3}{link} before the start of the next class.
+
+
+\end{document}

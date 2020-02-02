@@ -1,0 +1,107 @@
+% !Rnw weave = knitr
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english, georgian]{babel}
+% \usepackage{fontspec}
+\usepackage{geometry, graphicx}
+ % you must load Sweave with the `noae` option
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{Lab 6: Voting in Georgia}
+\author{David Sichinava}
+\date{\today}
+
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+% \SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section*{Introduction:}
+
+\paragraph{}
+Follow the assignment step-by-step. Name your $.rmd$ file using the following naming convention: $your\_surname\_lab6.rmd$. 
+
+\section*{Background:}
+\paragraph{}
+
+In this exercise, we are going to analyze voting patterns in Georgia. Specifically, we will explore how people in Georgia were voting for the United National Movement party from 2008 to 2016. We will analyze how voting is correlated with socio-demographic characteristics.
+Download raw dataset  \href{https://goo.gl/QoCMrD}{from here} or type the following address in your browser: https://goo.gl/QoCMrD
+
+\section*{Describe your data}
+\paragraph{}
+
+Create a new notebook and import data. Name your data table as $geo$.
+
+\begin{table}[]
+\centering
+\caption{Variable description}
+\label{lab1}
+\begin{tabular}{ll}
+Variable    & Description                                          \\
+UNMProp     & UNM support in \% in district                            \\
+TurnoutProp & Turnout                                         \\
+Urban       & \% of urban population                                  \\
+Georgian    & \% of ethnic Georgians                                 \\
+Orthodox    & \% of orthodox christians                               \\
+HiEd        & \% of people with higher education degree                  \\
+WHC         & \% of white-collar workers \\
+District    & District ID                                                     \\
+Elections   & Elections                                                  
+\end{tabular}
+\end{table}
+
+You can find a description of your variables in table \ref{lab1}. Each record in the table corresponds to a specific electoral district. There are information about 2008 presidential and parliamentary elections, 2012 parliamentary elections, and 2013 presidential elections data.
+
+\section*{Data description}
+\paragraph{}
+
+First, let's explore our data. Calculate mean proportion of UNM votes and mean turnout per each election. Which election has on average the highest value?
+
+Now, analyze other variables. Is there any association between the proportion of white-collar workers and people with higher education degree? Why is this a case?
+
+Use $ggplot2$ library and construct a graph visualizing relation between education and employment type. Below you can find an example of this.
+
+<<ch2, eval=FALSE>>=
+ggplot(geo, aes(x=HiEd, y=WHC))+ 
+  geom_point(aes(colour=Elections))+
+  geom_smooth(method="lm")+
+  labs(title="Higher Education and Employment",
+       x="Proportion of people with higher education",
+       y ="Proportion of people with white collar jobs")
+
+@
+
+Calculate the same graph for visualizing relationship between UNM votes and electoral turnout.
+
+\section*{Data analysis}
+\paragraph{}
+
+Calculate correlation between UNM votes and turnout. How would you explain this pattern?
+
+
+
+\subsection*{How to submit my assignment?}
+
+Upload zipped file to  \href{https://www.dropbox.com/request/nGci1X8XWd9eKWE5alp2}{this link} before the start of our next meeting. You can also access the same link via browser by typing: http://bit.ly/2Oy1QZB
+
+
+\end{document}

@@ -1,0 +1,415 @@
+---------------------------------------------------------------------------------------
+       log:  /afs/ir.stanford.edu/users/t/o/tomz/AER2007/table3.log
+  log type:  text
+ opened on:  18 Jun 2007, 22:34:53
+
+. 
+. ***********************************
+. * TOMZ, GOLDSTEIN, RIVERS TABLE 3 *
+. ***********************************
+. 
+. * model with FE for years only
+. areg ltrade bothp1 bothp2 bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3
+>  onep4 onep5 onep6 onep7 onep8 gsp regional custrict ldist lrgdp lrgdppc comlang bord
+> er landl island lareap comcol curcol colony comctry, a(year) robust cluster(dyad)
+
+Linear regression, absorbing indicators                Number of obs =  234597
+                                                       F( 31, 12149) = 1070.73
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.6493
+                                                       Adj R-squared =  0.6493
+                                                       Root MSE      =  1.9758
+
+                               (Std. Err. adjusted for 12150 clusters in dyad)
+------------------------------------------------------------------------------
+             |               Robust
+      ltrade |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      bothp1 |   1.167515   .6191935     1.89   0.059    -.0462029    2.381233
+      bothp2 |   .5927803     .11165     5.31   0.000     .3739286     .811632
+      bothp3 |   .6506217   .1095668     5.94   0.000     .4358534      .86539
+      bothp4 |   .6136538   .0986167     6.22   0.000     .4203494    .8069582
+      bothp5 |   .3839552   .0899117     4.27   0.000      .207714    .5601964
+      bothp6 |   .4311755   .0956522     4.51   0.000      .243682    .6186691
+      bothp7 |   .3346124   .1174688     2.85   0.004     .1043548      .56487
+      bothp8 |  -.8555883   .1292784    -6.62   0.000    -1.108995   -.6021821
+       onep1 |   .4266167   .5644771     0.76   0.450    -.6798484    1.533082
+       onep2 |   .2873458   .1035806     2.77   0.006     .0843114    .4903802
+       onep3 |   .3958064   .1056345     3.75   0.000      .188746    .6028667
+       onep4 |   .4201929   .0962278     4.37   0.000      .231571    .6088148
+       onep5 |   .2240184   .0896628     2.50   0.012      .048265    .3997718
+       onep6 |   .2696981   .0972572     2.77   0.006     .0790585    .4603377
+       onep7 |   .0953439    .120169     0.79   0.428    -.1402064    .3308942
+       onep8 |   -.769407   .1290261    -5.96   0.000    -1.022319   -.5164953
+         gsp |   .8397159   .0319869    26.25   0.000     .7770165    .9024153
+    regional |   1.211126   .1086197    11.15   0.000     .9982138    1.424038
+    custrict |   1.084367   .1216027     8.92   0.000     .8460069    1.322728
+       ldist |  -1.120198   .0221578   -50.56   0.000     -1.16363   -1.076765
+       lrgdp |   .9110321   .0095261    95.64   0.000     .8923595    .9297048
+     lrgdppc |   .3243418   .0141239    22.96   0.000     .2966566    .3520269
+     comlang |   .3273403   .0402752     8.13   0.000     .2483946     .406286
+      border |    .537631   .1105586     4.86   0.000     .3209185    .7543434
+       landl |   -.279952   .0313328    -8.93   0.000    -.3413693   -.2185348
+      island |   .0214042    .036162     0.59   0.554     -.049479    .0922874
+      lareap |  -.0934123   .0079773   -11.71   0.000    -.1090491   -.0777756
+      comcol |   .5287485   .0673958     7.85   0.000      .396642    .6608549
+      curcol |   1.009184   .2354484     4.29   0.000      .547668    1.470701
+      colony |   1.145993   .1154324     9.93   0.000     .9197273    1.372259
+     comctry |   .0134676    1.07561     0.01   0.990    -2.094899    2.121834
+       _cons |  -27.77786   .3687322   -75.33   0.000    -28.50064   -27.05509
+-------------+----------------------------------------------------------------
+        year |   absorbed                                      (52 categories)
+
+. estimates store t3pt1
+
+. fx_pct bothp1 bothp2 bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3 onep
+> 4 onep5 onep6 onep7 onep8 
+bothp1: % increase in trade 221% with unrounded coeff, 222% with rounded coeff
+bothp2: % increase in trade  81% with unrounded coeff,  80% with rounded coeff
+bothp3: % increase in trade  92% with unrounded coeff,  92% with rounded coeff
+bothp4: % increase in trade  85% with unrounded coeff,  84% with rounded coeff
+bothp5: % increase in trade  47% with unrounded coeff,  46% with rounded coeff
+bothp6: % increase in trade  54% with unrounded coeff,  54% with rounded coeff
+bothp7: % increase in trade  40% with unrounded coeff,  39% with rounded coeff
+bothp8: % increase in trade -57% with unrounded coeff, -58% with rounded coeff
+onep1: % increase in trade  53% with unrounded coeff,  54% with rounded coeff
+onep2: % increase in trade  33% with unrounded coeff,  34% with rounded coeff
+onep3: % increase in trade  49% with unrounded coeff,  49% with rounded coeff
+onep4: % increase in trade  52% with unrounded coeff,  52% with rounded coeff
+onep5: % increase in trade  25% with unrounded coeff,  25% with rounded coeff
+onep6: % increase in trade  31% with unrounded coeff,  31% with rounded coeff
+onep7: % increase in trade  10% with unrounded coeff,  11% with rounded coeff
+onep8: % increase in trade -54% with unrounded coeff, -54% with rounded coeff
+
+. 
+. * model with FE for dyads and years
+. areg ltrade bothp1 bothp2 bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3
+>  onep4 onep5 onep6 onep7 onep8 gsp regional custrict lrgdp lrgdppc curcol yrdum2-yrdu
+> m52, a(dyad) robust cluster(dyad)
+
+Linear regression, absorbing indicators                Number of obs =  234597
+                                                       F( 73, 12149) =  116.71
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.8532
+                                                       Adj R-squared =  0.8531
+                                                       Root MSE      =   1.313
+
+                               (Std. Err. adjusted for 12150 clusters in dyad)
+------------------------------------------------------------------------------
+             |               Robust
+      ltrade |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      bothp1 |   .8086696   .4580205     1.77   0.077    -.0891236    1.706463
+      bothp2 |   .7612684    .103661     7.34   0.000     .5580763    .9644604
+      bothp3 |   .7736058   .1043924     7.41   0.000     .5689801    .9782316
+      bothp4 |   .6794747   .0912075     7.45   0.000     .5006935    .8582559
+      bothp5 |    .532253   .0807333     6.59   0.000      .374003    .6905031
+      bothp6 |   .4845912   .0820444     5.91   0.000     .3237711    .6454113
+      bothp7 |   .4544354   .0894733     5.08   0.000     .2790536    .6298173
+      bothp8 |  -.0106369   .1437335    -0.07   0.941    -.2923776    .2711037
+       onep1 |   .0696754   .4493356     0.16   0.877    -.8110939    .9504447
+       onep2 |   .4104388   .0954034     4.30   0.000     .2234331    .5974446
+       onep3 |   .3760615   .0987366     3.81   0.000     .1825221    .5696009
+       onep4 |   .3504708    .087115     4.02   0.000     .1797116      .52123
+       onep5 |   .1973865   .0778329     2.54   0.011     .0448217    .3499514
+       onep6 |   .2094283   .0804466     2.60   0.009     .0517402    .3671164
+       onep7 |   .1729258   .0879743     1.97   0.049     .0004821    .3453696
+       onep8 |  -.1555396   .1395424    -1.11   0.265    -.4290649    .1179857
+         gsp |   .1926935   .0275655     6.99   0.000     .1386607    .2467263
+    regional |   .7669717   .0703354    10.90   0.000     .6291032    .9048402
+    custrict |   .5954946   .1131559     5.26   0.000     .3736911    .8172981
+       lrgdp |   .4164423   .0465849     8.94   0.000     .3251285    .5077562
+     lrgdppc |   .2562783   .0449284     5.70   0.000     .1682115    .3443451
+      curcol |   .2946333   .1544305     1.91   0.056    -.0080752    .5973417
+      yrdum2 |  -.1812693   .4018224    -0.45   0.652    -.9689053    .6063666
+      yrdum3 |  -.3907834   .4237401    -0.92   0.356    -1.221381    .4398147
+      yrdum4 |  -.2475921   .4309966    -0.57   0.566    -1.092414    .5972298
+      yrdum5 |  -.3613871   .4310625    -0.84   0.402    -1.206338     .483564
+      yrdum6 |  -.4768508   .4318061    -1.10   0.269     -1.32326     .369558
+      yrdum7 |  -.4496497    .432248    -1.04   0.298    -1.296925    .3976253
+      yrdum8 |   -.443959   .4314764    -1.03   0.304    -1.289722    .4018035
+      yrdum9 |  -.3972081   .4285192    -0.93   0.354    -1.237174    .4427578
+     yrdum10 |   -.361735   .4289967    -0.84   0.399    -1.202637    .4791669
+     yrdum11 |  -.4563614   .4285614    -1.06   0.287     -1.29641    .3836872
+     yrdum12 |  -.4463325   .4288532    -1.04   0.298    -1.286953     .394288
+     yrdum13 |  -.4670001   .4287479    -1.09   0.276    -1.307414    .3734141
+     yrdum14 |  -.3692433   .4282862    -0.86   0.389    -1.208752    .4702658
+     yrdum15 |   -.406074   .4286366    -0.95   0.343     -1.24627    .4341219
+     yrdum16 |  -.3933338   .4290988    -0.92   0.359    -1.234436    .4477682
+     yrdum17 |  -.3184254   .4295777    -0.74   0.459    -1.160466    .5236153
+     yrdum18 |  -.3411939    .429672    -0.79   0.427    -1.183419    .5010317
+     yrdum19 |  -.3665299   .4299803    -0.85   0.394     -1.20936       .4763
+     yrdum20 |  -.3949023   .4319322    -0.91   0.361    -1.241558    .4517537
+     yrdum21 |  -.4947268    .432128    -1.14   0.252    -1.341767     .352313
+     yrdum22 |  -.7530848    .432574    -1.74   0.082    -1.600999    .0948292
+     yrdum23 |  -.7556286   .4329066    -1.75   0.081    -1.604194    .0929372
+     yrdum24 |  -.8103499   .4336377    -1.87   0.062    -1.660349     .039649
+     yrdum25 |   -.752327    .433913    -1.73   0.083    -1.602866    .0982115
+     yrdum26 |  -.5868573   .4343365    -1.35   0.177    -1.438226    .2645114
+     yrdum27 |  -.3779245    .434821    -0.87   0.385    -1.230243    .4743939
+     yrdum28 |  -.4390998   .4352247    -1.01   0.313     -1.29221      .41401
+     yrdum29 |  -.4747265   .4355766    -1.09   0.276    -1.328526    .3790731
+     yrdum30 |  -.4174251   .4361472    -0.96   0.339    -1.272343    .4374928
+     yrdum31 |  -.4451542   .4364257    -1.02   0.308    -1.300618    .4103097
+     yrdum32 |  -.3810742   .4390262    -0.87   0.385    -1.241635     .479487
+     yrdum33 |  -.3678675   .4392338    -0.84   0.402    -1.228836    .4931008
+     yrdum34 |  -.4867473   .4394067    -1.11   0.268    -1.348054    .3745599
+     yrdum35 |    -.65744   .4398617    -1.49   0.135    -1.519639    .2047591
+     yrdum36 |  -.7956804   .4403565    -1.81   0.071    -1.658849    .0674885
+     yrdum37 |  -.8447924    .440632    -1.92   0.055    -1.708501    .0189164
+     yrdum38 |  -.8969486   .4411648    -2.03   0.042    -1.761702   -.0321953
+     yrdum39 |  -.9454114   .4414263    -2.14   0.032    -1.810677   -.0801456
+     yrdum40 |   -.921436   .4416972    -2.09   0.037    -1.787233   -.0556393
+     yrdum41 |  -.8743281   .4420163    -1.98   0.048     -1.74075   -.0079058
+     yrdum42 |  -.8693254   .4424947    -1.96   0.049    -1.736686   -.0019653
+     yrdum43 |   -.837743   .4429735    -1.89   0.059    -1.706042    .0305556
+     yrdum44 |  -.8564375   .4434282    -1.93   0.053    -1.725627    .0127523
+     yrdum45 |  -.8111936   .4438337    -1.83   0.068    -1.681178    .0587911
+     yrdum46 |  -.8863672   .4439791    -2.00   0.046    -1.756637   -.0160974
+     yrdum47 |  -.3813885   .4588954    -0.83   0.406    -1.280896    .5181195
+     yrdum48 |  -.2546169   .4593257    -0.55   0.579    -1.154968    .6457347
+     yrdum49 |  -.2270894   .4598968    -0.49   0.621     -1.12856    .6743816
+     yrdum50 |  -.1737428   .4598904    -0.38   0.706    -1.075201    .7277156
+     yrdum51 |   .0756841   .4593089     0.16   0.869    -.8246344    .9760026
+     yrdum52 |   .0260766   .4599479     0.06   0.955    -.8754946    .9276477
+       _cons |    -13.807   1.569351    -8.80   0.000    -16.88318   -10.73083
+-------------+----------------------------------------------------------------
+        dyad |   absorbed                                   (12150 categories)
+
+. estimates store t3pt2
+
+. fx_pct bothp1 bothp2 bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3 onep
+> 4 onep5 onep6 onep7 onep8 
+bothp1: % increase in trade 124% with unrounded coeff, 125% with rounded coeff
+bothp2: % increase in trade 114% with unrounded coeff, 114% with rounded coeff
+bothp3: % increase in trade 117% with unrounded coeff, 116% with rounded coeff
+bothp4: % increase in trade  97% with unrounded coeff,  97% with rounded coeff
+bothp5: % increase in trade  70% with unrounded coeff,  70% with rounded coeff
+bothp6: % increase in trade  62% with unrounded coeff,  62% with rounded coeff
+bothp7: % increase in trade  58% with unrounded coeff,  57% with rounded coeff
+bothp8: % increase in trade  -1% with unrounded coeff,  -1% with rounded coeff
+onep1: % increase in trade   7% with unrounded coeff,   7% with rounded coeff
+onep2: % increase in trade  51% with unrounded coeff,  51% with rounded coeff
+onep3: % increase in trade  46% with unrounded coeff,  46% with rounded coeff
+onep4: % increase in trade  42% with unrounded coeff,  42% with rounded coeff
+onep5: % increase in trade  22% with unrounded coeff,  22% with rounded coeff
+onep6: % increase in trade  23% with unrounded coeff,  23% with rounded coeff
+onep7: % increase in trade  19% with unrounded coeff,  19% with rounded coeff
+onep8: % increase in trade -14% with unrounded coeff, -15% with rounded coeff
+
+. 
+. * Print Table 3
+. estimates table t3pt1 t3pt2, se b(%5.2f) stats(rmse r2) stfmt(%5.3f) keep(bothp1 both
+> p2 bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3 onep4 onep5 onep6 onep
+> 7 onep8)
+
+----------------------------------
+    Variable |  t3pt1     t3pt2   
+-------------+--------------------
+      bothp1 |    1.17      0.81  
+             |    0.62      0.46  
+      bothp2 |    0.59      0.76  
+             |    0.11      0.10  
+      bothp3 |    0.65      0.77  
+             |    0.11      0.10  
+      bothp4 |    0.61      0.68  
+             |    0.10      0.09  
+      bothp5 |    0.38      0.53  
+             |    0.09      0.08  
+      bothp6 |    0.43      0.48  
+             |    0.10      0.08  
+      bothp7 |    0.33      0.45  
+             |    0.12      0.09  
+      bothp8 |   -0.86     -0.01  
+             |    0.13      0.14  
+       onep1 |    0.43      0.07  
+             |    0.56      0.45  
+       onep2 |    0.29      0.41  
+             |    0.10      0.10  
+       onep3 |    0.40      0.38  
+             |    0.11      0.10  
+       onep4 |    0.42      0.35  
+             |    0.10      0.09  
+       onep5 |    0.22      0.20  
+             |    0.09      0.08  
+       onep6 |    0.27      0.21  
+             |    0.10      0.08  
+       onep7 |    0.10      0.17  
+             |    0.12      0.09  
+       onep8 |   -0.77     -0.16  
+             |    0.13      0.14  
+-------------+--------------------
+        rmse |   1.976     1.313  
+          r2 |   0.649     0.853  
+----------------------------------
+                      legend: b/se
+
+. estimates table t3pt1 t3pt2, b(%5.2f) stats(rmse r2) stfmt(%5.3f) keep(bothp1 bothp2 
+> bothp3 bothp4 bothp5 bothp6 bothp7 bothp8 onep1 onep2 onep3 onep4 onep5 onep6 onep7 o
+> nep8) star
+
+----------------------------------------
+    Variable |   t3pt1        t3pt2     
+-------------+--------------------------
+      bothp1 |    1.17         0.81     
+      bothp2 |    0.59***      0.76***  
+      bothp3 |    0.65***      0.77***  
+      bothp4 |    0.61***      0.68***  
+      bothp5 |    0.38***      0.53***  
+      bothp6 |    0.43***      0.48***  
+      bothp7 |    0.33**       0.45***  
+      bothp8 |   -0.86***     -0.01     
+       onep1 |    0.43         0.07     
+       onep2 |    0.29**       0.41***  
+       onep3 |    0.40***      0.38***  
+       onep4 |    0.42***      0.35***  
+       onep5 |    0.22*        0.20*    
+       onep6 |    0.27**       0.21**   
+       onep7 |    0.10         0.17*    
+       onep8 |   -0.77***     -0.16     
+-------------+--------------------------
+        rmse |   1.976        1.313     
+          r2 |   0.649        0.853     
+----------------------------------------
+legend: * p<0.05; ** p<0.01; *** p<0.001
+
+. 
+. * FOOTNOTE: DYNAMICS ARDL(1,1)
+. * Create lags of independent variables and dependent variable
+. sort dyad year
+
+. by dyad: gen Lbothp = bothp[_n-1] if (year == year[_n-1]+1)
+(24982 missing values generated)
+
+. by dyad: gen Lonep = onep[_n-1] if (year == year[_n-1]+1)
+(24982 missing values generated)
+
+. foreach var in ltrade gsp regional custrict lrgdp lrgdppc curcol {
+  2.    by dyad: gen L`var' = `var'[_n-1] if (year == year[_n-1]+1)
+  3.    local laglist `laglist' L`var'
+  4. }
+(24982 missing values generated)
+(24982 missing values generated)
+(24982 missing values generated)
+(24982 missing values generated)
+(24982 missing values generated)
+(24982 missing values generated)
+(24982 missing values generated)
+
+. * AUTOREGRESSIVE DISTRIBUTED LAG MODEL ARDL(1,1), with dyad and year effects
+. areg ltrade bothp onep gsp regional custrict lrgdp lrgdppc curcol Lbothp Lonep `lagli
+> st' yrdum2-yrdum52, a(dyad) robust cluster(dyad)
+
+Linear regression, absorbing indicators                Number of obs =  209615
+                                                       F( 67, 10907) =  585.85
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.9117
+                                                       Adj R-squared =  0.9117
+                                                       Root MSE      =  .96426
+
+                               (Std. Err. adjusted for 10908 clusters in dyad)
+------------------------------------------------------------------------------
+             |               Robust
+      ltrade |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       bothp |   .0999971   .0445073     2.25   0.025     .0127547    .1872394
+        onep |   .0190397   .0399263     0.48   0.633    -.0592232    .0973026
+         gsp |    .044194   .0182966     2.42   0.016     .0083293    .0800586
+    regional |   .2163614   .0358301     6.04   0.000     .1461278     .286595
+    custrict |   .2988549    .083302     3.59   0.000     .1355678    .4621421
+       lrgdp |   .3194731    .107649     2.97   0.003     .1084614    .5304847
+     lrgdppc |  -.1253057   .1088391    -1.15   0.250    -.3386501    .0880387
+      curcol |  -.0123627   .1202127    -0.10   0.918    -.2480014    .2232759
+      Lbothp |   .1449896    .043186     3.36   0.001     .0603372     .229642
+       Lonep |   .0985261   .0376892     2.61   0.009     .0246485    .1724037
+     Lltrade |   .5534459   .0061502    89.99   0.000     .5413904    .5655013
+        Lgsp |  -.0226303   .0179897    -1.26   0.208    -.0578935    .0126328
+   Lregional |    .133512    .044946     2.97   0.003     .0454096    .2216144
+   Lcustrict |  -.0221484   .0755673    -0.29   0.769     -.170274    .1259772
+      Llrgdp |  -.0982973   .1057757    -0.93   0.353    -.3056369    .1090424
+    Llrgdppc |   .2395566   .1065453     2.25   0.025     .0307084    .4484047
+     Lcurcol |   .1267173   .0621206     2.04   0.041     .0049497    .2484849
+      yrdum2 |   .2418145   .0944164     2.56   0.010     .0567411    .4268878
+      yrdum3 |  (dropped)
+      yrdum4 |    .288895   .0583601     4.95   0.000     .1744986    .4032913
+      yrdum5 |   .0045101   .0587056     0.08   0.939    -.1105636    .1195838
+      yrdum6 |  -.0051619   .0579388    -0.09   0.929    -.1187324    .1084086
+      yrdum7 |   .0948713    .058317     1.63   0.104    -.0194406    .2091831
+      yrdum8 |   .0487044   .0585988     0.83   0.406    -.0661598    .1635687
+      yrdum9 |   .0309235   .0581817     0.53   0.595    -.0831231    .1449701
+     yrdum10 |   .0492434   .0587704     0.84   0.402    -.0659572     .164444
+     yrdum11 |  -.0748634   .0585939    -1.28   0.201    -.1897182    .0399914
+     yrdum12 |   .0143461   .0587934     0.24   0.807    -.1008997    .1295919
+     yrdum13 |   .0156568   .0589224     0.27   0.790    -.0998418    .1311553
+     yrdum14 |  -.0141978   .0588769    -0.24   0.809    -.1296072    .1012116
+     yrdum15 |  -.0358827   .0589714    -0.61   0.543    -.1514773    .0797119
+     yrdum16 |  -.0142971   .0591367    -0.24   0.809    -.1302158    .1016216
+     yrdum17 |   .0186083   .0597126     0.31   0.755    -.0984393    .1356558
+     yrdum18 |  -.0140818   .0599689    -0.23   0.814    -.1316317     .103468
+     yrdum19 |  -.0314662   .0601213    -0.52   0.601    -.1493149    .0863825
+     yrdum20 |  -.0953155   .0604334    -1.58   0.115    -.2137759    .0231449
+     yrdum21 |  -.1172228   .0609446    -1.92   0.054    -.2366854    .0022397
+     yrdum22 |  -.2032769   .0615473    -3.30   0.001    -.3239208    -.082633
+     yrdum23 |  -.1896776   .0618092    -3.07   0.002    -.3108348   -.0685203
+     yrdum24 |  -.2175898   .0628335    -3.46   0.001    -.3407549   -.0944248
+     yrdum25 |  -.1450754   .0632283    -2.29   0.022    -.2690143   -.0211365
+     yrdum26 |  -.0233227   .0635076    -0.37   0.713    -.1478091    .1011637
+     yrdum27 |   .1020664   .0641084     1.59   0.111    -.0235978    .2277305
+     yrdum28 |  -.1220264   .0644602    -1.89   0.058    -.2483801    .0043273
+     yrdum29 |  -.0856539   .0647743    -1.32   0.186    -.2126234    .0413155
+     yrdum30 |  -.0050003    .065449    -0.08   0.939    -.1332923    .1232916
+     yrdum31 |  -.0896499   .0658275    -1.36   0.173    -.2186837    .0393839
+     yrdum32 |   -.034914   .0662622    -0.53   0.598    -.1647999    .0949719
+     yrdum33 |  -.0634804    .066806    -0.95   0.342    -.1944323    .0674715
+     yrdum34 |  -.1943271   .0671403    -2.89   0.004    -.3259344   -.0627199
+     yrdum35 |  -.3094366   .0673458    -4.59   0.000    -.4414466   -.1774267
+     yrdum36 |  -.3458712   .0681272    -5.08   0.000    -.4794129   -.2123295
+     yrdum37 |   -.304909   .0683128    -4.46   0.000    -.4388146   -.1710035
+     yrdum38 |  -.3264639   .0686539    -4.76   0.000     -.461038   -.1918897
+     yrdum39 |  -.3117822   .0692805    -4.50   0.000    -.4475845   -.1759799
+     yrdum40 |   -.263963    .069417    -3.80   0.000     -.400033   -.1278929
+     yrdum41 |  -.2431306   .0702321    -3.46   0.001    -.3807982   -.1054629
+     yrdum42 |  -.2906247   .0707073    -4.11   0.000    -.4292239   -.1520256
+     yrdum43 |  -.2666554    .071262    -3.74   0.000    -.4063419   -.1269689
+     yrdum44 |  -.3048235   .0714704    -4.27   0.000    -.4449185   -.1647284
+     yrdum45 |   -.244112   .0723026    -3.38   0.001    -.3858382   -.1023857
+     yrdum46 |   -.352888   .0722613    -4.88   0.000    -.4945332   -.2112428
+     yrdum47 |  -.2749679   .0724239    -3.80   0.000     -.416932   -.1330038
+     yrdum48 |  -.1675045   .0731472    -2.29   0.022    -.3108863   -.0241227
+     yrdum49 |  -.2369812   .0732421    -3.24   0.001     -.380549   -.0934135
+     yrdum50 |  -.2546843   .0736505    -3.46   0.001    -.3990526    -.110316
+     yrdum51 |  -.2038011   .0736297    -2.77   0.006    -.3481287   -.0594736
+     yrdum52 |   -.209063   .0727765    -2.87   0.004    -.3517182   -.0664079
+       _cons |  -7.852755   .7408504   -10.60   0.000    -9.304957   -6.400554
+-------------+----------------------------------------------------------------
+        dyad |   absorbed                                   (10908 categories)
+
+. di "The long-run coefficient on bothp is: " (_b[bothp] + _b[Lbothp]) / (1 - _b[Lltrad
+> e])
+The long-run coefficient on bothp is: .54861576
+
+. di "Same, expressed as a percentage: " %5.0f 100 * (exp( (_b[bothp] + _b[Lbothp]) / (
+> 1 - _b[Lltrade]) ) - 1)
+Same, expressed as a percentage:    73
+
+. di "Same, based on rounded coefficients: " %5.0f 100 * (exp( ( round(_b[bothp],.01) +
+>  round(_b[Lbothp],.01) ) / (1 - round(_b[Lltrade],.01) ) ) - 1)
+Same, based on rounded coefficients:    70
+
+. di "The long-run coefficient on onep is: " (_b[onep] + _b[Lonep]) / (1 - _b[Lltrade])
+The long-run coefficient on onep is: .26327336
+
+. di "Same, expressed as a percentage: " %5.0f 100 * (exp( (_b[onep] + _b[Lonep]) / (1 
+> - _b[Lltrade]) ) - 1)
+Same, expressed as a percentage:    30
+
+. di "Same, based on rounded coefficients: " %5.0f 100 * (exp( ( round(_b[onep],.01) + 
+> round(_b[Lonep],.01) ) / (1 - round(_b[Lltrade],.01) ) ) - 1)
+Same, based on rounded coefficients:    31
+
+. 
+. log close
+       log:  /afs/ir.stanford.edu/users/t/o/tomz/AER2007/table3.log
+  log type:  text
+ closed on:  18 Jun 2007, 22:51:00
+---------------------------------------------------------------------------------------
